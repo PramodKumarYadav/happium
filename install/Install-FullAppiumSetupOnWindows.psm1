@@ -11,6 +11,8 @@ function Install-FullAppiumSetupOnWindows {
         [Alias('os')]
         [String] $operatingSystem = 'windows'
     )
+    # Install chocolatey (the awesome - windows package manager)
+    Install-Chocolatey
 
     # Install open JDK8 (if already installed/upgraded; skips). 
     Install-OpenJDK8
@@ -30,6 +32,19 @@ function Install-FullAppiumSetupOnWindows {
     # Install android studio (if already installed/upgraded; skips). 
     Install-AndroidStudio
 }
+
+# Tested okay [when node is installed or uninstalled].
+function Install-Chocolatey {
+    # https://chocolatey.org/install
+    # If already installed, below step does not install it again and skips. 
+    Get-ExecutionPolicy
+    Set-ExecutionPolicy AllSigned
+    Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    
+    # upgrade chocolatey if already installed
+    choco upgrade chocolatey
+    choco -?
+ }
 
 # Tested okay [when node is installed or uninstalled].
 function Install-OpenJDK8 {
