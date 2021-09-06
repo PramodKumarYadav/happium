@@ -147,4 +147,8 @@ function Start-AppiumServer {
 
     # Uninstall android studio
     choco uninstall androidstudio
+
+    # In the end, if for some reasons,you want to uninstall chocolatey as well, 
+    # follow these instructions. I would recommend not to install chocolatey though.
+    # https://docs.chocolatey.org/en-us/choco/uninstallation
 }
