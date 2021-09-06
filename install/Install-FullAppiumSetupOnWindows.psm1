@@ -56,7 +56,7 @@ function Install-AppiumServerAndClient {
         npm install -g appium
     }
 
-    # Install appium client (webdriverio) - always- until you find a way to check version and skip if already installed.
+    # Install appium client (webdriverio) - always- until I find a way to check version and skip if already installed.
     npm install wd
  }
 
