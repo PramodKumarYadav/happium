@@ -69,3 +69,8 @@ function Start-DeviceEmulator {
     # Note: The avd image should already be downloaded in this location: C:\Users\your-user-name\.android\avd
     emulator -avd $avdName
 }
+
+function List-AttachedEmulatorDevices {
+    # List of devices attached (i.e. all running emulators)
+    adb devices
+}
