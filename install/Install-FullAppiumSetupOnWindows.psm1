@@ -117,7 +117,7 @@ function Install-AppiumDoctor {
 
     # Set below properties at machine level; since eventually we want the sdk tools present in these folders to create emualtors from command line scripts (to automate the process) and not via android studio (manually)
     # Note: Running this command multiple times will NOT add the same path multiple times. So its completly safe to run this install script multiple times without having to worry about adding duplicate paths.
-    [Environment]::SetEnvironmentVariable("Path", $env:Path + ";%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;%ANDROID_HOME%\tools\bin", "Machine")
+    [Environment]::SetEnvironmentVariable("Path", $env:Path + ";%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;%ANDROID_HOME%\tools\bin;%ANDROID_HOME%\emulator", "Machine")
  }
 
  function Test-AppiumSetUp {
