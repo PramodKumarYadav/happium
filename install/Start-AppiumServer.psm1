@@ -70,7 +70,7 @@ function Start-DeviceEmulator {
     emulator -avd $avdName
 }
 
-function List-AttachedEmulatorDevices {
+function Show-AttachedEmulatorDevices {
     # List of devices attached (i.e. all running emulators)
     adb devices
 }
