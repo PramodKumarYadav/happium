@@ -3,18 +3,18 @@
 # Then execute below commands.
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 
-# ---------------------------------------------------------------------
 # NOTE: This above first command is to allow powershell to import and run this module. Else you may get this error
 # Import-Module: File D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 cannot be loaded.
 # The file D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 is not digitally signed.
 # You cannot run this script on the current system.
 # For more information about running scripts and setting execution policy, see about_Execution_Policies
 # at https://go.microsoft.com/fwlink/?LinkID=135170.
-# ---------------------------------------------------------------------
 
+# ---------------------------------------------------------------------
 # cd to this project. Say (cd D:\happium\)
 # Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
 # Install-FullAppiumSetupOnWindows
+# ---------------------------------------------------------------------
 
 # Note: After full setup is complete, open a new powershell terminal as administrator to see all changed env variables and installed softwares.
 function Install-FullAppiumSetupOnWindows {
@@ -125,6 +125,21 @@ function Install-AppiumDoctor {
     appium-doctor
 
     # todo: Add checks to take self healing actions if setup is not correct. 
+}
+
+# example usage(s):
+# Install-AndroidSDKForAPILevel -api 29 -cpu "x86" [ for a specific API and for a 32 bit machine - use "x86_64" if you have a 64 bit machine]
+# or: Install-AndroidSDKForAPILevel  [using default api value "31" and for a 64 bit cpu "x86_64"]
+function Install-AndroidSDKForAPILevel {
+    [CmdletBinding()]
+    param(
+        [String]$api = "31",
+        [String]$cpu = "x86_64"
+    )
+    # Install android sdk for this API version for 64 bit machine
+    sdkmanager "platform-tools" "platforms;android-$api"
+    sdkmanager "system-images;android-$api;google_apis;$cpu"
+    sdkmanager --licenses
 }
 
 # Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)

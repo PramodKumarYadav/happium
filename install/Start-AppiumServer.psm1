@@ -3,12 +3,14 @@
 # Then execute below commands.
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 
+# ---------------------------------------------------------------------
 # cd to this project. Say (cd D:\happium\)
 # Import-Module .\install\Start-AppiumServer.psm1 -Force
 # [To run in the same terminal]
     # Start-AppiumServer
 # [To run as a background Job]
-# Start-AppiumServer -asBackgroundJob
+    # Start-AppiumServer -asBackgroundJob
+# ---------------------------------------------------------------------
 
 # To run server as background. Run below command. By default, it runs the server in the current terminal.
 function Start-AppiumServer {
