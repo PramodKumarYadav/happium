@@ -57,20 +57,6 @@ function Start-AppiumServer {
  }
 
 # example usage(s):
-# Add-AndroidVirtualDeviceImage -api 28 -deviceName Pixel_XL [ for a specific API version]
-# or: Add-AndroidVirtualDeviceImage  [using default api values "31" and "Pixel_5"]
-# Note: The SDK that you provide in the command should already be downloaded, else this command will fail.
-function Add-AndroidVirtualDeviceImage {
-    [CmdletBinding()]
-    param(
-        [String]$api = "31",
-        [String]$deviceName = "Pixel_5"
-    )
-    $avdName = "$deviceName" + "_API_$api"
-    avdmanager create avd -n "$avdName" -k "system-images;android-$api;google_apis;x86_64"
-}
-
-# example usage(s):
 # Start-DeviceEmulator -avdName Pixel_XL_API_31
 # or: Start-DeviceEmulator   [using default emulator value "Pixel_5_API_31"]
 function Start-DeviceEmulator {

@@ -142,6 +142,20 @@ function Install-AndroidSDKForAPILevel {
     sdkmanager --licenses
 }
 
+# example usage(s):
+# Install-AndroidVirtualDeviceImage -api 28 -deviceName Pixel_XL [for a specific API version]
+# or: Install-AndroidVirtualDeviceImage  [using default api values "31" and "Pixel_5"]
+# Note: The SDK that you provide in the command should already be downloaded (by above function); else this command will fail.
+function Install-AndroidVirtualDeviceImage {
+    [CmdletBinding()]
+    param(
+        [String]$api = "31",
+        [String]$deviceName = "Pixel_5"
+    )
+    $avdName = "$deviceName" + "_API_$api"
+    avdmanager create avd -n "$avdName" -k "system-images;android-$api;google_apis;x86_64"
+}
+
 # Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
  function Uninstall-FullAppiumSetupFromWindows {
      # Uninstall android studio
