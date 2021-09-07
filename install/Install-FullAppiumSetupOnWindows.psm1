@@ -43,6 +43,12 @@ function Install-FullAppiumSetupOnWindows {
 
     # Install android studio (if already installed/upgraded; skips). 
     Install-AndroidStudio
+
+    # Install a android SDK to start with (you can add more later)
+    Install-AndroidSDKForAPILevel -api 31 -cpu "x86_64"
+
+    # Install a android virtual device image to start with (you can add more later)
+    Install-AndroidVirtualDeviceImage -api 31 -deviceName "Pixel_5"
 }
 
 # Tested okay [when node is installed or uninstalled].
