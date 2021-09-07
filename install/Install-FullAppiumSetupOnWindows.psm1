@@ -122,7 +122,7 @@ function Install-AppiumDoctor {
     # todo: Add checks to take self healing actions if setup is not correct. 
 }
 
-# To run server as background. Run below command.
+# To run server as background. Run below command. By default, it runs the server in the current terminal.
 #  Start-AppiumServer -asBackgroundJob
 function Start-AppiumServer {
     [CmdletBinding()]
