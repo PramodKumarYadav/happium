@@ -53,3 +53,19 @@ function Start-AppiumServer {
     # Verify if appium is running or not
     curl http://127.0.0.1:4723/wd/hub/status
  }
+
+# example usage(s):
+# Start-DeviceEmulator -avdName Pixel_XL_API_31
+# or: Start-DeviceEmulator -name Pixel_XL_API_31   [using alias name for parameter]
+# or: Start-DeviceEmulator   [using default emulator value "Pixel_XL_API_31"]
+function Start-DeviceEmulator {
+    [CmdletBinding()]
+    param(
+        [Alias('name')]
+        [String]$avdName = "Pixel_XL_API_31"
+    )
+
+    # Start emulator with provided avd name (android virtual device name).
+    # Note: The avd image should already be downloaded in this location: C:\Users\your-user-name\.android\avd
+    emulator -avd $avdName
+}
