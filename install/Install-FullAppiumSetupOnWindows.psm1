@@ -1,6 +1,17 @@
 # To use this script, open a powershell terminal with elevated access (as administrator).
 
-# Then execute below three commands.
+# Then execute below commands.
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+
+# ---------------------------------------------------------------------
+# NOTE: This above first command is to allow powershell to import and run this module. Else you may get this error
+# Import-Module: File D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 cannot be loaded.
+# The file D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 is not digitally signed.
+# You cannot run this script on the current system.
+# For more information about running scripts and setting execution policy, see about_Execution_Policies
+# at https://go.microsoft.com/fwlink/?LinkID=135170.
+# ---------------------------------------------------------------------
+
 # cd to this project. Say (cd D:\happium\)
 # Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
 # Install-FullAppiumSetupOnWindows
@@ -111,19 +122,25 @@ function Install-AppiumDoctor {
     # todo: Add checks to take self healing actions if setup is not correct. 
 }
 
+# To run server as background. Run below command.
+#  Start-AppiumServer -asBackgroundJob
 function Start-AppiumServer {
     [CmdletBinding()]
     param(
-        [Alias('os')]
-        [Boolean] $asBackgroundJob = $false
+        [Parameter(Mandatory=$false)]
+        [Switch]$asBackgroundJob
     )
 
-    # start appium (as a background job)
-    If ($asBackgroundJob) {
+    # Remove any previously open appium background instances that may prevent from starting a new instance
+    Stop-AppiumServer
+
+    # start appium
+    If ($asBackgroundJob.IsPresent) {
         Write-Host "starting appium server as a background job. Do `Stop-Job -Name Job1` to stop the background job."
-        appium &
+        $appiumJob = Start-Job -ScriptBlock {appium}
 
         # Verify if appium is running or not (since in background mode, you dont see it running)
+        $appiumJob
         Test-AppiumServer
     }else {
         Write-Host "starting appium server in the current terminal. Do ctrl +c to close the server."
@@ -132,10 +149,17 @@ function Start-AppiumServer {
  }
 
  function Stop-AppiumServer {
-    # Get job name
+    # Get all running jobs
+    Get-Job
 
-    # To stop job
-    # Stop-Job -Name Job1
+    # Stop all running background jobs (dont worry, there are no background jobs except the one we created)
+    Get-Job | Stop-Job
+
+    # Remove all running background jobs
+    Get-Job | Remove-Job
+
+    # Verify that the server is stopped and all background jobs are removed.
+    Get-Job
  }
 
  function Test-AppiumServer {
