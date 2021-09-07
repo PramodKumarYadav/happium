@@ -143,25 +143,26 @@ function Start-AppiumServer {
     curl http://127.0.0.1:4723/wd/hub/status
  }
 
+# Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
  function Uninstall-FullAppiumSetupFromWindows {
-     # uninstall openjdk8
-    choco uninstall openjdk8
+     # Uninstall android studio
+     choco uninstall androidstudio
+
+     # remove appium-doctor
+     npm uninstall -g appium-doctor
+
+     # Uninstall appium desktop
+     choco uninstall appium-desktop
 
     # Uninstall appium server and client
+     npm uninstall wd
     npm uninstall -g appium
-    npm uninstall wd
-    
-    # remove appium-doctor
-    npm uninstall -g appium-doctor
 
     # nodejs (npm) work is done. Can uninstall now.
     choco uninstall nodejs
 
-    # Uninstall appium desktop
-    choco uninstall appium-desktop
-
-    # Uninstall android studio
-    choco uninstall androidstudio
+    # uninstall openjdk8
+    choco uninstall openjdk8
 
     # In the end, if for some reasons,you want to uninstall chocolatey as well, 
     # follow these instructions. I would recommend not to install chocolatey though.
