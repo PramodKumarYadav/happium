@@ -1,20 +1,17 @@
 # To use this script, open a powershell terminal with elevated access (as administrator).
-
-# Then execute below commands.
+# ---------------------------------------------------------------------
+# cd to this project. Say (cd D:\happium\)
 # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+# Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
+# Install-FullAppiumSetupOnWindows
+# ---------------------------------------------------------------------
 
-# NOTE: This above first command is to allow powershell to import and run this module. Else you may get this error
+# NOTE: The Set-ExecutionPolicy command is to allow powershell to import and run this module. Else you may get this error:
 # Import-Module: File D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 cannot be loaded.
 # The file D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 is not digitally signed.
 # You cannot run this script on the current system.
 # For more information about running scripts and setting execution policy, see about_Execution_Policies
 # at https://go.microsoft.com/fwlink/?LinkID=135170.
-
-# ---------------------------------------------------------------------
-# cd to this project. Say (cd D:\happium\)
-# Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
-# Install-FullAppiumSetupOnWindows
-# ---------------------------------------------------------------------
 
 # Note: After full setup is complete, open a new powershell terminal as administrator to see all changed env variables and installed softwares.
 function Install-FullAppiumSetupOnWindows {
@@ -23,7 +20,10 @@ function Install-FullAppiumSetupOnWindows {
         [Alias('os')]
         [String] $operatingSystem = 'windows'
     )
-    # Install chocolatey (the awesome - windows package manager)
+    # NOTE: If any of the below softwares are alrady installed, this script will NOT reinstall them.
+    # However, if the current version is behind latest version, it will be upgraded.
+
+    # Install chocolatey (the awesome - windows package manager - if already installed/upgraded; skips)
     Install-Chocolatey
 
     # Install open JDK8 (if already installed/upgraded; skips). 
@@ -49,6 +49,9 @@ function Install-FullAppiumSetupOnWindows {
 
     # Install a android virtual device image to start with (you can add more later)
     Install-AndroidVirtualDeviceImage -api 31 -deviceName "Pixel_5"
+
+    # Show versions after setup
+    Show-Versions
 }
 
 # Tested okay [when node is installed or uninstalled].
@@ -152,6 +155,9 @@ function Install-AndroidSDKForAPILevel {
 # Install-AndroidVirtualDeviceImage -api 28 -deviceName Pixel_XL [for a specific API version]
 # or: Install-AndroidVirtualDeviceImage  [using default api values "31" and "Pixel_5"]
 # Note: The SDK that you provide in the command should already be downloaded (by above function); else this command will fail.
+# Note: read below to add hardware profile while creating device (else the emulation will not be proper)
+# https://stuff.mit.edu/afs/sipb/project/android/docs/tools/devices/managing-avds-cmdline.html
+# https://stuff.mit.edu/afs/sipb/project/android/docs/tools/devices/managing-avds-cmdline.html#hardwareopts
 function Install-AndroidVirtualDeviceImage {
     [CmdletBinding()]
     param(
@@ -165,20 +171,24 @@ function Install-AndroidVirtualDeviceImage {
 # Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
  function Uninstall-FullAppiumSetupFromWindows {
      # Uninstall android studio
+     # Last time I tested, this did not work. Had to do this manually. Test again.
      choco uninstall androidstudio
 
      # remove appium-doctor
+     # This sometimes freezes the screen (but removes it nonetheless)
      npm uninstall -g appium-doctor
 
      # Uninstall appium desktop
      choco uninstall appium-desktop
 
     # Uninstall appium server and client
-     npm uninstall wd
+    npm uninstall wd
     npm uninstall -g appium
 
     # nodejs (npm) work is done. Can uninstall now.
     choco uninstall nodejs
+     # You would also need to find and remove all the nodejs.install packages, otherwise, the
+     # next install will not work correctly
 
     # uninstall openjdk8
     choco uninstall openjdk8
@@ -186,4 +196,22 @@ function Install-AndroidVirtualDeviceImage {
     # In the end, if for some reasons,you want to uninstall chocolatey as well, 
     # follow these instructions. I would recommend not to install chocolatey though.
     # https://docs.chocolatey.org/en-us/choco/uninstallation
+}
+
+function Show-Versions {
+    Write-Host "Choco version:"
+    choco -v
+
+    Write-Host "`nJDK version:"
+    java -version
+
+    Write-Host "`nNode and NPM version:"
+    node -v
+    npm -v
+
+    Write-Host "`nAppium version:"
+    appium --version
+
+    Write-Host "`nAndroid Studio version:"
+    cat $ENV:ANDROID_HOME\platform-tools\source.properties | Select-String Pkg.Revision
 }
