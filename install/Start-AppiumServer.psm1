@@ -1,10 +1,7 @@
 # To use this script, open a powershell terminal with elevated access (as administrator).
-
-# Then execute below commands.
-# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
-
 # ---------------------------------------------------------------------
 # cd to this project. Say (cd D:\happium\)
+# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 # Import-Module .\install\Start-AppiumServer.psm1 -Force
 # [To run in the same terminal]
     # Start-AppiumServer
