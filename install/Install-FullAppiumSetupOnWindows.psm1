@@ -182,6 +182,8 @@ function Install-AndroidSDKForAPILevel {
 # Install-AndroidVirtualDeviceImage -api 28 -deviceName Pixel_XL [for a specific API version]
 # or: Install-AndroidVirtualDeviceImage  [using default api values "31" and "Pixel_5"]
 # Note: The SDK that you provide in the command should already be downloaded (by above function); else this command will fail.
+# Also (with little exploration that I did so far), you cannot run a 32 bit device on a 64 bit machine
+# (so beaware of the images that you create and run). If this assumption is incorrect, please do let me know and we can remove this line.
 # Note: read below to add hardware profile while creating device (else the emulation will not be proper)
 # https://stuff.mit.edu/afs/sipb/project/android/docs/tools/devices/managing-avds-cmdline.html
 # https://stuff.mit.edu/afs/sipb/project/android/docs/tools/devices/managing-avds-cmdline.html#hardwareopts
@@ -192,7 +194,14 @@ function Install-AndroidVirtualDeviceImage {
         [String]$deviceName = "Pixel_5"
     )
     $avdName = "$deviceName" + "_API_$api"
-    avdmanager create avd -n "$avdName" -k "system-images;android-$api;google_apis;x86_64"
+    avdmanager create avd -n "$avdName" -k "system-images;android-$api;google_apis;x86_64" --force
+
+    # Above process of creating device does not provice all hardware profile info (in config.ini file) to the virtual device being created.
+    # So we copy a config.ini template that we got by creating a device directly from android studio. 
+    # This help launch a proper emulator device.
+    $src = "./config/android-virtual-device-image/config.ini"
+    $dest = "$HOME\.android\avd\$avdName.avd"
+    Copy-Item $src $dest
 }
 
 # Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
