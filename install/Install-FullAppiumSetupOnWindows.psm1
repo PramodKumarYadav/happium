@@ -1,3 +1,6 @@
+#Requires -Version 5
+#Requires -RunAsAdministrator
+
 # To use this script, open a powershell terminal with elevated access (as administrator).
 # ---------------------------------------------------------------------
 # cd to this project. Say (cd D:\happium\)
@@ -15,6 +18,27 @@
 
 # Note: After full setup is complete, open a new powershell terminal as administrator to see all changed env variables and installed softwares.
 function Install-FullAppiumSetupOnWindows {
+<#
+    .Synopsis
+    This scripts installs all tools and dependencies needed to run appium tests on a windows machine.
+    It also sets all env variables, so that you do not have to do them manually.
+    The only thing you need to run this script is powershell, which comes pre-installed with windows latest versions.
+
+    .Description
+    This scripts installs:
+    -> Chocolatey (windows package manager)
+    -> JDK8
+    -> nodejs and npm (needed to install appium)
+    -> appium client and server
+    -> appium desktop
+    -> appium doctor
+    -> android studio
+    -> android sdk for latest api at the time of writing this script (api 31) for a 64 bit architecture
+    -> a android virtual device image for pixel_5
+
+    .Example
+    Install-FullAppiumSetupOnWindows
+#>
     [CmdletBinding()]
     param(
         [Alias('os')]
@@ -31,6 +55,9 @@ function Install-FullAppiumSetupOnWindows {
 
     # Install or upgrade nodejs (if already installed/upgraded; skips). 
     Install-NodeJS
+
+    # refreshenv, sometimes node is not directly visible in the terminal after installation, so refresh env.
+    refreshenv
 
     # Install appium server and client (if already installed; skips) 
     Install-AppiumServerAndClient 
@@ -170,6 +197,9 @@ function Install-AndroidVirtualDeviceImage {
 
 # Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
  function Uninstall-FullAppiumSetupFromWindows {
+     # Show tools version before being removed.
+     Show-Versions
+
      # Uninstall android studio
      # Last time I tested, this did not work. Had to do this manually. Test again.
      choco uninstall androidstudio
@@ -196,9 +226,15 @@ function Install-AndroidVirtualDeviceImage {
     # In the end, if for some reasons,you want to uninstall chocolatey as well, 
     # follow these instructions. I would recommend not to install chocolatey though.
     # https://docs.chocolatey.org/en-us/choco/uninstallation
+
+     # Show that now all these tools are removed.
+     Show-Versions
 }
 
 function Show-Versions {
+    # First clear text on terminal.
+    Clear-Host
+
     Write-Host "Choco version:"
     choco -v
 
@@ -213,5 +249,5 @@ function Show-Versions {
     appium --version
 
     Write-Host "`nAndroid Studio version:"
-    cat $ENV:ANDROID_HOME\platform-tools\source.properties | Select-String Pkg.Revision
+    Get-Content $ENV:ANDROID_HOME\platform-tools\source.properties | Select-String Pkg.Revision
 }
