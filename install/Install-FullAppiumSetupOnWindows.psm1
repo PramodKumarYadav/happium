@@ -1,14 +1,22 @@
 #Requires -Version 5
 #Requires -RunAsAdministrator
 
-# To use this script, open a powershell terminal with elevated access (as administrator).
-# ---------------------------------------------------------------------
-# cd to this project. Say (cd D:\happium\)
-# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
-# Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
-# Install-FullAppiumSetupOnWindows
-# ---------------------------------------------------------------------
+<# To use this script, open a powershell terminal with elevated access (as administrator).
+# cd to this project. Say;
+-------------------------------------------------
+cd D:\happium
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
+Install-FullAppiumSetupOnWindows
+-------------------------------------------------
+After this script finishes, close this terminal and open another powershell terminal as administrator.
+This is because, nodejs is not available in same terminal directly after install. And we need nodejs to install
+appium client, server and appium doctor. To install all these run.
+Install-Appium
+-------------------------------------------------
+#>
 
+<#
 # NOTE: The Set-ExecutionPolicy command is to allow powershell to import and run this module. Else you may get this error:
 # Import-Module: File D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 cannot be loaded.
 # The file D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 is not digitally signed.
@@ -17,6 +25,8 @@
 # at https://go.microsoft.com/fwlink/?LinkID=135170.
 
 # Note: After full setup is complete, open a new powershell terminal as administrator to see all changed env variables and installed softwares.
+ #>
+
 function Install-FullAppiumSetupOnWindows {
 <#
     .Synopsis
@@ -29,9 +39,7 @@ function Install-FullAppiumSetupOnWindows {
     -> Chocolatey (windows package manager)
     -> JDK8
     -> nodejs and npm (needed to install appium)
-    -> appium client and server
     -> appium desktop
-    -> appium doctor
     -> android studio
     -> android sdk for latest api at the time of writing this script (api 31) for a 64 bit architecture
     -> a android virtual device image for pixel_5
@@ -56,17 +64,8 @@ function Install-FullAppiumSetupOnWindows {
     # Install or upgrade nodejs (if already installed/upgraded; skips). 
     Install-NodeJS
 
-    # refreshenv, sometimes node is not directly visible in the terminal after installation, so refresh env.
-    refreshenv
-
-    # Install appium server and client (if already installed; skips) 
-    Install-AppiumServerAndClient 
-
     # Install appium desktop (if already installed; skips) 
     Install-AppiumDesktop
-
-    # Install appium doctor (if already installed; skips) 
-    Install-AppiumDoctor
 
     # Install android studio (if already installed/upgraded; skips). 
     Install-AndroidStudio
@@ -76,6 +75,35 @@ function Install-FullAppiumSetupOnWindows {
 
     # Install a android virtual device image to start with (you can add more later)
     Install-AndroidVirtualDeviceImage -api 31 -deviceName "Pixel_5"
+}
+
+function Install-Appium {
+    <#
+    .Synopsis
+    Installing appium server, client and doctor needs nodejs.
+
+    .Description
+    Installing appium server, client and doctor needs nodejs. Nodejs after installation needs to be opened via a
+    seperate terminal than from which it was installed. Thus we have to do this installation seperately.
+    -> appium client and server
+    -> appium doctor
+
+    .Example
+    Install-Appium
+#>
+    [CmdletBinding()]
+    param(
+        [Alias('os')]
+        [String] $operatingSystem = 'windows'
+    )
+    # NOTE: If any of the below softwares are alrady installed, this script will NOT reinstall them.
+    # However, if the current version is behind latest version, it will be upgraded.
+
+    # Install appium server and client (if already installed; skips)
+    Install-AppiumServerAndClient
+
+    # Install appium doctor (if already installed; skips)
+    Install-AppiumDoctor
 
     # Show versions after setup
     Show-Versions
@@ -241,9 +269,6 @@ function Install-AndroidVirtualDeviceImage {
 }
 
 function Show-Versions {
-    # First clear text on terminal.
-    Clear-Host
-
     Write-Host "Choco version:"
     choco -v
 
