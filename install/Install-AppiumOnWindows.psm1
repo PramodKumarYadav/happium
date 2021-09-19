@@ -7,19 +7,23 @@
 cd D:\happium
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
 Import-Module .\install\Install-AppiumOnWindows.psm1 -Force
-Install-FullAppiumSetupOnWindows
+
+
+STEP01: Install appium dependencies (everything needed to run tests and install appium)
+Install-AppiumDependencies
 -------------------------------------------------
 After this script finishes, close this terminal and open another powershell terminal as administrator.
 This is because, nodejs is not available in same terminal directly after install. And we need nodejs to install
 appium client, server and appium doctor. To install all these run.
+STEP01: Install appium (server, client, doctor and desktop)
 Install-Appium
 -------------------------------------------------
 #>
 
 <#
 # NOTE: The Set-ExecutionPolicy command is to allow powershell to import and run this module. Else you may get this error:
-# Import-Module: File D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 cannot be loaded.
-# The file D:\happium\install\Install-FullAppiumSetupOnWindows.psm1 is not digitally signed.
+# Import-Module: File D:\happium\install\Install-AppiumOnWindows.psm1 cannot be loaded.
+# The file D:\happium\install\Install-AppiumOnWindows.psm1 is not digitally signed.
 # You cannot run this script on the current system.
 # For more information about running scripts and setting execution policy, see about_Execution_Policies
 # at https://go.microsoft.com/fwlink/?LinkID=135170.
@@ -27,7 +31,7 @@ Install-Appium
 # Note: After full setup is complete, open a new powershell terminal as administrator to see all changed env variables and installed softwares.
  #>
 
-function Install-FullAppiumSetupOnWindows {
+function Install-AppiumDependencies {
 <#
     .Synopsis
     This scripts installs all tools and dependencies needed to run appium tests on a windows machine.
@@ -45,7 +49,7 @@ function Install-FullAppiumSetupOnWindows {
     -> a android virtual device image for pixel_5
 
     .Example
-    Install-FullAppiumSetupOnWindows
+    Install-AppiumDependencies
 #>
     [CmdletBinding()]
     param(
@@ -64,9 +68,6 @@ function Install-FullAppiumSetupOnWindows {
     # Install or upgrade nodejs (if already installed/upgraded; skips). 
     Install-NodeJS
 
-    # Install appium desktop (if already installed; skips) 
-    Install-AppiumDesktop
-
     # Install android studio (if already installed/upgraded; skips). 
     Install-AndroidStudio
 
@@ -75,38 +76,6 @@ function Install-FullAppiumSetupOnWindows {
 
     # Install a android virtual device image to start with (you can add more later)
     Install-AndroidVirtualDeviceImage -api 31 -deviceName "Pixel_5"
-}
-
-function Install-Appium {
-    <#
-    .Synopsis
-    Installing appium server, client and doctor needs nodejs.
-
-    .Description
-    Installing appium server, client and doctor needs nodejs. Nodejs after installation needs to be opened via a
-    seperate terminal than from which it was installed. Thus we have to do this installation seperately.
-    -> appium client and server
-    -> appium doctor
-
-    .Example
-    Install-Appium
-#>
-    [CmdletBinding()]
-    param(
-        [Alias('os')]
-        [String] $operatingSystem = 'windows'
-    )
-    # NOTE: If any of the below softwares are alrady installed, this script will NOT reinstall them.
-    # However, if the current version is behind latest version, it will be upgraded.
-
-    # Install appium server and client (if already installed; skips)
-    Install-AppiumServerAndClient
-
-    # Install appium doctor (if already installed; skips)
-    Install-AppiumDoctor
-
-    # Show versions after setup
-    Show-Versions
 }
 
 # Tested okay [when node is installed or uninstalled].
@@ -122,46 +91,35 @@ function Install-Chocolatey {
     choco -?
  }
 
-# Tested okay [when node is installed or uninstalled].
+# If already installed or is at latest version, than it will not install/upgrade again.
 function Install-OpenJDK8 {
-    # If already installed or is at latest version, than it will not install/upgrade again. 
+    Write-Host "$("*-" * 32)`nInstalling OpenJDK8!"
     choco install openjdk8
     choco upgrade openjdk8
  }
 
 # Tested okay [when node is installed or uninstalled].
 function Install-NodeJS {
-    # If already installed or is at latest version, than it will not install/upgrade again. 
-    choco install nodejs
-    choco upgrade nodejs
+    Write-Host "$("*-" * 32)`nInstalling nodejs!"
+    choco install nodejs.install
+    choco upgrade nodejs.install
  }
 
- function Install-AppiumDesktop {
-    # If already installed or is at latest version, than it will not install/upgrade again.
-    choco install appium-desktop
-    choco upgrade appium-desktop
- }
-
- # Tested okay [when androidstudio is installed or uninstalled].
- function Install-AndroidStudio {
-    # Install android studio (if you want to run some virtual emulators for testing and not just real devices)
-    # This will also install sdk at the right location: C:\Users\your-user-name\AppData\Local\Android\Sdk\
-    # Choco also sets env varibles and saves you the hassle of setting up env variables
-    # if you only want to run using real devices than you dont need android studio but sdk will suffice
-    # however in that case, you would need to setup the env varaibles though - so below setup is better.
+# Tested okay [when androidstudio is installed or uninstalled].
+# Install android studio (if you want to run some virtual emulators for testing and not just real devices)
+# This will also install sdk at the right location: C:\Users\your-user-name\AppData\Local\Android\Sdk\
+# Choco also sets env varibles and saves you the hassle of setting up env variables
+# if you only want to run using real devices than you dont need android studio but sdk will suffice
+# however in that case, you would need to setup the env varaibles though - so below setup is better.
+function Install-AndroidStudio {
+    Write-Host "$("*-" * 32)`nInstalling androidstudio!"
     choco install androidstudio
     choco upgrade androidstudio
 
     # Set below properties at machine level; since eventually we want the sdk tools present in these folders to create emualtors from command line scripts (to automate the process) and not via android studio (manually)
     # Note: Running this command multiple times will NOT add the same path multiple times. So its completly safe to run this install script multiple times without having to worry about adding duplicate paths.
     [Environment]::SetEnvironmentVariable("Path", $env:Path + ";%ANDROID_HOME%\platform-tools;%ANDROID_HOME%\tools;%ANDROID_HOME%\tools\bin;%ANDROID_HOME%\emulator", "Machine")
- }
-
- function Test-AppiumSetUp {
-    # Verify the installation
-    appium-doctor
-
-    # todo: Add checks to take self healing actions if setup is not correct. 
+    refreshenv
 }
 
 # example usage(s):
@@ -174,6 +132,7 @@ function Install-AndroidSDKForAPILevel {
         [String]$cpu = "x86_64"
     )
     # Install android sdk for this API version for 64 bit machine
+    Write-Host "$("*-" * 32)`nInstalling android sdk for API version $api for $cpu bit machine"
     sdkmanager "platform-tools" "platforms;android-$api"
     sdkmanager "system-images;android-$api;google_apis;$cpu"
     sdkmanager --licenses
@@ -195,6 +154,7 @@ function Install-AndroidVirtualDeviceImage {
         [String]$deviceName = "Pixel_5"
     )
     $avdName = "$deviceName" + "_API_$api"
+    Write-Host "$("*-" * 32)`Creating a virtual device image named: $avdName"
     avdmanager create avd -n "$avdName" -k "system-images;android-$api;google_apis;x86_64" --force
 
     # Above process of creating device does not provice all hardware profile info (in config.ini file) to the virtual device being created.
@@ -208,19 +168,75 @@ function Install-AndroidVirtualDeviceImage {
 # Tested Okay: [when appium is already installed or uninstalled]
 # Tested Okay: Script does not install again if already installed and tries to upgrade.
 function Install-Appium {
+    <#
+    .Synopsis
+    Installing appium server, client and doctor needs nodejs (from install dependencies step).
+    Installing appium desktop needs chocolatey installed (from install dependencies step)
+
+    .Description
+    Installing appium server, client and doctor needs nodejs. Nodejs after installation needs to be opened via a
+    seperate terminal than from which it was installed. Thus we have to do this installation seperately.
+    -> appium client and server
+    -> appium doctor
+    -> appium desktop
+
+    .Example
+    Install-Appium
+    #>
+
+    [CmdletBinding()]
+    param(
+        [Alias('os')]
+        [String] $operatingSystem = 'windows'
+    )
+
+    # Install appium desktop (if already installed; skips)
+    Install-AppiumDesktop
+
+    # Install appium server and client (if already installed; skips)
+    Install-AppiumServerAndClient
+
+    # Install appium doctor (if already installed; skips)
+    Install-AppiumDoctor
+
+    # Show versions after setup
+    Test-AppiumSetUp
+}
+
+# If already installed or is at latest version, than it will not install/upgrade again.
+function Install-AppiumDesktop {
+    Write-Host "$("*-" * 32)`nInstalling appium desktop!"
+    choco install appium-desktop
+    choco upgrade appium-desktop
+}
+
+# If already installed or is at latest version, than it will not install/upgrade again.
+function Install-AppiumServerAndClient {
     Write-Host "$("*-" * 32)`nInstalling appium server!"
     npm install -g appium
 
     Write-Host "$("*-" * 32)`nInstalling appium client!"
     npm install wd
+}
 
+# If already installed or is at latest version, than it will not install/upgrade again.
+function Install-AppiumDoctor {
     Write-Host "$("*-" * 32)`nInstalling appium doctor!"
     npm install -g appium-doctor
+}
+
+# Verify the installation
+function Test-AppiumSetUp {
+    Write-Host "$("*-" * 32)`nTest appium setup!"
+    appium-doctor
 }
 
 # Tested Okay: [when appium is installed or uninstalled].
 # Tested Okay: Script does not crash if already installed.
 function Uninstall-Appium {
+    Write-Host "$("*-" * 32)`nUninstalling appium-desktop"
+    choco uninstall appium-desktop
+
     Write-Host "$("*-" * 32)`nUninstalling appium-doctor"
     npm uninstall -g appium-doctor
 
@@ -232,31 +248,23 @@ function Uninstall-Appium {
 }
 
 # Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
-function Uninstall-FullAppiumSetupFromWindows {
-    # Show tools version before being removed.
-    Show-Versions
-
-    # Uninstall android studio
+function Uninstall-AppiumDependencies {
     # Last time I tested, this did not work. Had to do this manually. Test again.
+    Write-Host "$("*-" * 32)`nUninstalling androidstudio"
     choco uninstall androidstudio
 
-    # Uninstall appium desktop
-    choco uninstall appium-desktop
+    Write-Host "$("*-" * 32)`nUninstalling nodejs; takes a few mins."
+    Write-Host "`nBe patient when you see this line. Running auto uninstaller..."
+    choco uninstall nodejs.install
 
-    # nodejs (npm) work is done. Can uninstall now.
-    choco uninstall nodejs
-    # You would also need to find and remove all the nodejs.install packages, otherwise, the
-    # next install will not work correctly
-
-    # uninstall openjdk8
+    Write-Host "$("*-" * 32)`nUninstalling openjdk8"
     choco uninstall openjdk8
+
+    Write-Host "$("*-" * 32)`nClose this terminal and open a new terminal and run Show-Versions to see that all dependencies are indeed removed."
 
     # In the end, if for some reasons,you want to uninstall chocolatey as well,
     # follow these instructions. I would recommend not to install chocolatey though.
     # https://docs.chocolatey.org/en-us/choco/uninstallation
-
-    # Show that now all these tools are removed.
-    Show-Versions
 }
 
 function Show-Versions {

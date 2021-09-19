@@ -1,7 +1,8 @@
 # happium 😊
-Goal of this project is to help new Appium users have a reference code repo that they can use in their project to write clean and maintainable test and code.
+Goal of this project is to provide new Appium users with a reference framework that they can use to create production grade,
+cross platform, mobile app tests.
 
-End result should be a clean, production grade framework, the core of which you should be able to port to your actual project and start writing tests from there. 
+End result should be a clean, readable and maintainable framework; the core of which you should be able to port to your actual project as is, and start writing tests from there. 
 
 ## Working principles
 There are two key principles you will see throughout being followed in the project. 
