@@ -137,7 +137,7 @@ function Install-NodeJS {
  }
 
  function Install-AppiumDesktop {
-    # If already installed or is at latest version, than it will not install/upgrade again. 
+    # If already installed or is at latest version, than it will not install/upgrade again.
     choco install appium-desktop
     choco upgrade appium-desktop
  }
@@ -205,7 +205,7 @@ function Install-AndroidVirtualDeviceImage {
     Copy-Item $src $dest
 }
 
-# Tested Okay: [when appium is already installed or not installed]
+# Tested Okay: [when appium is already installed or uninstalled]
 # Tested Okay: Script does not install again if already installed and tries to upgrade.
 function Install-Appium {
     Write-Host "Installing appium server!"
