@@ -1,23 +1,50 @@
 ***********************************************************************************************************************
-Test1: Uninstall Appium client, server and doctor (when appium is already installed)
+Test1: Uninstall appium-client, appium-server, appium-doctor and appium-desktop (when appium is already installed)
 ***********************************************************************************************************************
 
-PS D:\happium> Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
 PS D:\happium> Uninstall-Appium
-****************************************************************
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Uninstalling appium-doctor
-removed 268 packages in 3.098s
-****************************************************************
-Uninstalling appium client
-npm WARN happium No repository field.
-npm WARN happium No license field.
 
-removed 97 packages in 1.226s
+removed 264 packages, and audited 1 package in 2s
+
 found 0 vulnerabilities
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+Uninstalling appium client
 
-****************************************************************
+removed 97 packages, and audited 1 package in 1s
+
+found 0 vulnerabilities
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Uninstalling appium server
-removed 714 packages in 7.304s
+
+removed 714 packages, and audited 1 package in 4s
+
+found 0 vulnerabilities
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+Uninstalling appium-desktop
+Chocolatey v0.11.1
+Uninstalling the following packages:
+appium-desktop
+
+appium-desktop v1.20.2
+The package appium-desktop wants to run 'chocolateyuninstall.ps1'.
+Note: If you don't run this script, the installation will fail.
+Note: To confirm automatically next time, use '-y' or consider:
+choco feature enable -n allowGlobalConfirmation
+Do you want to run the script?([Y]es/[A]ll - yes to all/[N]o/[P]rint): y
+
+Uninstalling appium-desktop...
+0
+appium-desktop has been uninstalled.
+ Running auto uninstaller...
+ Auto uninstaller has successfully uninstalled appium-desktop or detected previous uninstall.
+ appium-desktop has been successfully uninstalled.
+Environment Vars (like PATH) have changed. Close/reopen your shell to
+ see the changes (or in powershell/cmd.exe just type `refreshenv`).
+
+Chocolatey uninstalled 1/1 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
 PS D:\happium>
 
 ***********************************************************************************************************************
@@ -25,18 +52,50 @@ Test2: Try to now uninstall Again (when already uninstalled)
 ***********************************************************************************************************************
 
 PS D:\happium> Uninstall-Appium
-****************************************************************
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Uninstalling appium-doctor
-up to date in 0.033s
-****************************************************************
-Uninstalling appium client
-npm WARN happium No repository field.
-npm WARN happium No license field.
 
-up to date in 0.378s
+up to date, audited 1 package in 498ms
+
 found 0 vulnerabilities
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+Uninstalling appium client
 
-****************************************************************
+up to date, audited 1 package in 494ms
+
+found 0 vulnerabilities
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Uninstalling appium server
-up to date in 0.035s
+
+up to date, audited 1 package in 474ms
+
+found 0 vulnerabilities
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+Uninstalling appium-desktop
+Chocolatey v0.11.1
+Uninstalling the following packages:
+appium-desktop
+appium-desktop is not installed. Cannot uninstall a non-existent package.
+
+Chocolatey uninstalled 0/1 packages. 1 packages failed.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+Failures
+ - appium-desktop - appium-desktop is not installed. Cannot uninstall a non-existent package.
+
+If a package uninstall is failing and/or you've already uninstalled the
+ software outside of Chocolatey, you can attempt to run the command
+ with `-n` to skip running a chocolateyUninstall script, additionally
+ adding `--skip-autouninstaller` to skip an attempt to automatically
+ remove system-installed software. Only the packaging files are removed
+ and not things like software installed to Programs and Features.
+
+If a package is failing because it is a dependency of another package
+ or packages, then you may first need to consider if it needs to be
+ removed as packages have dependencies for a reason. If
+ you decide that you still want to remove it, head into
+ `$env:ChocolateyInstall\lib` and find the package folder you want to
+ be removed. Then delete the folder for the package. You should use
+ this option only as a last resort.
+
 PS D:\happium>

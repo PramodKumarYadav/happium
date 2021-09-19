@@ -2,75 +2,86 @@
 Test1: Install Appium client, server and doctor (when not installed)
 ***********************************************************************************************************************
 
-PS D:\happium> Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
 PS D:\happium> Install-Appium
-****************************************************************
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Installing appium server!
-C:\Users\Pramod Yadav\AppData\Roaming\npm\appium -> C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\build\lib\main.js
 
-> appium-windows-driver@1.18.1 install C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-windows-driver
-> node install-npm.js
+added 714 packages, and audited 715 packages in 19s
 
-info WinAppDriver WinAppDriver version 1.2-RC already exists with correct checksum, not re-downloading
+26 vulnerabilities (9 low, 14 moderate, 3 high)
 
-> core-js@2.6.12 postinstall C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\core-js
-> node -e "try{require('./postinstall')}catch(e){}"
+To address issues that do not require attention, run:
+  npm audit fix
 
-Thank you for using core-js ( https://github.com/zloirock/core-js ) for polyfilling JavaScript standard library!
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
 
-The project needs your help! Please consider supporting of core-js on Open Collective or Patreon:
-> https://opencollective.com/core-js
-> https://www.patreon.com/zloirock
+Some issues need review, and may require choosing
+a different dependency.
 
-Also, the author of core-js ( https://github.com/zloirock ) is looking for a good job -)
-
-
-> appium-chromedriver@4.27.1 postinstall C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-chromedriver
-> node install-npm.js
-
-dbug ChromedriverStorageClient Parsed 481 entries from storage XML
-info ChromedriverStorageClient The total count of entries in the mapping: 342
-dbug ChromedriverStorageClient Selecting chromedrivers whose versions match to 89.0.4389.23
-dbug ChromedriverStorageClient Got 4 items
-dbug ChromedriverStorageClient Selecting chromedrivers whose platform matches to win32
-dbug ChromedriverStorageClient Got 1 item
-dbug ChromedriverStorageClient Got 1 driver to sync: [
-dbug ChromedriverStorageClient   "89.0.4389.23/chromedriver_win32.zip"
-dbug ChromedriverStorageClient ]
-dbug ChromedriverStorageClient Retrieving 'https://chromedriver.storage.googleapis.com/89.0.4389.23/chromedriver_win32.zip' to 'C:\Users\PRAMOD~1\AppData\Local\Temp\2021819-14444-1ey29fm.t40y\0.zip'
-dbug Support Traversed 1 directory and 1 file in 3ms
-dbug ChromedriverStorageClient Moving the extracted 'chromedriver.exe' to 'C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-chromedriver\chromedriver\win\chromedriver_win32_v89.0.4389.23.exe'
-dbug ChromedriverStorageClient Permissions of the file 'C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-chromedriver\chromedriver\win\chromedriver_win32_v89.0.4389.23.exe' have been changed to 755
-info ChromedriverStorageClient Successfully synchronized 1 chromedriver
-+ appium@1.21.0
-added 714 packages from 600 contributors in 23.279s
-****************************************************************
+Run `npm audit` for details.
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Installing appium client!
-npm WARN deprecated request@2.88.0: request has been deprecated, see https://github.com/request/request/issues/3142
 npm WARN deprecated har-validator@5.1.5: this library is no longer supported
 npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm WARN deprecated request@2.88.0: request has been deprecated, see https://github.com/request/request/issues/3142
 
-> wd@1.14.0 install D:\happium\node_modules\wd
-> node scripts/build-browser-scripts
+added 102 packages, and audited 103 packages in 6s
 
-npm WARN happium No repository field.
-npm WARN happium No license field.
-
-+ wd@1.14.0
-added 97 packages from 99 contributors and audited 97 packages in 8.845s
-
-5 packages are looking for funding
+6 packages are looking for funding
   run `npm fund` for details
 
 found 0 vulnerabilities
-
-****************************************************************
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Installing appium doctor!
 npm WARN deprecated authorize-ios@1.2.1: Moved into appium
 npm WARN deprecated debug@4.1.1: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
-C:\Users\Pramod Yadav\AppData\Roaming\npm\appium-doctor -> C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium-doctor\appium-doctor.js
-+ appium-doctor@1.16.0
-added 268 packages from 639 contributors in 19.749s
+
+added 264 packages, and audited 265 packages in 9s
+
+16 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+Installing appium desktop!
+Chocolatey v0.11.1
+Installing the following packages:
+appium-desktop
+By installing, you accept licenses for the packages.
+Progress: Downloading appium-desktop 1.20.2... 100%
+
+appium-desktop v1.20.2 [Approved]
+appium-desktop package files install completed. Performing other installation steps.
+The package appium-desktop wants to run 'chocolateyinstall.ps1'.
+Note: If you don't run this script, the installation will fail.
+Note: To confirm automatically next time, use '-y' or consider:
+choco feature enable -n allowGlobalConfirmation
+Do you want to run the script?([Y]es/[A]ll - yes to all/[N]o/[P]rint): y
+
+Downloading appium-desktop 64 bit
+  from 'https://github.com/appium/appium-desktop/releases/download/v1.20.2/Appium-windows-1.20.2.exe'
+Progress: 100% - Completed download of C:\Users\Pramod Yadav\AppData\Local\Temp\chocolatey\appium-desktop\1.20.2\Appium-windows-1.20.2.exe (246.07 MB).
+Download of Appium-windows-1.20.2.exe (246.07 MB) completed.
+Hashes match.
+Installing appium-desktop...
+appium-desktop has been installed.
+  appium-desktop can be automatically uninstalled.
+Environment Vars (like PATH) have changed. Close/reopen your shell to
+ see the changes (or in powershell/cmd.exe just type `refreshenv`).
+ The install of appium-desktop was successful.
+  Software installed as 'exe', install location is likely default.
+
+Chocolatey installed 1/1 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+Chocolatey v0.11.1
+Upgrading the following packages:
+appium-desktop
+By upgrading, you accept licenses for the packages.
+appium-desktop v1.20.2 is the latest version available based on your source(s).
+
+Chocolatey upgraded 0/1 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
 PS D:\happium>
 
 ***********************************************************************************************************************
@@ -78,32 +89,64 @@ Test2: Try to now install Again (when already installed)
 ***********************************************************************************************************************
 
 PS D:\happium> Install-Appium
-****************************************************************
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Installing appium server!
-C:\Users\Pramod Yadav\AppData\Roaming\npm\appium -> C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\build\lib\main.js
-+ appium@1.21.0
-updated 1 package in 4.549s
-****************************************************************
+
+changed 714 packages, and audited 715 packages in 24s
+
+26 vulnerabilities (9 low, 14 moderate, 3 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues possible (including breaking changes), run:
+  npm audit fix --force
+
+Some issues need review, and may require choosing
+a different dependency.
+
+Run `npm audit` for details.
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Installing appium client!
-npm WARN deprecated request@2.88.0: request has been deprecated, see https://github.com/request/request/issues/3142
-npm WARN deprecated har-validator@5.1.5: this library is no longer supported
-npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
 
-> wd@1.14.0 install D:\happium\node_modules\wd
-> node scripts/build-browser-scripts
+up to date, audited 103 packages in 987ms
 
-npm WARN happium No repository field.
-npm WARN happium No license field.
+6 packages are looking for funding
+  run `npm fund` for details
 
-+ wd@1.14.0
-updated 1 package and audited 97 packages in 2.75s
 found 0 vulnerabilities
-
-****************************************************************
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
 Installing appium doctor!
 npm WARN deprecated authorize-ios@1.2.1: Moved into appium
 npm WARN deprecated debug@4.1.1: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
-C:\Users\Pramod Yadav\AppData\Roaming\npm\appium-doctor -> C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium-doctor\appium-doctor.js
-+ appium-doctor@1.16.0
-updated 1 package in 5.391s
+
+changed 264 packages, and audited 265 packages in 19s
+
+16 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
+Installing appium desktop!
+Chocolatey v0.11.1
+Installing the following packages:
+appium-desktop
+By installing, you accept licenses for the packages.
+appium-desktop v1.20.2 already installed.
+ Use --force to reinstall, specify a version to install, or try upgrade.
+
+Chocolatey installed 0/1 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+Warnings:
+ - appium-desktop - appium-desktop v1.20.2 already installed.
+ Use --force to reinstall, specify a version to install, or try upgrade.
+Chocolatey v0.11.1
+Upgrading the following packages:
+appium-desktop
+By upgrading, you accept licenses for the packages.
+appium-desktop v1.20.2 is the latest version available based on your source(s).
+
+Chocolatey upgraded 0/1 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
 PS D:\happium>

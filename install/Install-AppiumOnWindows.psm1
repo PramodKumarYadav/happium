@@ -199,12 +199,12 @@ function Install-Appium {
     Install-AppiumDesktop
 
     # Show versions after setup
-    Test-AppiumSetUp
+    Test-AppiumDoctor
 }
 
 # If already installed or is at latest version, than it will not install/upgrade again.
 function Install-AppiumDesktop {
-    Write-Host "$("*-" * 32)`nInstalling appium desktop!"
+    Write-Host "$("*-" * 32)`nInstalling appium desktop!. Takes some time to install this. Be patient..."
     choco install appium-desktop
     choco upgrade appium-desktop
 }
@@ -225,7 +225,7 @@ function Install-AppiumDoctor {
 }
 
 # Verify the installation
-function Test-AppiumSetUp {
+function Test-AppiumDoctor {
     Write-Host "$("*-" * 32)`nTest appium setup!"
     appium-doctor
 }
