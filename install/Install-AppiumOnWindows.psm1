@@ -189,15 +189,14 @@ function Install-Appium {
         [Alias('os')]
         [String] $operatingSystem = 'windows'
     )
-
-    # Install appium desktop (if already installed; skips)
-    Install-AppiumDesktop
-
     # Install appium server and client (if already installed; skips)
     Install-AppiumServerAndClient
 
     # Install appium doctor (if already installed; skips)
     Install-AppiumDoctor
+
+    # Install appium desktop (if already installed; skips)
+    Install-AppiumDesktop
 
     # Show versions after setup
     Test-AppiumSetUp
@@ -234,9 +233,6 @@ function Test-AppiumSetUp {
 # Tested Okay: [when appium is installed or uninstalled].
 # Tested Okay: Script does not crash if already installed.
 function Uninstall-Appium {
-    Write-Host "$("*-" * 32)`nUninstalling appium-desktop"
-    choco uninstall appium-desktop
-
     Write-Host "$("*-" * 32)`nUninstalling appium-doctor"
     npm uninstall -g appium-doctor
 
@@ -245,6 +241,9 @@ function Uninstall-Appium {
 
     Write-Host "$("*-" * 32)`nUninstalling appium server"
     npm uninstall -g appium
+
+    Write-Host "$("*-" * 32)`nUninstalling appium-desktop"
+    choco uninstall appium-desktop
 }
 
 # Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
