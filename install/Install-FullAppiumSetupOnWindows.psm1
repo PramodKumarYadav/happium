@@ -136,37 +136,10 @@ function Install-NodeJS {
     choco upgrade nodejs
  }
 
-# Tested okay [when appium is installed or uninstalled].
-function Install-AppiumServerAndClient {
-    # Check if appium server is already installed. If not, install. Else skip. 
-    $appiumVersion = appium --version | Select-String '.'
-    If ($appiumVersion) {
-        Write-Host "appium is already installed. Version: $appiumVersion"
-    }else {
-        Write-Host "appium is not installed. Installing now!"
-        npm install -g appium
-    }
-
-    # Install appium client (webdriverio) - always- until I find a way to check version and skip if already installed.
-    npm install wd
- }
-
  function Install-AppiumDesktop {
     # If already installed or is at latest version, than it will not install/upgrade again. 
     choco install appium-desktop
     choco upgrade appium-desktop
- }
-
- # Tested okay [when appium-doctor is installed or uninstalled].
-function Install-AppiumDoctor {
-    # Check if appium doctor is already installed. If not, install. Else skip. 
-    $appiumDoctorVersion = appium-doctor --version | Select-String '.'
-    If ($appiumDoctorVersion) {
-        Write-Host "appium doctor is already installed. Version: $appiumDoctorVersion"
-    }else {
-        Write-Host "appium doctor is not installed. Installing now!"
-        npm install -g appium-doctor
-    }
  }
 
  # Tested okay [when androidstudio is installed or uninstalled].
@@ -232,40 +205,58 @@ function Install-AndroidVirtualDeviceImage {
     Copy-Item $src $dest
 }
 
-# Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
- function Uninstall-FullAppiumSetupFromWindows {
-     # Show tools version before being removed.
-     Show-Versions
+# Tested Okay: [when appium is already installed or not installed]
+# Tested Okay: Script does not install again if already installed and tries to upgrade.
+function Install-Appium {
+    Write-Host "Installing appium server!"
+    npm install -g appium
 
-     # Uninstall android studio
-     # Last time I tested, this did not work. Had to do this manually. Test again.
-     choco uninstall androidstudio
+    Write-Host "`nInstalling appium client!"
+    npm install wd
 
-     # remove appium-doctor
-     # This sometimes freezes the screen (but removes it nonetheless)
-     npm uninstall -g appium-doctor
+    Write-Host "Installing appium doctor!"
+    npm install -g appium-doctor
+}
 
-     # Uninstall appium desktop
-     choco uninstall appium-desktop
+# Tested Okay: [when appium is installed or uninstalled].
+# Tested Okay: Script does not crash if already installed.
+function Uninstall-Appium {
+    Write-Host "Uninstalling appium-doctor"
+    npm uninstall -g appium-doctor
 
-    # Uninstall appium server and client
+    Write-Host "`nUninstalling appium client"
     npm uninstall wd
+
+    Write-Host "`nUninstalling appium server"
     npm uninstall -g appium
+}
+
+# Uninstall in the reverse order of installation (so first installed item is the last to be uninstalled)
+function Uninstall-FullAppiumSetupFromWindows {
+    # Show tools version before being removed.
+    Show-Versions
+
+    # Uninstall android studio
+    # Last time I tested, this did not work. Had to do this manually. Test again.
+    choco uninstall androidstudio
+
+    # Uninstall appium desktop
+    choco uninstall appium-desktop
 
     # nodejs (npm) work is done. Can uninstall now.
     choco uninstall nodejs
-     # You would also need to find and remove all the nodejs.install packages, otherwise, the
-     # next install will not work correctly
+    # You would also need to find and remove all the nodejs.install packages, otherwise, the
+    # next install will not work correctly
 
     # uninstall openjdk8
     choco uninstall openjdk8
 
-    # In the end, if for some reasons,you want to uninstall chocolatey as well, 
+    # In the end, if for some reasons,you want to uninstall chocolatey as well,
     # follow these instructions. I would recommend not to install chocolatey though.
     # https://docs.chocolatey.org/en-us/choco/uninstallation
 
-     # Show that now all these tools are removed.
-     Show-Versions
+    # Show that now all these tools are removed.
+    Show-Versions
 }
 
 function Show-Versions {
