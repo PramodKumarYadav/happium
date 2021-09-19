@@ -6,7 +6,7 @@
 -------------------------------------------------
 cd D:\happium
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
-Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
+Import-Module .\install\Install-AppiumOnWindows.psm1 -Force
 Install-FullAppiumSetupOnWindows
 -------------------------------------------------
 After this script finishes, close this terminal and open another powershell terminal as administrator.

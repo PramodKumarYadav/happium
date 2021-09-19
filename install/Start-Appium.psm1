@@ -6,7 +6,7 @@
 -------------------------------------------------
 cd D:\happium
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
-Import-Module .\install\Start-AppiumServer.psm1 -Force
+Import-Module .\install\Start-Appium.psm1 -Force
 Start-AppiumServerAndEmulator
 -------------------------------------------------
 # To see help or examples for any given function below, run:
