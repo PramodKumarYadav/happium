@@ -84,3 +84,6 @@ nb-configuration.xml
 ## OS X
 ##############################
 .DS_Store
+
+# Ignore node modules
+node_modules
