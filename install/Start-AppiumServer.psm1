@@ -1,73 +1,93 @@
-# To use this script, open a powershell terminal with elevated access (as administrator).
-# ---------------------------------------------------------------------
-# cd to this project. Say (cd D:\happium\)
-# Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
-# Import-Module .\install\Start-AppiumServer.psm1 -Force
-# [To run in the same terminal]
-    # Start-AppiumServer
-# [To run as a background Job]
-    # Start-AppiumServer -asBackgroundJob
-# ---------------------------------------------------------------------
+#Requires -Version 5
+#Requires -RunAsAdministrator
 
-# To run server as background. Run below command. By default, it runs the server in the current terminal.
-function Start-AppiumServer {
-    [CmdletBinding()]
-    param(
-        [Parameter(Mandatory=$false)]
-        [Switch]$asBackgroundJob
-    )
+<# To use this script, open a powershell terminal with elevated access (as administrator).
+# cd to this project. Say;
+-------------------------------------------------
+cd D:\happium
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+Import-Module .\install\Start-AppiumServer.psm1 -Force
+Start-AppiumServerAndEmulator
+-------------------------------------------------
+# To see help or examples for any given function below, run:
+Get-Help Start-AppiumServerAndEmulator  (to see the synopsis and description, for this chosen function)
+Run Get-Help Start-AppiumServerAndEmulator -Examples (to see the examples usage, for this chosen function)
+---------------------------------------------------------------------
+#>
 
-    # Remove any previously open appium background instances that may prevent from starting a new instance
-    Stop-AppiumServer
+# Run this function to start both appium server and an emulator
+function Start-AppiumServerAndEmulator {
+    <#
+    .Synopsis
+    To start both appium server and a default emulator (or a specific emulator)
 
-    # start appium
-    If ($asBackgroundJob.IsPresent) {
-        Write-Host "starting appium server as a background job. Do `Stop-Job -Name Job1` to stop the background job."
-        $appiumJob = Start-Job -ScriptBlock {appium}
+    .Description
+    -> Running this function will launch a terminal window for appium server. If appium is already open, will not open another instance.
+    -> emualtor will be launched in the current open terminal window.
+    Note:
+    -> The avd image should already be downloaded and available in this location: C:\Users\your-user-name\.android\avd
+    -> Once you are done, you can close the terminals using ctrl+c combination.
 
-        # Verify if appium is running or not (since in background mode, you dont see it running)
-        $appiumJob
-        Test-AppiumServer
-    }else {
-        Write-Host "starting appium server in the current terminal. Do ctrl +c to close the server."
-        appium
-    }
- }
+    .Example
+    Start-AppiumServerAndEmulator [to run using default emulator value "Pixel_5_API_31"]
+    Start-AppiumServerAndEmulator -avdName Pixel_XL_API_31  [to run using a specific emulator value "Pixel_XL_API_31"]
+    #>
 
- function Stop-AppiumServer {
-    # Get all running jobs
-    Get-Job
-
-    # Stop all running background jobs (dont worry, there are no background jobs except the one we created)
-    Get-Job | Stop-Job
-
-    # Remove all running background jobs
-    Get-Job | Remove-Job
-
-    # Verify that the server is stopped and all background jobs are removed.
-    Get-Job
- }
-
- function Test-AppiumServer {
-    # Verify if appium is running or not
-    curl http://127.0.0.1:4723/wd/hub/status
- }
-
-# example usage(s):
-# Start-DeviceEmulator -avdName Pixel_XL_API_31
-# or: Start-DeviceEmulator   [using default emulator value "Pixel_5_API_31"]
-function Start-DeviceEmulator {
     [CmdletBinding()]
     param(
         [String]$avdName = "Pixel_5_API_31"
     )
 
-    # Start emulator with provided avd name (android virtual device name).
-    # Note: The avd image should already be downloaded in this location: C:\Users\your-user-name\.android\avd
+    Start-AppiumServer
+    Start-Emulator -avdName Pixel_XL_API_31
+}
+
+function Start-AppiumServer {
+    <#
+    .Synopsis
+    To start appium server
+
+    .Description
+    -> Will launch appium in another powershell window.
+    -> If appium is already open, will not open another instance.
+    Note:
+    -> Once you are done, you can close the terminal's using ctrl+c combination.
+
+    .Example
+    Start-AppiumServer
+    #>
+
+    start powershell appium
+}
+
+# Start emulator with provided avd name (android virtual device name).
+function Start-Emulator {
+    <#
+    .Synopsis
+    To start emulator with provided avd name (android virtual device name).
+
+    .Description
+    Note: The avd image should already be downloaded in this location: C:\Users\your-user-name\.android\avd
+
+    .Example
+    Start-Emulator  [to run using default emulator value "Pixel_5_API_31"]
+    Start-Emulator -avdName Pixel_XL_API_31  [to run using a specific emulator value "Pixel_XL_API_31"]
+    #>
+
+    [CmdletBinding()]
+    param(
+        [String]$avdName = "Pixel_5_API_31"
+    )
+
     emulator -avd $avdName
 }
 
+# Verify if appium is running or not
+function Test-AppiumServer {
+    curl http://127.0.0.1:4723/wd/hub/status
+}
+
+# To show list of devices attached (i.e. all running emulators)
 function Show-AttachedEmulatorDevices {
-    # List of devices attached (i.e. all running emulators)
     adb devices
 }
