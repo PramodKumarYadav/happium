@@ -208,26 +208,26 @@ function Install-AndroidVirtualDeviceImage {
 # Tested Okay: [when appium is already installed or uninstalled]
 # Tested Okay: Script does not install again if already installed and tries to upgrade.
 function Install-Appium {
-    Write-Host "Installing appium server!"
+    Write-Host "$("*" * 64)`nInstalling appium server!"
     npm install -g appium
 
-    Write-Host "`nInstalling appium client!"
+    Write-Host "$("*" * 64)`nInstalling appium client!"
     npm install wd
 
-    Write-Host "Installing appium doctor!"
+    Write-Host "$("*" * 64)`nInstalling appium doctor!"
     npm install -g appium-doctor
 }
 
 # Tested Okay: [when appium is installed or uninstalled].
 # Tested Okay: Script does not crash if already installed.
 function Uninstall-Appium {
-    Write-Host "Uninstalling appium-doctor"
+    Write-Host "$("*" * 64)`nUninstalling appium-doctor"
     npm uninstall -g appium-doctor
 
-    Write-Host "`nUninstalling appium client"
+    Write-Host "$("*" * 64)`nUninstalling appium client"
     npm uninstall wd
 
-    Write-Host "`nUninstalling appium server"
+    Write-Host "$("*" * 64)`nUninstalling appium server"
     npm uninstall -g appium
 }
 
