@@ -143,7 +143,7 @@ function Install-AppiumServerAndClient {
     If ($appiumVersion) {
         Write-Host "appium is already installed. Version: $appiumVersion"
     }else {
-        # Install appium server 
+        Write-Host "appium is not installed. Installing now!"
         npm install -g appium
     }
 
@@ -164,7 +164,7 @@ function Install-AppiumDoctor {
     If ($appiumDoctorVersion) {
         Write-Host "appium doctor is already installed. Version: $appiumDoctorVersion"
     }else {
-        # Install appium-doctor
+        Write-Host "appium doctor is not installed. Installing now!"
         npm install -g appium-doctor
     }
  }
