@@ -1,0 +1,109 @@
+***********************************************************************************************************************
+Test1: Install Appium client, server and doctor (when not installed)
+***********************************************************************************************************************
+
+PS D:\happium> Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
+PS D:\happium> Install-Appium
+****************************************************************
+Installing appium server!
+C:\Users\Pramod Yadav\AppData\Roaming\npm\appium -> C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\build\lib\main.js
+
+> appium-windows-driver@1.18.1 install C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-windows-driver
+> node install-npm.js
+
+info WinAppDriver WinAppDriver version 1.2-RC already exists with correct checksum, not re-downloading
+
+> core-js@2.6.12 postinstall C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+Thank you for using core-js ( https://github.com/zloirock/core-js ) for polyfilling JavaScript standard library!
+
+The project needs your help! Please consider supporting of core-js on Open Collective or Patreon:
+> https://opencollective.com/core-js
+> https://www.patreon.com/zloirock
+
+Also, the author of core-js ( https://github.com/zloirock ) is looking for a good job -)
+
+
+> appium-chromedriver@4.27.1 postinstall C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-chromedriver
+> node install-npm.js
+
+dbug ChromedriverStorageClient Parsed 481 entries from storage XML
+info ChromedriverStorageClient The total count of entries in the mapping: 342
+dbug ChromedriverStorageClient Selecting chromedrivers whose versions match to 89.0.4389.23
+dbug ChromedriverStorageClient Got 4 items
+dbug ChromedriverStorageClient Selecting chromedrivers whose platform matches to win32
+dbug ChromedriverStorageClient Got 1 item
+dbug ChromedriverStorageClient Got 1 driver to sync: [
+dbug ChromedriverStorageClient   "89.0.4389.23/chromedriver_win32.zip"
+dbug ChromedriverStorageClient ]
+dbug ChromedriverStorageClient Retrieving 'https://chromedriver.storage.googleapis.com/89.0.4389.23/chromedriver_win32.zip' to 'C:\Users\PRAMOD~1\AppData\Local\Temp\2021819-14444-1ey29fm.t40y\0.zip'
+dbug Support Traversed 1 directory and 1 file in 3ms
+dbug ChromedriverStorageClient Moving the extracted 'chromedriver.exe' to 'C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-chromedriver\chromedriver\win\chromedriver_win32_v89.0.4389.23.exe'
+dbug ChromedriverStorageClient Permissions of the file 'C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-chromedriver\chromedriver\win\chromedriver_win32_v89.0.4389.23.exe' have been changed to 755
+info ChromedriverStorageClient Successfully synchronized 1 chromedriver
++ appium@1.21.0
+added 714 packages from 600 contributors in 23.279s
+****************************************************************
+Installing appium client!
+npm WARN deprecated request@2.88.0: request has been deprecated, see https://github.com/request/request/issues/3142
+npm WARN deprecated har-validator@5.1.5: this library is no longer supported
+npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+
+> wd@1.14.0 install D:\happium\node_modules\wd
+> node scripts/build-browser-scripts
+
+npm WARN happium No repository field.
+npm WARN happium No license field.
+
++ wd@1.14.0
+added 97 packages from 99 contributors and audited 97 packages in 8.845s
+
+5 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+****************************************************************
+Installing appium doctor!
+npm WARN deprecated authorize-ios@1.2.1: Moved into appium
+npm WARN deprecated debug@4.1.1: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+C:\Users\Pramod Yadav\AppData\Roaming\npm\appium-doctor -> C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium-doctor\appium-doctor.js
++ appium-doctor@1.16.0
+added 268 packages from 639 contributors in 19.749s
+PS D:\happium>
+
+***********************************************************************************************************************
+Test2: Try to now install Again (when already installed)
+***********************************************************************************************************************
+
+PS D:\happium> Install-Appium
+****************************************************************
+Installing appium server!
+C:\Users\Pramod Yadav\AppData\Roaming\npm\appium -> C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\build\lib\main.js
++ appium@1.21.0
+updated 1 package in 4.549s
+****************************************************************
+Installing appium client!
+npm WARN deprecated request@2.88.0: request has been deprecated, see https://github.com/request/request/issues/3142
+npm WARN deprecated har-validator@5.1.5: this library is no longer supported
+npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+
+> wd@1.14.0 install D:\happium\node_modules\wd
+> node scripts/build-browser-scripts
+
+npm WARN happium No repository field.
+npm WARN happium No license field.
+
++ wd@1.14.0
+updated 1 package and audited 97 packages in 2.75s
+found 0 vulnerabilities
+
+****************************************************************
+Installing appium doctor!
+npm WARN deprecated authorize-ios@1.2.1: Moved into appium
+npm WARN deprecated debug@4.1.1: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+C:\Users\Pramod Yadav\AppData\Roaming\npm\appium-doctor -> C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium-doctor\appium-doctor.js
++ appium-doctor@1.16.0
+updated 1 package in 5.391s
+PS D:\happium>

@@ -1,0 +1,42 @@
+***********************************************************************************************************************
+Test1: Uninstall Appium client, server and doctor (when appium is already installed)
+***********************************************************************************************************************
+
+PS D:\happium> Import-Module .\install\Install-FullAppiumSetupOnWindows.psm1 -Force
+PS D:\happium> Uninstall-Appium
+****************************************************************
+Uninstalling appium-doctor
+removed 268 packages in 3.098s
+****************************************************************
+Uninstalling appium client
+npm WARN happium No repository field.
+npm WARN happium No license field.
+
+removed 97 packages in 1.226s
+found 0 vulnerabilities
+
+****************************************************************
+Uninstalling appium server
+removed 714 packages in 7.304s
+PS D:\happium>
+
+***********************************************************************************************************************
+Test2: Try to now uninstall Again (when already uninstalled)
+***********************************************************************************************************************
+
+PS D:\happium> Uninstall-Appium
+****************************************************************
+Uninstalling appium-doctor
+up to date in 0.033s
+****************************************************************
+Uninstalling appium client
+npm WARN happium No repository field.
+npm WARN happium No license field.
+
+up to date in 0.378s
+found 0 vulnerabilities
+
+****************************************************************
+Uninstalling appium server
+up to date in 0.035s
+PS D:\happium>
