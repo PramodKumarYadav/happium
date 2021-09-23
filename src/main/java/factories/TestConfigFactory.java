@@ -26,7 +26,6 @@ public class TestConfigFactory {
 
         // Merge properties from common properties (application.conf) and host specific properties (from host file)
         Config mergedConfig = hostConfig.withFallback(appConfig);
-        log.info(mergedConfig.getString("hostURI"));
         return mergedConfig;
     }
 }
