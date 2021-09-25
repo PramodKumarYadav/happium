@@ -53,13 +53,13 @@ public class CapabilitiesFactory {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         CapabilitiesFactory capabilitiesFactory = getCapabilities(deviceName);
-        capabilities.setCapability(automationName, capabilitiesFactory.automationName);
-        capabilities.setCapability(platformName, capabilitiesFactory.platformVersion);
-        capabilities.setCapability(platformVersion, capabilitiesFactory.platformVersion);
-        capabilities.setCapability(deviceName, capabilitiesFactory.deviceName);
-        capabilities.setCapability(app, capabilitiesFactory.app);
-        capabilities.setCapability(appPackage, capabilitiesFactory.appPackage);
-        capabilities.setCapability(appActivity, capabilitiesFactory.appActivity);
+        capabilities.setCapability("automationName", capabilitiesFactory.automationName);
+        capabilities.setCapability("platformName", capabilitiesFactory.platformName);
+        capabilities.setCapability("platformVersion", capabilitiesFactory.platformVersion);
+        capabilities.setCapability("deviceName", capabilitiesFactory.deviceName);
+        capabilities.setCapability("app", capabilitiesFactory.app);
+        capabilities.setCapability("appPackage", capabilitiesFactory.appPackage);
+        capabilities.setCapability("appActivity", capabilitiesFactory.appActivity);
 
         return capabilities;
     }
