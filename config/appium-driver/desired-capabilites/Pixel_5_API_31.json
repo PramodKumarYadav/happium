@@ -1,9 +1,8 @@
 {
   "automationName": "UiAutomator2",
   "platformName": "Android",
-  "platformVersion": "31",
   "deviceName": "Pixel_5_API_31",
-  "app": "/app/ContactManager.apk",
+  "app": "./app/ContactManager.apk",
   "appPackage": "com.jayway.contacts",
   "appActivity": "com.jayway.contacts.MainActivity"
 }
