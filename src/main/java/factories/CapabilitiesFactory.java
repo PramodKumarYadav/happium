@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.io.File;
 import java.io.IOException;
 
-import static factories.TestConfigFactory.getConfig;
+import static factories.EnvConfigFactory.getConfig;
 
 // This is what I need.
 // https://www.baeldung.com/jackson-object-mapper-tutorial
