@@ -22,6 +22,7 @@
         <typesafe.version>1.4.1</typesafe.version>
         <slf4j.version>1.7.30</slf4j.version>
         <junit.version>5.6.2</junit.version>
+        <appium.java.client>7.5.1</appium.java.client>
         <json.version>20210307</json.version>
     </properties>
     <dependencyManagement>
@@ -48,6 +49,12 @@
             <artifactId>junit-jupiter</artifactId>
             <version>${junit.version}</version>
             <!--            <scope>test</scope>-->
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.appium/java-client -->
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${appium.java.client}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
