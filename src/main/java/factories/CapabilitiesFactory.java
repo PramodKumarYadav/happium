@@ -31,8 +31,22 @@ public class CapabilitiesFactory {
     private String appPackage;
     private String appActivity;
 
-    // todo: make this a private method when you see its working okay.
-    public CapabilitiesFactory getCapabilities(String deviceName){
+    public DesiredCapabilities getDesiredCapabilities(String deviceName){
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+
+        CapabilitiesFactory capabilitiesFactory = getCapabilities(deviceName);
+        capabilities.setCapability("automationName", capabilitiesFactory.automationName);
+        capabilities.setCapability("platformName", capabilitiesFactory.platformName);
+        capabilities.setCapability("platformVersion", capabilitiesFactory.platformVersion);
+        capabilities.setCapability("deviceName", capabilitiesFactory.deviceName);
+        capabilities.setCapability("app", capabilitiesFactory.app);
+        capabilities.setCapability("appPackage", capabilitiesFactory.appPackage);
+        capabilities.setCapability("appActivity", capabilitiesFactory.appActivity);
+
+        return capabilities;
+    }
+    
+    private CapabilitiesFactory getCapabilities(String deviceName){
         Config config = getConfig();
         String pathDesiredCapabilities = config.getString("pathDesiredCapabilities");
 
@@ -47,20 +61,5 @@ public class CapabilitiesFactory {
         }
 
         return capabilitiesFactory;
-    }
-
-    public DesiredCapabilities getDesiredCapabilities(String deviceName){
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-
-        CapabilitiesFactory capabilitiesFactory = getCapabilities(deviceName);
-        capabilities.setCapability("automationName", capabilitiesFactory.automationName);
-        capabilities.setCapability("platformName", capabilitiesFactory.platformName);
-        capabilities.setCapability("platformVersion", capabilitiesFactory.platformVersion);
-        capabilities.setCapability("deviceName", capabilitiesFactory.deviceName);
-        capabilities.setCapability("app", capabilitiesFactory.app);
-        capabilities.setCapability("appPackage", capabilitiesFactory.appPackage);
-        capabilities.setCapability("appActivity", capabilitiesFactory.appActivity);
-
-        return capabilities;
     }
 }
