@@ -2,6 +2,7 @@ import com.typesafe.config.Config;
 import factories.CapabilitiesFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import static factories.EnvConfigFactory.getConfig;
 
@@ -17,8 +18,7 @@ public class TestSandbox {
         log.info(hostURI);
         log.info(serverPath);
 
-        CapabilitiesFactory capabilitiesFactory = new CapabilitiesFactory().getCapabilities(deviceName);
-        log.info(capabilitiesFactory.getAutomationName());
-        log.info(capabilitiesFactory.getDeviceName());
+        DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities(deviceName);
+        log.info(String.valueOf(capabilities));
     }
 }
