@@ -17,7 +17,7 @@ public class TestSandbox {
         log.info(hostURI);
         log.info(serverPath);
 
-        CapabilitiesFactory capabilitiesFactory = CapabilitiesFactory.getCapabilities(deviceName);
+        CapabilitiesFactory capabilitiesFactory = new CapabilitiesFactory().getCapabilities(deviceName);
         log.info(capabilitiesFactory.getAutomationName());
         log.info(capabilitiesFactory.getDeviceName());
     }
