@@ -21,6 +21,21 @@ public class SearchScreenIOS implements SearchScreen{
     @FindBy(xpath = "//XCUIElementTypeOther[@name=\"Search results\"]/XCUIElementTypeCell/XCUIElementTypeStaticText")
     private MobileElement firstSearchResultName;
 
+    @FindBy(id = "detail_name")
+    private MobileElement detailName;
+
+    @FindBy(id = "phonenumber")
+    private MobileElement phoneNumber;
+
+    @FindBy(id = "email")
+    private MobileElement email;
+
+    @FindBy(id = "street1")
+    private MobileElement street1;
+
+    @FindBy(id = "street2")
+    private MobileElement street2;
+
     public void setSearch(String name) {
         searchField.sendKeys(name);
     }
@@ -29,7 +44,27 @@ public class SearchScreenIOS implements SearchScreen{
         return firstSearchResultName.getText();
     }
 
-    public void navigateToFirstSearchResult() {
+    public void tapFirstSearchResult() {
         firstSearchResultName.click();
+    }
+
+    public String getDetailName() {
+        return detailName.getText();
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber.getText();
+    }
+
+    public String getEmail() {
+        return email.getText();
+    }
+
+    public String getStreet1() {
+        return street1.getText();
+    }
+
+    public String getStreet2() {
+        return street2.getText();
     }
 }
