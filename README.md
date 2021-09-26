@@ -37,3 +37,13 @@ For example to only install appium-doctor, run on terminal.
 
 ## Reference
 -[Sample apps to use for testing](https://github.com/appium/sample-apps)
+
+## Troubleshooting tips
+- 1) If you want to run tests, keep appium-desktop closed. It seems, when I run appium server and driver from appium-desktop,
+the tests from intellij don't run. 
+- 2) Also it seems, Appium-desktop is only able to open the images created by android-studio (say Pixel_XL_API_31.avd). 
+     If you have created an image by avd (say Pixel_5_API_31.avd), it seems appium-desktop keep throwing different kind of errors and cannot create a session. 
+- 3) Same is the case, if you want to launch emulator from tests. 
+      - One, you must use an image created by android studio (say Pixel_XL_API_31.avd). Giving another image (say Pixel_5_API_31.avd) will fail. 
+      - Two, You must give the absolute path of the app. Note that when the emulator is started manually via the android studio, then you can even even give relative path and tests works. 
+        But if you want to launch emulator and app from the tests, then you have to take care of both above points (Absolute path and a app created via android studio)
