@@ -160,7 +160,7 @@ function Install-AndroidVirtualDeviceImage {
     # Above process of creating device does not provice all hardware profile info (in config.ini file) to the virtual device being created.
     # So we copy a config.ini template that we got by creating a device directly from android studio. 
     # This help launch a proper emulator device.
-    $src = "./config/android-virtual-device-image/config.ini"
+    $src = "./config/android-virtual-devices/hardware-profiles/config.ini"
     $dest = "$HOME\.android\avd\$avdName.avd"
     Copy-Item $src $dest
 }
