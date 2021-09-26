@@ -1,0 +1,12 @@
+{
+  "automationName": "UiAutomator2",
+  "platformName": "Android",
+  "platformVersion": "12.0",
+  "deviceName": "Pixel_XL_API_31",
+  "app": "D:/happium/app/ContactManager.apk",
+  "appPackage": "com.jayway.contacts",
+  "appActivity": "com.jayway.contacts.MainActivity",
+  "avd": "Pixel_XL_API_31",
+  "avdLaunchTimeout": 180000,
+  "avdReadyTimeout": 180000
+}

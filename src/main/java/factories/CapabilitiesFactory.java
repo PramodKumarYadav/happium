@@ -30,6 +30,9 @@ public class CapabilitiesFactory {
     private String app;
     private String appPackage;
     private String appActivity;
+    private String avd;
+    private Integer avdLaunchTimeout;
+    private Integer avdReadyTimeout;
 
     public DesiredCapabilities getDesiredCapabilities(String deviceName){
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -42,6 +45,9 @@ public class CapabilitiesFactory {
         capabilities.setCapability("app", capabilitiesFactory.app);
         capabilities.setCapability("appPackage", capabilitiesFactory.appPackage);
         capabilities.setCapability("appActivity", capabilitiesFactory.appActivity);
+        capabilities.setCapability("avd", capabilitiesFactory.avd);
+        capabilities.setCapability("avdLaunchTimeout", capabilitiesFactory.avdLaunchTimeout);
+        capabilities.setCapability("avdReadyTimeout", capabilitiesFactory.avdReadyTimeout);
 
         return capabilities;
     }
