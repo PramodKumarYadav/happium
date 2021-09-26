@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import static factories.EnvConfigFactory.getConfig;
 
@@ -42,6 +43,8 @@ public class DriverFactory {
                 log.error("Check the value of 'platformName' property set in application.conf. Or in CI, if run from continuous integration.");
                 break;
         }
+        log.info("SessionId: {}", driver.getSessionId());
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         return driver;
     }
 
