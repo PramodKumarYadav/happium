@@ -1,4 +1,4 @@
-package screens.search;
+package org.saucedemo.screens.search;
 
 public interface SearchScreen {
     void setSearch(String contactName);

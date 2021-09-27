@@ -1,10 +1,10 @@
-package screens.search;
+package org.saucedemo.screens.search;
 
 import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 
-import static factories.EnvConfigFactory.getConfig;
+import static org.saucedemo.factories.EnvConfigFactory.getConfig;
 
 @Slf4j
 public class SearchScreenFactory {

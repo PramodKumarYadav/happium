@@ -1,4 +1,4 @@
-package screens.search;
+package org.saucedemo.screens.search;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
