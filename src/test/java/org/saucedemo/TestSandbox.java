@@ -1,10 +1,10 @@
 import com.typesafe.config.Config;
-import factories.CapabilitiesFactory;
+import org.saucedemo.factories.CapabilitiesFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import static factories.EnvConfigFactory.getConfig;
+import static org.saucedemo.factories.EnvConfigFactory.getConfig;
 
 @Slf4j
 public class TestSandbox {

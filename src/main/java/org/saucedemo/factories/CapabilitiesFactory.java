@@ -30,6 +30,7 @@ public class CapabilitiesFactory {
     private String app;
     private String appPackage;
     private String appActivity;
+    private String appWaitActivity;
     private String avd;
     private Integer avdLaunchTimeout;
     private Integer avdReadyTimeout;
@@ -43,8 +44,9 @@ public class CapabilitiesFactory {
         capabilities.setCapability("platformVersion", capabilitiesFactory.platformVersion);
         capabilities.setCapability("deviceName", capabilitiesFactory.deviceName);
         capabilities.setCapability("app", capabilitiesFactory.app);
-        capabilities.setCapability("appPackage", capabilitiesFactory.appPackage);
-        capabilities.setCapability("appActivity", capabilitiesFactory.appActivity);
+        capabilities.setCapability("appWaitPackage", capabilitiesFactory.appPackage);
+//        capabilities.setCapability("appActivity", capabilitiesFactory.appActivity);
+        capabilities.setCapability("appWaitActivity", capabilitiesFactory.appWaitActivity);
         capabilities.setCapability("avd", capabilitiesFactory.avd);
         capabilities.setCapability("avdLaunchTimeout", capabilitiesFactory.avdLaunchTimeout);
         capabilities.setCapability("avdReadyTimeout", capabilitiesFactory.avdReadyTimeout);
