@@ -1,0 +1,8 @@
+{
+  "platformName": "Android",
+  "platformVersion": "12.0",
+  "deviceName": "emulator",
+  "automationName": "Appium",
+  "app": "D:/happium/apps/Android.SauceLabs.Mobile.Sample.app.2.7.1.apk",
+  "appWaitActivity": "com.swaglabsmobileapp.MainActivity"
+}
