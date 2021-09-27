@@ -1,4 +1,4 @@
-package factories;
+package org.saucedemo.factories;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;

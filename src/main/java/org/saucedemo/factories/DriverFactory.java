@@ -1,4 +1,4 @@
-package factories;
+package org.saucedemo.factories;
 
 import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
@@ -6,16 +6,15 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.saucedemo.factories.capabilities.CapabilitiesFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import static factories.EnvConfigFactory.getConfig;
-
 @Slf4j
 public class DriverFactory {
-    private static Config config = getConfig();
+    private static Config config = EnvConfigFactory.getConfig();
     private static String platformName = config.getString("platformName");
     private static String hostURI = config.getString("hostURI");
     private static URL hostURL = getHostURL(hostURI);
