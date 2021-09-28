@@ -8,6 +8,7 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Slf4j
@@ -25,7 +26,8 @@ public class ProductsScreen {
     @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]/android.widget.TextView")
     private MobileElement products;
 
-    public String getProductsText() {
-        return products.getText();
+    public Boolean isProductHeadingDisplayed() {
+        wait.until(ExpectedConditions.visibilityOf(products));
+        return products.isDisplayed();
     }
 }

@@ -11,7 +11,7 @@ import org.saucedemo.factories.EnvConfigFactory;
 import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 class TestLogin {
@@ -39,6 +39,7 @@ class TestLogin {
         loginScreen.setUserName("standard_user");
         loginScreen.setPassword("secret_sauce");
         loginScreen.tapLogin();
-        assertEquals("afdaf", productsScreen.getProductsText());
+
+        assertTrue(productsScreen.isProductHeadingDisplayed());
     }
 }
