@@ -1,28 +1,32 @@
 package org.saucedemo.login;
 
+import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.saucedemo.factories.DriverFactory;
+import org.saucedemo.factories.EnvConfigFactory;
 import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.saucedemo.factories.DriverFactory.getDriver;
 
 @Slf4j
 class TestLogin {
-    String deviceName = "Pixel_XL_API_31";
-    AppiumDriver driver = getDriver(deviceName);
-//    AppiumDriver driver = DriverFactory.getDriver(deviceName);
+    AppiumDriver driver = DriverFactory.getDriver();
+
     LoginScreen loginScreen = new LoginScreen(driver);
     ProductsScreen productsScreen = new ProductsScreen(driver);
 
     @BeforeEach
     public void setUp() {
-        log.info("Running tests on device: {}", deviceName);
+        Config config = EnvConfigFactory.getConfig();
+        log.info("Running tests on platform: {}", config.getString("platformName").toLowerCase());
+        log.info("Running tests on platform: {}", config.getString("deviceType").toLowerCase());
+//        log.info("Running tests on platform: {}", config.getString("deviceName").toLowerCase());
+        log.info("Running tests on platform: {}", config.getString("host").toLowerCase());
     }
 
     @AfterEach
@@ -31,7 +35,7 @@ class TestLogin {
     }
 
     @Test
-    void searchContact() throws InterruptedException {
+    void searchContact() {
         loginScreen.setUserName("standard_user");
         loginScreen.setPassword("secret_sauce");
         loginScreen.tapLogin();
