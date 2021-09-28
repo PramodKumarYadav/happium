@@ -73,10 +73,13 @@ public class CapabilitiesFactory {
                 switch (host) {
                     case "local":
                         // Get local app location stored in the project here (via absolute path)
-                        String pathAndroidApp = config.getString("pathAndroidApp").toLowerCase();
+                        String pathAndroidApp = config.getString("pathAndroidApp");
                         capabilities.setCapability("app", getCanonicalPath(pathAndroidApp));
                     case "browser-stack":
                         // Get app location on remote server here (via http)
+                        // Note this property should be parsed from a config file and should not be set here (as done below).
+                        // Since there can be multiple devices that are available to run on host and not just One.
+                        // capabilities.setCapability("app", "bs://" + ANDROID_HASHED_APP_ID);
                 }
 
                 break;
