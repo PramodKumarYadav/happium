@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class DriverFactory {
     private static Config config = EnvConfigFactory.getConfig();
-    private static String platformName = config.getString("platformName");
+    private static String platformName = config.getString("platformName").toLowerCase();
     private static String hostURI = config.getString("hostURI");
     private static URL hostURL = getHostURL(hostURI);
 
@@ -34,7 +34,7 @@ public class DriverFactory {
         AppiumDriver driver = null;
         DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities();
 
-        switch (platformName.toLowerCase()) {
+        switch (platformName) {
             case "android":
                 driver = new AndroidDriver(hostURL, capabilities);
                 break;
@@ -46,9 +46,11 @@ public class DriverFactory {
                 log.error("Check the value of 'platformName' property set in application.conf. Or in CI, if run from continuous integration.");
                 break;
         }
+
         log.info("SessionId: {}", driver.getSessionId());
         driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
 
+        log.info("Driver capabilities: {}", driver.getCapabilities());
         return driver;
     }
 

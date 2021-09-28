@@ -24,13 +24,13 @@ class TestLogin {
     public void setUp() {
         Config config = EnvConfigFactory.getConfig();
         log.info("Running tests on platform: {}", config.getString("platformName").toLowerCase());
-        log.info("Running tests on platform: {}", config.getString("deviceType").toLowerCase());
-//        log.info("Running tests on platform: {}", config.getString("deviceName").toLowerCase());
-        log.info("Running tests on platform: {}", config.getString("host").toLowerCase());
+        log.info("Running tests on deviceType: {}", config.getString("deviceType").toLowerCase());
+//        log.info("Running tests on deviceName: {}", config.getString("deviceName").toLowerCase());
+        log.info("Running tests on host: {}", config.getString("host").toLowerCase());
     }
 
     @AfterEach
-    public void tearDown(){
+    public void tearDown() {
         driver.quit();
     }
 

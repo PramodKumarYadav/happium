@@ -103,8 +103,9 @@ public class CapabilitiesFactory {
         while (keys.hasNext()) {
             String key = (String) keys.next();
             String value = obj.get(key).toString();
-            log.info("key: {}", key);
-            log.info("value: {}", value);
+
+            log.debug("key: {}", key);
+            log.debug("value: {}", value);
 
             capabilities.setCapability(key, value);
         }
