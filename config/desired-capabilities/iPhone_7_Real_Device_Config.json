@@ -1,0 +1,6 @@
+{
+  "deviceName": "emulator",
+  "avd": "Pixel_XL_API_31",
+  "avdLaunchTimeout": 180000,
+  "avdReadyTimeout": 180000
+}
