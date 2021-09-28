@@ -6,7 +6,6 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.factories.capabilities.CapabilitiesFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;

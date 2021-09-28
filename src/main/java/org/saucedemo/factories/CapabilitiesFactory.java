@@ -1,4 +1,4 @@
-package org.saucedemo.factories.capabilities;
+package org.saucedemo.factories;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.typesafe.config.Config;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.factories.EnvConfigFactory;
 
 import java.util.Iterator;
 

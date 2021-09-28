@@ -3,7 +3,7 @@ package org.saucedemo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.factories.capabilities.CapabilitiesFactory;
+import org.saucedemo.factories.CapabilitiesFactory;
 
 @Slf4j
 public class TestSandbox {
