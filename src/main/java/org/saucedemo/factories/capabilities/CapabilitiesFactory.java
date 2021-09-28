@@ -10,6 +10,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.factories.EnvConfigFactory;
 
 import java.util.Iterator;
+
 import static org.saucedemo.utils.FileUtils.getCanonicalPath;
 import static org.saucedemo.utils.FileUtils.getFileAsString;
 
@@ -41,7 +42,7 @@ public class CapabilitiesFactory {
     public DesiredCapabilities getDesiredCapabilities(String deviceName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        switch(platformName) {
+        switch (platformName) {
             case "android":
                 // Common android capabilities here
                 capabilities.setCapability("platformName", "Android");
@@ -91,16 +92,17 @@ public class CapabilitiesFactory {
                 break;
         }
 
+        log.info("Capabilities: {}", capabilities);
         return capabilities;
     }
 
-    private DesiredCapabilities setCapabilitiesFromFile(String filePath, DesiredCapabilities capabilities){
+    private DesiredCapabilities setCapabilitiesFromFile(String filePath, DesiredCapabilities capabilities) {
         String jsonString = getFileAsString(filePath);
 
         JSONObject obj = new JSONObject(jsonString);
         Iterator<?> keys = obj.keys();
-        while(keys.hasNext()) {
-            String key = (String)keys.next();
+        while (keys.hasNext()) {
+            String key = (String) keys.next();
             String value = obj.get(key).toString();
             log.info("key: {}", key);
             log.info("value: {}", value);
