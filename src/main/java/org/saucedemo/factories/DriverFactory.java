@@ -24,11 +24,16 @@ public class DriverFactory {
         // using private WebDriver driver = DriverFactory.getAuthenticatedDriver();
     }
 
-    // Since you cannot run tests in parallel on the same emulator device.
-    // If you want to run your tests in parallel, you must specify different deviceNames for each test from your test class.
+    // Non preferred method. Since tests need not have to care about the device. That should be concern of capabilities.
     public static AppiumDriver getDriver(String deviceName) {
+        return getDriver(deviceName);
+    }
+
+    // This should be your preferred method to call driver. Which device to pick from available devices is a responsibility
+    // we can delegate to capabilities class.
+    public static AppiumDriver getDriver() {
         AppiumDriver driver = null;
-        DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities(deviceName);
+        DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities();
 
         switch (platformName.toLowerCase()) {
             case "android":
@@ -44,7 +49,7 @@ public class DriverFactory {
         }
         log.info("SessionId: {}", driver.getSessionId());
         driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
-        log.info("Capabilities: {}", driver.getCapabilities());
+
         return driver;
     }
 
