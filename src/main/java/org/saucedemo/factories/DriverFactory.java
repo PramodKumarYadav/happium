@@ -23,7 +23,7 @@ public class DriverFactory {
         // using private WebDriver driver = DriverFactory.getAuthenticatedDriver();
     }
 
-    // Note1: This should be your preferred method to call driver.
+    // Note1: Below method should be your preferred method to call driver.
     // Since at any given moment you are either on Android machine OR on a mac machine. Not both. Thus accordingly
     // You can specify your choice in application.conf file.
     
