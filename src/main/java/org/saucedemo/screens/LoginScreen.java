@@ -9,7 +9,6 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Slf4j
@@ -35,10 +34,6 @@ public class LoginScreen {
     @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]/android.widget.TextView")
     private MobileElement login;
 
-    @AndroidFindBy(accessibility = "test-PRODUCTS")
-    @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]/android.widget.TextView")
-    private MobileElement products;
-
     public void setUserName(String name) {
         userName.click();
         userName.sendKeys(name);
@@ -51,6 +46,5 @@ public class LoginScreen {
 
     public void tapLogin() {
         login.click();
-        wait.until(ExpectedConditions.visibilityOf(products));
     }
 }
