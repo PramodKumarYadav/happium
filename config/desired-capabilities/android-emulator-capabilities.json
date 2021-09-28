@@ -1,0 +1,6 @@
+{
+  "deviceName": "starts-with-emulator-overwrite-and-add-unique-system-port-nr-here",
+  "avd": "overwrite-with-avd-device-name-from-tests",
+  "avdLaunchTimeout": 300000,
+  "avdReadyTimeout": 300000
+}
