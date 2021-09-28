@@ -23,15 +23,18 @@ public class DriverFactory {
         // using private WebDriver driver = DriverFactory.getAuthenticatedDriver();
     }
 
-    // Non preferred method. Since tests need not have to care about the device. That should be concern of capabilities.
-    public static AppiumDriver getDriver(String deviceName) {
-        return getDriver(deviceName);
+    // This should be your preferred method to call driver.
+    // Since at any given moment you are either on Android machine OR on a mac machine. Not both. Thus accordingly
+    // You can specify your choice in application.conf file.
+    public static AppiumDriver getDriver() {
+        return getDriver(platformName);
     }
 
-    // This should be your preferred method to call driver. Which device to pick from available devices is a responsibility
-    // we can delegate to capabilities class.
-    public static AppiumDriver getDriver() {
+    // If you are running your tests in CI, you can have two CI jobs: One, for platform android and another for iOS. Or randomize it when the time comes.
+    public static AppiumDriver getDriver(String platformName) {
         AppiumDriver driver = null;
+
+        // The device to be chosen, and thus its capabilities, is done in CapabilitiesFactory class and not drivers concern.
         DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities();
 
         switch (platformName) {
