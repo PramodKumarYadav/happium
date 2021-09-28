@@ -23,14 +23,18 @@ public class DriverFactory {
         // using private WebDriver driver = DriverFactory.getAuthenticatedDriver();
     }
 
-    // This should be your preferred method to call driver.
+    // Note1: This should be your preferred method to call driver.
     // Since at any given moment you are either on Android machine OR on a mac machine. Not both. Thus accordingly
     // You can specify your choice in application.conf file.
+    
+    // Note2: When you are running your tests in CI, you can have two CI jobs: One, for platform android and another for iOS. Or randomize it when the time comes.
+    // Note that when you will overwrite the platformName value from "mvn clean test command", it will automatically be picked by this below method.
+    // So you would not need to change anything anywhere in any of the tests.
     public static AppiumDriver getDriver() {
         return getDriver(platformName);
     }
 
-    // If you are running your tests in CI, you can have two CI jobs: One, for platform android and another for iOS. Or randomize it when the time comes.
+    // If for some weird reason, you still want to call the driver name with a platform name from tests, here you go :P.
     public static AppiumDriver getDriver(String platformName) {
         AppiumDriver driver = null;
 
