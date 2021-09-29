@@ -55,7 +55,7 @@ public class DriverFactory {
         }
 
         log.info("SessionId: {}", driver.getSessionId());
-        driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         log.info("Driver capabilities: {}", driver.getCapabilities());
         return driver;
