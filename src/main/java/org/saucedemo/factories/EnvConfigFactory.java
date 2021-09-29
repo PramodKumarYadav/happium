@@ -28,12 +28,4 @@ public class EnvConfigFactory {
         Config mergedConfig = hostConfig.withFallback(appConfig);
         return mergedConfig;
     }
-
-    public static void getTestSetupDetails() {
-        Config config = EnvConfigFactory.getConfig();
-        log.info("Running tests on platform: {}", config.getString("platformName").toLowerCase());
-        log.info("Running tests on deviceType: {}", config.getString("deviceType").toLowerCase());
-//        log.info("Running tests on deviceName: {}", config.getString("deviceName").toLowerCase());
-        log.info("Running tests on host: {}", config.getString("host").toLowerCase());
-    }
 }

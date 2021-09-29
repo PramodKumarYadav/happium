@@ -10,22 +10,17 @@ import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.saucedemo.factories.EnvConfigFactory.getTestSetupDetails;
 
 @Slf4j
 class TestLogin {
-    AppiumDriver driver;
+    AppiumDriver driver = DriverFactory.getDriver();
 
-    LoginScreen loginScreen;
-    ProductsScreen productsScreen;
+    LoginScreen loginScreen = new LoginScreen(driver);
+    ProductsScreen productsScreen = new ProductsScreen(driver);
 
     @BeforeEach
     public void setUp() {
-        getTestSetupDetails();
-
-        driver = DriverFactory.getDriver();
-        loginScreen = new LoginScreen(driver);
-        productsScreen = new ProductsScreen(driver);
+        log.info("add anything that you need for your particular test here.");
     }
 
     @AfterEach
@@ -34,10 +29,8 @@ class TestLogin {
     }
 
     @Test
-    void searchContact() {
-        loginScreen.setUserName("standard_user");
-        loginScreen.setPassword("secret_sauce");
-        loginScreen.tapLogin();
+    void loginValidUser() {
+        loginScreen.login("standard_user", "secret_sauce");
 
         assertTrue(productsScreen.isProductHeadingDisplayed());
     }

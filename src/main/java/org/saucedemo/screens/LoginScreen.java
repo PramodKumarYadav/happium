@@ -15,36 +15,43 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 @Data
 public class LoginScreen {
     private WebDriverWait wait;
-    private static final Integer TIME_OUT_IN_SECONDS = 5;
+    private static final Integer TIME_OUT_IN_FIVE_SECONDS = 5;
+    ScreenActions screenActions;
 
     public LoginScreen(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        wait = new WebDriverWait(driver, TIME_OUT_IN_SECONDS);
+        wait = new WebDriverWait(driver, TIME_OUT_IN_FIVE_SECONDS);
+
+        screenActions = new ScreenActions(driver);
     }
 
     @AndroidFindBy(accessibility = "test-Username")
     @iOSXCUITFindBy(accessibility = "test-Username")
-    private MobileElement userName;
+    private MobileElement userNameField;
 
     @AndroidFindBy(accessibility = "test-Password")
     @iOSXCUITFindBy(accessibility = "test-Password")
-    private MobileElement password;
+    private MobileElement passwordField;
 
     @AndroidFindBy(accessibility = "test-LOGIN")
     @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]/android.widget.TextView")
-    private MobileElement login;
+    private MobileElement loginButton;
 
-    public void setUserName(String name) {
-        userName.click();
-        userName.sendKeys(name);
+    private void setUserName(String userName) {
+        screenActions.setTextField(userNameField, userName);
     }
 
-    public void setPassword(String name) {
-        password.click();
-        password.sendKeys(name);
+    private void setPassword(String password) {
+        screenActions.setTextField(passwordField, password);
     }
 
-    public void tapLogin() {
-        login.click();
+    private void tapLogin() {
+        loginButton.click();
+    }
+
+    public void login(String userName, String password){
+        setUserName(userName);
+        setPassword(password);
+        tapLogin();
     }
 }
