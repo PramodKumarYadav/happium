@@ -29,10 +29,8 @@ class TestLogin {
     }
 
     @Test
-    void searchContact() {
-        loginScreen.setUserName("standard_user");
-        loginScreen.setPassword("secret_sauce");
-        loginScreen.tapLogin();
+    void loginValidUser() {
+        loginScreen.login("standard_user", "secret_sauce");
 
         assertTrue(productsScreen.isProductHeadingDisplayed());
     }
