@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 // All interactions in pages should happen via screen actions and not directly in the pages.
-// this class provides robustness and readability and reduces flakiness.
+// this class provides robustness and readability and reduces flakiness. 
 public class ScreenActions {
     private WebDriverWait shortWait;
     private WebDriverWait longWait;
