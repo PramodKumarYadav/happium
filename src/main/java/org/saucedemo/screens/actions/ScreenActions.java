@@ -1,4 +1,4 @@
-package org.saucedemo.screens;
+package org.saucedemo.screens.actions;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
@@ -10,7 +10,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 // All interactions in pages should happen via screen actions and not directly in the pages.
 // this class provides robustness and readability and reduces flakiness. 
-
 public class ScreenActions {
     private WebDriverWait shortWait;
     private WebDriverWait longWait;
