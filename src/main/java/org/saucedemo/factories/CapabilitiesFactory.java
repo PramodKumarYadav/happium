@@ -41,6 +41,13 @@ public class CapabilitiesFactory {
     public DesiredCapabilities getDesiredCapabilities(String deviceName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
+        // Capabilities are affected based on below 4 parameters.
+        // Thus depending on what the choice from user is defined in application.conf file,
+        // a valid capability is build for the tests.
+        log.info("Running tests on platform: {}", platformName);
+        log.info("Running tests on deviceType: {}", deviceType);
+        log.info("Running tests on deviceName: {}", deviceName);
+        log.info("Running tests on host: {}", host);
         switch (platformName) {
             case "android":
                 // Common android capabilities here
