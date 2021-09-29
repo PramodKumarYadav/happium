@@ -41,7 +41,7 @@ public class LoginScreen {
     }
 
     private void tapLogin() {
-        loginButton.click();
+        screenActions.clickButton(loginButton);
     }
 
     public void login(String userName, String password){
