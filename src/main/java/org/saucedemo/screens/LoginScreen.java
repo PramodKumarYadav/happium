@@ -9,19 +9,14 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Slf4j
 @Data
 public class LoginScreen {
-    private WebDriverWait wait;
-    private static final Integer TIME_OUT_IN_FIVE_SECONDS = 5;
     ScreenActions screenActions;
 
     public LoginScreen(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        wait = new WebDriverWait(driver, TIME_OUT_IN_FIVE_SECONDS);
-
         screenActions = new ScreenActions(driver);
     }
 

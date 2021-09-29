@@ -8,18 +8,15 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 @Slf4j
 @Data
 public class ProductsScreen {
-    private WebDriverWait wait;
-    private static final Integer TIME_OUT_IN_SECONDS = 5;
+    ScreenActions screenActions;
 
     public ProductsScreen(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        wait = new WebDriverWait(driver, TIME_OUT_IN_SECONDS);
+        screenActions = new ScreenActions(driver);
     }
 
     @AndroidFindBy(accessibility = "test-PRODUCTS")
@@ -27,7 +24,7 @@ public class ProductsScreen {
     private MobileElement products;
 
     public Boolean isProductHeadingDisplayed() {
-        wait.until(ExpectedConditions.visibilityOf(products));
+        screenActions.waitUntilElementIsVisible(products);
         return products.isDisplayed();
     }
 }
