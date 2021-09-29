@@ -43,7 +43,7 @@ public class LoginScreen {
     private void tapLogin() {
         screenActions.clickButton(loginButton);
     }
-
+  
     public void login(String userName, String password){
         setUserName(userName);
         setPassword(password);
