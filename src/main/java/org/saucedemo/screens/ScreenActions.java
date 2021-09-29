@@ -8,6 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+// All interactions in pages should happen via screen actions and not directly in the pages.
+// this class provides robustness and readability and reduces flakiness. 
+
 public class ScreenActions {
     private WebDriverWait shortWait;
     private WebDriverWait longWait;
@@ -30,5 +33,10 @@ public class ScreenActions {
 
     public WebElement waitUntilElementIsVisible(MobileElement mobileElement) {
         return longWait.until(ExpectedConditions.visibilityOf(mobileElement));
+    }
+
+    public void clickButton(MobileElement mobileElement) {
+        waitUntilElementIsVisible(mobileElement).isEnabled();
+        mobileElement.click();
     }
 }
