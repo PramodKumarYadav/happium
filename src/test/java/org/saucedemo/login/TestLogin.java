@@ -5,22 +5,25 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.saucedemo.factories.DriverFactory.getDriver;
 
 @Slf4j
 class TestLogin {
-    AppiumDriver driver = DriverFactory.getDriver();
-
-    LoginScreen loginScreen = new LoginScreen(driver);
-    ProductsScreen productsScreen = new ProductsScreen(driver);
+    private AppiumDriver driver;
+    private LoginScreen loginScreen;
+    private ProductsScreen productsScreen;
 
     @BeforeEach
     public void setUp() {
-        log.info("add anything that you need for your particular test here.");
+        driver = getDriver();
+
+        loginScreen = new LoginScreen(driver);
+        productsScreen = new ProductsScreen(driver);
     }
 
     @AfterEach
@@ -29,9 +32,14 @@ class TestLogin {
     }
 
     @Test
-    void loginValidUser() {
+    void assertThatAValidUserCanLogin() {
         loginScreen.login("standard_user", "secret_sauce");
-
         assertTrue(productsScreen.isProductHeadingDisplayed());
+    }
+
+    @Test
+    void assertThatAWarningIsDisplayedToALockedOutUser() {
+        loginScreen.login("locked_out_user", "secret_sauce");
+        assertEquals("Hellas Pindakaas!", loginScreen.getErrorMessage());
     }
 }
