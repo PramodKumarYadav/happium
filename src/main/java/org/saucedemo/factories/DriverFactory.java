@@ -11,7 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import static org.saucedemo.factories.AvailableDevices.getDevice;
+import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities;
 
 @Slf4j
 public class DriverFactory {
@@ -20,36 +20,38 @@ public class DriverFactory {
     private static String hostURI = config.getString("hostURI");
     private static URL hostURL = getHostURL(hostURI);
 
+    /*
+     Do not want people to create an instance of Factory but use its static getDriver method to get the driver
+     using private WebDriver driver = DriverFactory.getDriver();
+     */
     private DriverFactory() {
-        // Do not want people to create an instance of Factory but use its static getDriver method to get the driver
-        // using private WebDriver driver = DriverFactory.getAuthenticatedDriver();
     }
 
-    // Note1: Below method should be your preferred method to call driver.
-    // Since at any given moment you are either on Android machine OR on a mac machine. Not both. Thus accordingly
-    // You can specify your choice in application.conf file.
-    
-    // Note2: When you are running your tests in CI, you can have two CI jobs: One, for platform android and another for iOS. Or randomize it when the time comes.
-    // Note that when you will overwrite the platformName value from "mvn clean test command", it will automatically be picked by this below method.
-    // So you would not need to change anything anywhere in any of the tests.
+    /* Note1: Below method should be your preferred method to call driver.
+     Since at any given moment you are either on Android machine OR on a mac machine. Not both. Thus accordingly
+     You can specify your choice in application.conf file.
+
+     Note2: When you are running your tests in CI, you can have two CI jobs: One, for platform android and another for iOS. Or randomize it when the time comes.
+     Note that when you will overwrite the platformName value from "mvn clean test command", it will automatically be picked by this below method.
+     So you would not need to change anything anywhere in any of the tests.
+    */
 
     public static AppiumDriver getDriver() {
-        String deviceName = getDevice();
-        return getDriver(platformName, deviceName);
+        return getDriver(platformName);
     }
 
-    public static AppiumDriver getDriver(String platformName, String deviceName) {
+    public static AppiumDriver getDriver(String platformName) {
         AppiumDriver driver = null;
 
-        // The device to be chosen, and thus its capabilities, is done in CapabilitiesFactory class and not drivers concern.
-        DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities(deviceName);
+        // The device to be chosen, and thus its capabilities, is done in CapabilitiesFactory and is not drivers concern.
+        DesiredCapabilities capabilities = getDesiredCapabilities();
 
         switch (platformName) {
             case "android":
                 driver = new AndroidDriver(hostURL, capabilities);
                 break;
             case "ios":
-                driver =  new IOSDriver(hostURL, capabilities);
+                driver = new IOSDriver(hostURL, capabilities);
                 break;
             default:
                 log.error("Platform choice is incorrect. You can either choose 'android' or 'ios'.");
