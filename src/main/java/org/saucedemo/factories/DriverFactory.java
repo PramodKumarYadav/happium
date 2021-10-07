@@ -11,6 +11,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import static org.saucedemo.factories.AvailableDevices.getDevice;
+
 @Slf4j
 public class DriverFactory {
     private static Config config = EnvConfigFactory.getConfig();
@@ -30,16 +32,17 @@ public class DriverFactory {
     // Note2: When you are running your tests in CI, you can have two CI jobs: One, for platform android and another for iOS. Or randomize it when the time comes.
     // Note that when you will overwrite the platformName value from "mvn clean test command", it will automatically be picked by this below method.
     // So you would not need to change anything anywhere in any of the tests.
+
     public static AppiumDriver getDriver() {
-        return getDriver(platformName);
+        String deviceName = getDevice();
+        return getDriver(platformName, deviceName);
     }
 
-    // If for some weird reason, you still want to call the driver name with a platform name from tests, here you go :P.
-    public static AppiumDriver getDriver(String platformName) {
+    public static AppiumDriver getDriver(String platformName, String deviceName) {
         AppiumDriver driver = null;
 
         // The device to be chosen, and thus its capabilities, is done in CapabilitiesFactory class and not drivers concern.
-        DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities();
+        DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities(deviceName);
 
         switch (platformName) {
             case "android":
