@@ -39,11 +39,51 @@ For example to only install appium-doctor, run on terminal.
 -[Sample apps to use for testing](https://github.com/appium/sample-apps)
 
 ## Troubleshooting tips
-- 1) If you want to run tests, keep appium-desktop closed. It seems, when I run appium server and driver from appium-desktop,
-the tests from intellij don't run. 
+- 1) It seems when I start appium server from *appium-desktop*, there are lesser issues with running avds from tests in parallel/or stand alone. 
+     
+    - [ ] So to avoid issues, always launch *appium-desktop* unless you find a stable fix for launching from appium terminal. 
+      
+    Launching appium server from terminal, works sometimes and not on other times. The error I see most often when running tests from appium terminal is while 
+    making a call to pixelratio endpoint: GET http://127.0.0.1:8201/wd/hub/session/16cc5cc1-9507-4d03-9282-1e8bded63c3c/appium/device/pixel_ratio
+    
+see detailed logs below: 
+``` 
+[debug] [ADB] Getting focused package and activity
+[debug] [ADB] Running 'C:\Users\Pramod Yadav\AppData\Local\Android\Sdk\platform-tools\adb.exe -P 5037 -s emulator-5554 shell dumpsys window displays'
+[debug] [ADB] Found package: 'com.swaglabsmobileapp' and fully qualified activity name : 'com.swaglabsmobileapp.MainActivity'
+[debug] [WD Proxy] Proxying [GET /appium/device/pixel_ratio] to [GET http://127.0.0.1:8201/wd/hub/session/16cc5cc1-9507-4d03-9282-1e8bded63c3c/appium/device/pixel_ratio] with no body
+[WD Proxy] socket hang up
+[debug] [UiAutomator2] Deleting UiAutomator2 session
+[debug] [UiAutomator2] Deleting UiAutomator2 server session
+[debug] [WD Proxy] Matched '/' to command name 'deleteSession'
+[debug] [WD Proxy] Proxying [DELETE /] to [DELETE http://127.0.0.1:8201/wd/hub/session/16cc5cc1-9507-4d03-9282-1e8bded63c3c] with no body
+[WD Proxy] socket hang up
+[UiAutomator2] Did not get confirmation UiAutomator2 deleteSession worked; Error was: UnknownError: An unknown server-side error occurred while processing the command. Original error: Could not proxy command to the remote server. Original error: socket hang up
+[debug] [ADB] Running 'C:\Users\Pramod Yadav\AppData\Local\Android\Sdk\platform-tools\adb.exe -P 5037 -s emulator-5554 shell am force-stop com.swaglabsmobileapp'
+[debug] [Logcat] Stopping logcat capture
+[debug] [ADB] Removing forwarded port socket connection: 8201
+[debug] [ADB] Running 'C:\Users\Pramod Yadav\AppData\Local\Android\Sdk\platform-tools\adb.exe -P 5037 -s emulator-5554 forward --remove tcp:8201'
+[UiAutomator2] Restoring hidden api policy to the device default configuration
+[debug] [ADB] Running 'C:\Users\Pramod Yadav\AppData\Local\Android\Sdk\platform-tools\adb.exe -P 5037 -s emulator-5554 shell 'settings delete global hidden_api_policy_pre_p_apps;settings delete global hidden_api_policy_p_apps;settings delete global hidden_api_policy''
+[debug] [BaseDriver] Event 'newSessionStarted' logged at 1633635690879 (21:41:30 GMT+0200 (Central European Summer Time))
+[debug] [W3C] Encountered internal error running command: UnknownError: An unknown server-side error occurred while processing the command. Original error: Could not proxy command to the remote server. Original error: socket hang up
+[debug] [W3C]     at UIA2Proxy.command (C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-base-driver\lib\jsonwp-proxy\proxy.js:274:13)
+[debug] [W3C]     at processTicksAndRejections (node:internal/process/task_queues:96:5)
+[debug] [W3C]     at AndroidUiautomator2Driver.commands.getDevicePixelRatio (C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-uiautomator2-driver\lib\commands\viewport.js:14:10)
+[debug] [W3C]     at AndroidUiautomator2Driver.fillDeviceDetails (C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-uiautomator2-driver\lib\driver.js:238:28)
+[debug] [W3C]     at AndroidUiautomator2Driver.createSession (C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\node_modules\appium-uiautomator2-driver\lib\driver.js:224:7)
+[debug] [W3C]     at AppiumDriver.createSession (C:\Users\Pramod Yadav\AppData\Roaming\npm\node_modules\appium\lib\appium.js:387:35)
+[HTTP] <-- POST /wd/hub/session 500 18594 ms - 1350
+[HTTP]
+[debug] [ADB] Waiting up to 20000ms for activity matching pkg: 'com.swaglabsmobileapp' and activity: 'com.swaglabsmobileapp.MainActivity' to be focused
+[debug] [ADB] Possible activities, to be checked: 'com.swaglabsmobileapp.MainActivity', 'com.swaglabsmobileapp.com.swaglabsmobileapp.MainActivity'
+```
+
 - 2) Also it seems, Appium-desktop is only able to open the images created by android-studio (say Pixel_XL_API_31.avd). 
      If you have created an image by avd (say Pixel_5_API_31.avd), it seems appium-desktop keep throwing different kind of errors and cannot create a session. 
-- 3) Same is the case, if you want to launch emulator from tests. 
-      - One, you must use an image created by android studio (say Pixel_XL_API_31.avd). Giving another image (say Pixel_5_API_31.avd) will fail. 
-      - Two, You must give the absolute path of the app. Note that when the emulator is started manually via the android studio, then you can even even give relative path and tests works. 
-        But if you want to launch emulator and app from the tests, then you have to take care of both above points (Absolute path and a app created via android studio)
+    - [ ] So create avd devices using android studio
+- 3) If you want to launch emulator from tests. 
+      - *One*, you must use an image created by *android studio* (say Pixel_XL_API_31.avd). Giving another image not created from studio (say Pixel_5_API_31.avd) will fail. 
+      - *Two*, You must give the absolute path of the app. 
+        Note that when the emulator is started manually via the android studio, then you can even give a relative path and tests works. 
+        However, if you want to launch emulator and app from the tests, then you have to take care of both above points (Absolute path and an app created via android studio)
