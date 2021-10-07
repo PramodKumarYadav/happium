@@ -3,22 +3,23 @@ package org.saucedemo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.factories.CapabilitiesFactory;
 import org.saucedemo.factories.DeviceList;
+
+import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities;
 
 @Slf4j
 public class TestSandbox {
-    private static String deviceName = "Pixel_XL_API_31";
+    private static String deviceName = "Pixel_4a_API_31";
 
     @Test
     void testDesiredCapabilitiesDefault() {
-        DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities();
+        DesiredCapabilities capabilities = getDesiredCapabilities();
         log.info(capabilities.toString());
     }
 
     @Test
     void testDesiredCapabilities() {
-        DesiredCapabilities capabilities = new CapabilitiesFactory().getDesiredCapabilities(deviceName);
+        DesiredCapabilities capabilities = getDesiredCapabilities(deviceName);
         log.info(capabilities.toString());
     }
 

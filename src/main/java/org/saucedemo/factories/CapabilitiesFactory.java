@@ -78,7 +78,8 @@ public class CapabilitiesFactory {
 
                         // set unique systemPort and virtual device name from configuration files for the selected device
                         String pathDesiredCapabilities = config.getString("pathDesiredCapabilities").toLowerCase();
-                        capabilities = setCapabilitiesFromFile(String.format("%s/%s.json", pathDesiredCapabilities, deviceName), capabilities);
+                        String pathDeviceNameConfig = String.format("%s/%s.json", pathDesiredCapabilities, deviceName);
+                        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
 
                         // Set the avd property with the virtual drive that you have with you on your machine.
                         capabilities.setCapability("avd", deviceName);
