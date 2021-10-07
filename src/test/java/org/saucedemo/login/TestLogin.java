@@ -5,12 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.saucedemo.factories.DriverFactory.getDriver;
 
 @Slf4j
 class TestLogin {
@@ -20,7 +20,7 @@ class TestLogin {
 
     @BeforeEach
     public void setUp() {
-        driver = new DriverFactory().getDriverV1();
+        driver = getDriver();
 
         loginScreen = new LoginScreen(driver);
         productsScreen = new ProductsScreen(driver);
