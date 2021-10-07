@@ -20,10 +20,7 @@ public class DriverFactory {
     private static String hostURI = config.getString("hostURI");
     private static URL hostURL = getHostURL(hostURI);
 
-    /*
-     Do not want people to create an instance of Factory but use its static getDriver method to get the driver
-     using private WebDriver driver = DriverFactory.getDriver();
-     */
+    // Don't want to create any driver for this factory class.
     private DriverFactory() {
     }
 
