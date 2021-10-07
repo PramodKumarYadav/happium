@@ -3,13 +3,13 @@ package org.saucedemo.factories;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.typesafe.config.Config;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Iterator;
 
+import static org.saucedemo.factories.AvailableDevices.getDevice;
 import static org.saucedemo.utils.FileUtils.getCanonicalPath;
 import static org.saucedemo.utils.FileUtils.getFileAsString;
 
@@ -19,26 +19,38 @@ import static org.saucedemo.utils.FileUtils.getFileAsString;
 
 @Slf4j
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@NoArgsConstructor
 @Data
 public class CapabilitiesFactory {
     private static Config config = EnvConfigFactory.getConfig();
+
     private static String platformName = config.getString("platformName").toLowerCase();
     private static String deviceType = config.getString("deviceType").toLowerCase();
-    // For device name, pass a fixed name or get from list of available devices (on local or remote).
-    private static String deviceName = "Pixel_XL_API_31";
+    private static String deviceName = config.getString("deviceName").toLowerCase();
     private static String host = config.getString("host").toLowerCase();
-    private static Integer systemPort = 8200;
-    private static Integer serverPort = 5554;
 
-    // Preferred and convenient way (since tests should care about testing application and not on which device).
-    // That is concern for capabilities.
-    public DesiredCapabilities getDesiredCapabilities() {
+    // Don't want to create any driver for this factory class.
+    private CapabilitiesFactory(){
+
+    }
+
+    // Preferred way (since tests should care about testing application and not on which device). This is concern for capabilities class.
+    public static DesiredCapabilities getDesiredCapabilities() {
+        /*
+         If user wants to pick any random device. Then get a random device.
+         Else, keep the deviceName provided by user in application.conf file.
+         Note: that if you do provide a fixed deviceName, then you cannot run tests in parallel.
+         So change parallel property to false in junit-platform.properties file.
+         junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
+         */
+        if (deviceName.equalsIgnoreCase("randomDevice")) {
+            deviceName = getDevice();
+        }
+
         return getDesiredCapabilities(deviceName);
     }
 
     // In case if in future, there is a need to get a capability from another calling class, we also provide a option for that.
-    public DesiredCapabilities getDesiredCapabilities(String deviceName) {
+    public static DesiredCapabilities getDesiredCapabilities(String deviceName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Capabilities are affected based on below 4 parameters.
@@ -64,13 +76,10 @@ public class CapabilitiesFactory {
                         String pathAndroidEmulatorCapabilities = config.getString("pathAndroidEmulatorCapabilities").toLowerCase();
                         capabilities = setCapabilitiesFromFile(pathAndroidEmulatorCapabilities, capabilities);
 
-                        // Set port to a unique number and increment by one (so that next parallel run can get a new free systemPort)
-                        capabilities.setCapability("systemPort", systemPort);
-                        systemPort++;
-
-                        // set virtual device name and the avd - device name to use to start this emulator.
-                        capabilities.setCapability("deviceName", "emulator-" + serverPort);
-                        serverPort = serverPort + 2;
+                        // set unique systemPort and virtual device name from configuration files for the selected device
+                        String pathDesiredCapabilities = config.getString("pathDesiredCapabilities").toLowerCase();
+                        String pathDeviceNameConfig = String.format("%s/%s.json", pathDesiredCapabilities, deviceName);
+                        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
 
                         // Set the avd property with the virtual drive that you have with you on your machine.
                         capabilities.setCapability("avd", deviceName);
@@ -105,7 +114,7 @@ public class CapabilitiesFactory {
         return capabilities;
     }
 
-    private DesiredCapabilities setCapabilitiesFromFile(String filePath, DesiredCapabilities capabilities) {
+    private static DesiredCapabilities setCapabilitiesFromFile(String filePath, DesiredCapabilities capabilities) {
         String jsonString = getFileAsString(filePath);
 
         JSONObject obj = new JSONObject(jsonString);

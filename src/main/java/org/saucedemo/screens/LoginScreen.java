@@ -33,6 +33,10 @@ public class LoginScreen {
     @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]/android.widget.TextView")
     private MobileElement loginButton;
 
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']/android.widget.TextView")
+    @iOSXCUITFindBy(accessibility = "test-Error message")
+    private MobileElement errorMessage;
+
     private void setUserName(String userName) {
         screenActions.setTextField(userNameField, userName);
     }
@@ -49,5 +53,9 @@ public class LoginScreen {
         setUserName(userName);
         setPassword(password);
         tapLogin();
+    }
+
+    public String getErrorMessage() {
+        return errorMessage.getText();
     }
 }
