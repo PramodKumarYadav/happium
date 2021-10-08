@@ -57,8 +57,7 @@ public class CapabilitiesFactory {
                 // Capabilities specific for device type
                 switch (deviceType) {
                     case "real":
-                        // some code here
-                        // that will do something with the device name we get above.
+                        capabilities = setAndroidRealDeviceCapabilities(deviceName, capabilities);
                     case "virtual":
                         capabilities = setAndroidEmulatorCapabilities(deviceName, capabilities);
                 }
@@ -105,8 +104,8 @@ public class CapabilitiesFactory {
     */
     private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(String deviceName, DesiredCapabilities capabilities){
         // get default properties from android-emulator-capabilities.json
-        String pathAndroidEmulatorCapabilities = config.getString("pathAndroidEmulatorCapabilities").toLowerCase();
-        capabilities = setCapabilitiesFromFile(pathAndroidEmulatorCapabilities, capabilities);
+        String pathAndroidEmulatorDefaultCapabilities = config.getString("pathAndroidEmulatorDefaultCapabilities").toLowerCase();
+        capabilities = setCapabilitiesFromFile(pathAndroidEmulatorDefaultCapabilities, capabilities);
 
         /*
         Pick a device (fixed or random) based on the choice provided in application.conf
@@ -123,13 +122,25 @@ public class CapabilitiesFactory {
 
         // Note: Getting the above name with deviceName is not enough with synchronized. You need synchronization in below steps too.
         // set unique systemPort and virtual device name from configuration files for the selected device
-        String pathDesiredCapabilities = config.getString("pathDesiredCapabilities").toLowerCase();
-        String pathDeviceNameConfig = String.format("%s/%s.json", pathDesiredCapabilities, deviceName);
+        String pathAndroidCapabilities = config.getString("pathAndroidCapabilities").toLowerCase();
+        String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
         log.info("pathDeviceNameConfig: {}", pathDeviceNameConfig);
         capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
 
         // Set the avd property with the virtual drive that you have with you on your machine.
         capabilities.setCapability("avd", deviceName);
+
+        return capabilities;
+    }
+
+    // This is when you want to run tests on a Single real android device connected to your computer.
+    // So no synchronized required (since tests will run in sequence). Remember to put the parallel run property to false in junit-platform.properties
+    private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities){
+        String pathAndroidCapabilities = config.getString("pathAndroidCapabilities").toLowerCase();
+        String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
+
+        log.info("pathRealDeviceNameConfig: {}", pathDeviceNameConfig);
+        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
 
         return capabilities;
     }
