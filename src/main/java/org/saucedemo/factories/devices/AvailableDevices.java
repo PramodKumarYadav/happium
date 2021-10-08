@@ -1,4 +1,4 @@
-package org.saucedemo.factories;
+package org.saucedemo.factories.devices;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,9 +14,18 @@ http://tutorials.jenkov.com/java-concurrency/synchronized.html
 public class AvailableDevices {
     private static Integer deviceNumber = 0;
 
-    public static synchronized String getDevice(){
+    public static synchronized String getAndroidEmulator(){
         log.info("fetching device number: {}", deviceNumber);
-        String deviceName = DeviceList.values()[deviceNumber].toString();
+        String deviceName = AndroidEmulators.values()[deviceNumber].toString();
+        log.info("device fetched: {}", deviceName);
+
+        deviceNumber ++;
+        return deviceName;
+    }
+
+    public static synchronized String getIosSimulator(){
+        log.info("fetching device number: {}", deviceNumber);
+        String deviceName = IosSimulators.values()[deviceNumber].toString();
         log.info("device fetched: {}", deviceName);
 
         deviceNumber ++;
