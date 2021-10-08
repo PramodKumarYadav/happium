@@ -1,0 +1,5 @@
+{
+  "platformName": "Android",
+  "automationName": "UiAutomator2",
+  "appWaitActivity": "com.swaglabsmobileapp.MainActivity"
+}
