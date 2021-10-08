@@ -49,12 +49,10 @@ public class CapabilitiesFactory {
 
         switch (platformName) {
             case "android":
-                // Common android capabilities here
-                capabilities.setCapability("platformName", "Android");
-                capabilities.setCapability("automationName", "UiAutomator2");
-                capabilities.setCapability("appWaitActivity", "com.swaglabsmobileapp.MainActivity");
+                // Set common android capabilities here from the config file
+                capabilities = setAndroidCommonCapabilities(capabilities);
 
-                // Capabilities specific for device type
+                // Set capabilities specific for device type (fixed or virtual)
                 switch (deviceType) {
                     case "real":
                         capabilities = setAndroidRealDeviceCapabilities(deviceName, capabilities);
@@ -91,6 +89,24 @@ public class CapabilitiesFactory {
         return capabilities;
     }
 
+    private static DesiredCapabilities setAndroidCommonCapabilities(DesiredCapabilities capabilities){
+        // get default properties from android-emulator-capabilities.json
+        String pathAndroidCommonCapabilities = config.getString("pathAndroidCommonCapabilities").toLowerCase();
+
+        capabilities = setCapabilitiesFromFile(pathAndroidCommonCapabilities, capabilities);
+        return capabilities;
+    }
+
+    // This is when you want to run tests on a Single real android device connected to your computer.
+    // So no synchronized required (since tests will run in sequence). Remember to put the parallel run property to false in junit-platform.properties
+    private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities){
+        String pathAndroidCapabilities = config.getString("pathAndroidCapabilities").toLowerCase();
+        String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
+
+        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
+        return capabilities;
+    }
+
     /*
     Apart from fetching devices in a synchronized way (in a parallel run mode), we also had this challenge
      that the next steps to use this fetched device name to get capabilities and setting up avd, were getting affected
@@ -124,28 +140,16 @@ public class CapabilitiesFactory {
         // set unique systemPort and virtual device name from configuration files for the selected device
         String pathAndroidCapabilities = config.getString("pathAndroidCapabilities").toLowerCase();
         String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
-        log.info("pathDeviceNameConfig: {}", pathDeviceNameConfig);
         capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
 
         // Set the avd property with the virtual drive that you have with you on your machine.
         capabilities.setCapability("avd", deviceName);
-
-        return capabilities;
-    }
-
-    // This is when you want to run tests on a Single real android device connected to your computer.
-    // So no synchronized required (since tests will run in sequence). Remember to put the parallel run property to false in junit-platform.properties
-    private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities){
-        String pathAndroidCapabilities = config.getString("pathAndroidCapabilities").toLowerCase();
-        String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
-
-        log.info("pathRealDeviceNameConfig: {}", pathDeviceNameConfig);
-        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
-
         return capabilities;
     }
 
     private static DesiredCapabilities setCapabilitiesFromFile(String filePath, DesiredCapabilities capabilities) {
+        log.info("parsing desired capabilities from: {}", filePath);
+
         String jsonString = getFileAsString(filePath);
 
         JSONObject obj = new JSONObject(jsonString);
