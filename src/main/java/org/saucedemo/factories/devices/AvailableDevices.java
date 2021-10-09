@@ -1,6 +1,8 @@
 package org.saucedemo.factories.devices;
 
+import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
+import org.saucedemo.factories.EnvConfigFactory;
 
 /*
 We had a unique problem statement here. Since for parallel execution in appium, you can only run a test on a single device,
@@ -17,6 +19,33 @@ public class AvailableDevices {
     private static Integer systemPort = 8200;
 
     public static synchronized Device getAndroidEmulator(){
+        // todo: Add logic here to check if unique device is needed at a class level, or test level or both.
+        Config config = EnvConfigFactory.getConfig();
+        String deviceName = config.getString("deviceName");
+
+        Device device = new Device();
+        if (deviceName.equalsIgnoreCase("randomVirtualDevice")) {
+            device = getRandomAndroidEmulator();
+        }else {
+            device = getSpecificAndroidEmulator(deviceName);
+        }
+
+        return device;
+    }
+
+    public static synchronized Device getSpecificAndroidEmulator(String deviceName){
+        Device device = new Device();
+
+        // Set all the unique properties for this emulator device (necessary for execution in parallel)
+        device.setDeviceName(deviceName);
+        device.setUdid("emulator-" + emulatorNumber);
+        device.setSystemPort(systemPort);
+
+        log.info("Device details: {}", device);
+        return device;
+    }
+
+    public static synchronized Device getRandomAndroidEmulator(){
         Device device = new Device();
 
         log.info("fetching device number: {}", deviceNumber);
