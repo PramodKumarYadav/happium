@@ -18,7 +18,7 @@ public class SearchScreenFactory {
 
     public static SearchScreen getSearchScreen(AppiumDriver driver){
         log.info("Platform to run the application: {}", platformName);
-        switch (platformName.toLowerCase()) {
+        switch (platformName) {
             case "ios":
                 return new SearchScreenIOS(driver);
             case "android":

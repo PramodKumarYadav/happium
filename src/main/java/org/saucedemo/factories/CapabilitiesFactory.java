@@ -29,10 +29,10 @@ public class CapabilitiesFactory {
      Thus depending on what the choice from user is defined in application.conf file,
      a valid capability is build for the tests.
      */
-    private static String platformName = config.getString("platformName").toLowerCase();
-    private static String deviceType = config.getString("deviceType").toLowerCase();
+    private static String host = config.getString("host");
+    private static String platformName = config.getString("platformName");
+    private static String deviceType = config.getString("deviceType");
     private static String deviceName = config.getString("deviceName");
-    private static String host = config.getString("host").toLowerCase();
 
     // Don't want to create any driver for this factory class.
     private CapabilitiesFactory(){
@@ -43,21 +43,21 @@ public class CapabilitiesFactory {
     public static DesiredCapabilities getDesiredCapabilities() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
+        log.info("Running tests on host: {}", host);
         log.info("Running tests on platform: {}", platformName);
         log.info("Running tests on deviceType: {}", deviceType);
         log.info("Running tests on deviceName: {}", deviceName);
-        log.info("Running tests on host: {}", host);
 
         // Capabilities specific for host
         switch (host) {
             case "local":
                 // On localhost you are either on android or on IOS (not both).
-                // Get local app location stored in the project here (via absolute path)
-                String pathAndroidApp = config.getString("pathAndroidApp");
-                capabilities.setCapability("app", getCanonicalPath(pathAndroidApp));
-
                 switch (platformName) {
                     case "android":
+                        // Get local app location stored in the project here (via absolute path)
+                        String pathAndroidApp = config.getString("pathAndroidApp");
+                        capabilities.setCapability("app", getCanonicalPath(pathAndroidApp));
+
                         // Set common android capabilities here from the config file
                         capabilities = setAndroidCommonCapabilities(capabilities);
 
@@ -70,11 +70,20 @@ public class CapabilitiesFactory {
                         }
                         break;
                     case "ios":
-                        // Common iOS capabilities here
-                        capabilities.setCapability("platformName", "ios");
-                        capabilities.setCapability("automationName", "XCUITest");
-                        capabilities.setCapability("deviceName", "iPhone 7");
+                        // Get local app location stored in the project here (via absolute path)
+                        String pathIOSApp = config.getString("pathIOSApp");
+                        capabilities.setCapability("app", getCanonicalPath(pathIOSApp));
 
+                        // Set common android capabilities here from the config file
+                        capabilities = setIosCommonCapabilities(capabilities);
+
+                        // Set capabilities specific for device type (fixed or virtual)
+                        switch (deviceType) {
+                            case "real":
+                                capabilities = setIosRealDeviceCapabilities(deviceName, capabilities);
+                            case "virtual":
+                                capabilities = setIosSimulatorCapabilities(capabilities);
+                        }
                         break;
                     default:
                         break;
@@ -86,6 +95,9 @@ public class CapabilitiesFactory {
                 // Note this property should be parsed from a config file and should not be set here (as done below).
                 // Since there can be multiple devices that are available to run on host and not just One.
                 // capabilities.setCapability("app", "bs://" + ANDROID_HASHED_APP_ID);
+                break;
+            default:
+                break;
         }
 
         log.info("Capabilities: {}", capabilities);
@@ -94,17 +106,33 @@ public class CapabilitiesFactory {
 
     private static DesiredCapabilities setAndroidCommonCapabilities(DesiredCapabilities capabilities){
         // get default properties from android-emulator-capabilities.json
-        String pathAndroidCommonCapabilities = config.getString("pathAndroidCommonCapabilities").toLowerCase();
+        String pathAndroidCommonCapabilities = config.getString("pathAndroidCommonCapabilities");
 
         capabilities = setCapabilitiesFromFile(pathAndroidCommonCapabilities, capabilities);
+        return capabilities;
+    }
+
+    private static DesiredCapabilities setIosCommonCapabilities(DesiredCapabilities capabilities){
+        // get default properties from ios-common-capabilities.json
+        String pathIOSCommonCapabilities = config.getString("pathIOSCommonCapabilities");
+
+        capabilities = setCapabilitiesFromFile(pathIOSCommonCapabilities, capabilities);
         return capabilities;
     }
 
     // This is when you want to run tests on a Single real android device connected to your computer.
     // So no synchronized required (since tests will run in sequence). Remember to put the parallel run property to false in junit-platform.properties
     private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities){
-        String pathAndroidCapabilities = config.getString("pathAndroidCapabilities").toLowerCase();
+        String pathAndroidCapabilities = config.getString("pathAndroidCapabilities");
         String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
+
+        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
+        return capabilities;
+    }
+
+    private static DesiredCapabilities setIosRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities){
+        String pathIOSCapabilities = config.getString("pathIOSCapabilities");
+        String pathDeviceNameConfig = String.format("%s/%s.json", pathIOSCapabilities, deviceName);
 
         capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
         return capabilities;
@@ -123,7 +151,7 @@ public class CapabilitiesFactory {
     */
     private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities){
         // get default properties from android-emulator-capabilities.json
-        String pathAndroidEmulatorDefaultCapabilities = config.getString("pathAndroidEmulatorDefaultCapabilities").toLowerCase();
+        String pathAndroidEmulatorDefaultCapabilities = config.getString("pathAndroidEmulatorDefaultCapabilities");
         capabilities = setCapabilitiesFromFile(pathAndroidEmulatorDefaultCapabilities, capabilities);
 
         /*
@@ -143,6 +171,11 @@ public class CapabilitiesFactory {
         capabilities.setCapability("systemPort  ", device.getSystemPort());
 
         return capabilities;
+    }
+
+    // todo: when you pick up IOS work.
+    private static synchronized DesiredCapabilities setIosSimulatorCapabilities(DesiredCapabilities capabilities){
+        return null;
     }
 
     private static DesiredCapabilities setCapabilitiesFromFile(String filePath, DesiredCapabilities capabilities) {
