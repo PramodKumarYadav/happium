@@ -158,8 +158,8 @@ public class CapabilitiesFactory {
         // or "unique devices per test" within one class OR "unique device per each test class".
         Device device = getAndroidEmulator();
         capabilities.setCapability("avd", device.getDeviceName());
-        capabilities.setCapability("deviceName", device.getUdid());
         capabilities.setCapability("udid", device.getUdid());
+        capabilities.setCapability("deviceName", device.getUdid());
         capabilities.setCapability("systemPort  ", device.getSystemPort());
 
         return capabilities;
