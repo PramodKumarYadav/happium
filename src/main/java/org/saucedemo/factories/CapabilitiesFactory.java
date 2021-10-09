@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.saucedemo.factories.devices.Device;
 
 import java.util.Iterator;
 
@@ -132,18 +133,17 @@ public class CapabilitiesFactory {
         junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
         */
 
+        Device device = new Device();
         if (deviceName.equalsIgnoreCase("randomVirtualDevice")) {
-            deviceName = getAndroidEmulator();
+            device = getAndroidEmulator();
         }
 
-        // Note: Getting the above name with deviceName is not enough with synchronized. You need synchronization in below steps too.
-        // set unique systemPort and virtual device name from configuration files for the selected device
-        String pathAndroidCapabilities = config.getString("pathAndroidCapabilities").toLowerCase();
-        String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
-        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
-
         // Set the avd property with the virtual drive that you have with you on your machine.
-        capabilities.setCapability("avd", deviceName);
+        capabilities.setCapability("avd", device.getDeviceName());
+        capabilities.setCapability("deviceName", device.getUdid());
+        capabilities.setCapability("udid", device.getUdid());
+        capabilities.setCapability("systemPort  ", device.getSystemPort());
+
         return capabilities;
     }
 

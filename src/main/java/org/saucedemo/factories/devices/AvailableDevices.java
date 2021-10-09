@@ -13,14 +13,27 @@ http://tutorials.jenkov.com/java-concurrency/synchronized.html
 @Slf4j
 public class AvailableDevices {
     private static Integer deviceNumber = 0;
+    private static Integer emulatorNumber = 5554;
+    private static Integer systemPort = 8200;
 
-    public static synchronized String getAndroidEmulator(){
+    public static synchronized Device getAndroidEmulator(){
+        Device device = new Device();
+
         log.info("fetching device number: {}", deviceNumber);
         String deviceName = AndroidEmulators.values()[deviceNumber].toString();
         log.info("device fetched: {}", deviceName);
 
+        // Set all the unique properties for this emulator device (necessary for execution in parallel)
+        device.setDeviceName(deviceName);
+        device.setUdid("emulator-" + emulatorNumber);
+        device.setSystemPort(systemPort);
+
         deviceNumber ++;
-        return deviceName;
+        systemPort ++;
+        emulatorNumber = emulatorNumber + 2;
+
+        log.info("Device: {}", device);
+        return device;
     }
 
     public static synchronized String getIosSimulator(){
