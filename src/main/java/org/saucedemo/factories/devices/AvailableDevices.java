@@ -18,6 +18,14 @@ public class AvailableDevices {
     private static Integer emulatorNumber = 5554;
     private static Integer systemPort = 8200;
 
+    /*
+    Pick a device (fixed or random) based on the choice provided in application.conf
+    If user wants to pick any random device. Then get a random device.
+    Else, keep the deviceName provided by user in application.conf file. In case if user wants to test with a specific device.
+    Note: that if you do provide a fixed deviceName, then you cannot run tests in parallel.
+    So change parallel property to false in junit-platform.properties file.
+    junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
+    */
     public static synchronized Device getAndroidEmulator(){
         // todo: Add logic here to check if unique device is needed at a class level, or test level or both.
         Config config = EnvConfigFactory.getConfig();
@@ -33,6 +41,7 @@ public class AvailableDevices {
         return device;
     }
 
+    // Say when running tests in series in a particular class.
     public static synchronized Device getSpecificAndroidEmulator(String deviceName){
         Device device = new Device();
 
@@ -45,6 +54,8 @@ public class AvailableDevices {
         return device;
     }
 
+    // Say when running tests in parallel within a single class.
+    // todo : OR say, when running tests in parallel on multiple classes (within each class, whereas tests will then run in sequence)
     public static synchronized Device getRandomAndroidEmulator(){
         Device device = new Device();
 
