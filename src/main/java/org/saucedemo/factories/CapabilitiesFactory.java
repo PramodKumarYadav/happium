@@ -31,7 +31,7 @@ public class CapabilitiesFactory {
      */
     private static String platformName = config.getString("platformName").toLowerCase();
     private static String deviceType = config.getString("deviceType").toLowerCase();
-    private static String deviceName = config.getString("deviceName").toLowerCase();
+    private static String deviceName = config.getString("deviceName");
     private static String host = config.getString("host").toLowerCase();
 
     // Don't want to create any driver for this factory class.
@@ -48,42 +48,44 @@ public class CapabilitiesFactory {
         log.info("Running tests on deviceName: {}", deviceName);
         log.info("Running tests on host: {}", host);
 
-        switch (platformName) {
-            case "android":
-                // Set common android capabilities here from the config file
-                capabilities = setAndroidCommonCapabilities(capabilities);
+        // Capabilities specific for host
+        switch (host) {
+            case "local":
+                // On localhost you are either on android or on IOS (not both).
+                // Get local app location stored in the project here (via absolute path)
+                String pathAndroidApp = config.getString("pathAndroidApp");
+                capabilities.setCapability("app", getCanonicalPath(pathAndroidApp));
 
-                // Set capabilities specific for device type (fixed or virtual)
-                switch (deviceType) {
-                    case "real":
-                        capabilities = setAndroidRealDeviceCapabilities(deviceName, capabilities);
-                    case "virtual":
-                        capabilities = setAndroidEmulatorCapabilities(deviceName, capabilities);
+                switch (platformName) {
+                    case "android":
+                        // Set common android capabilities here from the config file
+                        capabilities = setAndroidCommonCapabilities(capabilities);
+
+                        // Set capabilities specific for device type (fixed or virtual)
+                        switch (deviceType) {
+                            case "real":
+                                capabilities = setAndroidRealDeviceCapabilities(deviceName, capabilities);
+                            case "virtual":
+                                capabilities = setAndroidEmulatorCapabilities(capabilities);
+                        }
+                        break;
+                    case "ios":
+                        // Common iOS capabilities here
+                        capabilities.setCapability("platformName", "ios");
+                        capabilities.setCapability("automationName", "XCUITest");
+                        capabilities.setCapability("deviceName", "iPhone 7");
+
+                        break;
+                    default:
+                        break;
                 }
-
-                // Capabilities specific for host
-                switch (host) {
-                    case "local":
-                        // Get local app location stored in the project here (via absolute path)
-                        String pathAndroidApp = config.getString("pathAndroidApp");
-                        capabilities.setCapability("app", getCanonicalPath(pathAndroidApp));
-                    case "browser-stack":
-                        // Get app location on remote server here (via http)
-                        // Note this property should be parsed from a config file and should not be set here (as done below).
-                        // Since there can be multiple devices that are available to run on host and not just One.
-                        // capabilities.setCapability("app", "bs://" + ANDROID_HASHED_APP_ID);
-                }
-
-                break;
-            case "ios":
-                // Common iOS capabilities here
-                capabilities.setCapability("platformName", "ios");
-                capabilities.setCapability("automationName", "XCUITest");
-                capabilities.setCapability("deviceName", "iPhone 7");
-
-                break;
-            default:
-                break;
+            case "browser-stack":
+                // On browser-stack cluster, you can run both IOS and android tests.
+                // Also the capabilities are different. To be added when I add browser-stack in framework.
+                // Get app location on remote server here (via http)
+                // Note this property should be parsed from a config file and should not be set here (as done below).
+                // Since there can be multiple devices that are available to run on host and not just One.
+                // capabilities.setCapability("app", "bs://" + ANDROID_HASHED_APP_ID);
         }
 
         log.info("Capabilities: {}", capabilities);
@@ -119,7 +121,7 @@ public class CapabilitiesFactory {
      In absence of this, the same device was getting picked by multiple threads running in parallel.
     http://tutorials.jenkov.com/java-concurrency/synchronized.html
     */
-    private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(String deviceName, DesiredCapabilities capabilities){
+    private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities){
         // get default properties from android-emulator-capabilities.json
         String pathAndroidEmulatorDefaultCapabilities = config.getString("pathAndroidEmulatorDefaultCapabilities").toLowerCase();
         capabilities = setCapabilitiesFromFile(pathAndroidEmulatorDefaultCapabilities, capabilities);
@@ -133,12 +135,8 @@ public class CapabilitiesFactory {
         junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
         */
 
-        Device device = new Device();
-        if (deviceName.equalsIgnoreCase("randomVirtualDevice")) {
-            device = getAndroidEmulator();
-        }
-
-        // Set the avd property with the virtual drive that you have with you on your machine.
+        // Get and Set the avd property with the virtual drive that you have with you on your machine.
+        Device device = getAndroidEmulator();
         capabilities.setCapability("avd", device.getDeviceName());
         capabilities.setCapability("deviceName", device.getUdid());
         capabilities.setCapability("udid", device.getUdid());
