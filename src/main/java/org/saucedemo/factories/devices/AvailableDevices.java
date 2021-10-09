@@ -21,18 +21,18 @@ public class AvailableDevices {
 
         log.info("fetching device number: {}", deviceNumber);
         String deviceName = AndroidEmulators.values()[deviceNumber].toString();
-        log.info("device fetched: {}", deviceName);
 
         // Set all the unique properties for this emulator device (necessary for execution in parallel)
         device.setDeviceName(deviceName);
         device.setUdid("emulator-" + emulatorNumber);
         device.setSystemPort(systemPort);
 
+        // Increment so that next device fetched has unique properties. 
         deviceNumber ++;
         systemPort ++;
         emulatorNumber = emulatorNumber + 2;
 
-        log.info("Device: {}", device);
+        log.info("Device details: {}", device);
         return device;
     }
 
