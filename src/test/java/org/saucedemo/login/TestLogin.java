@@ -5,8 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.screens.LoginScreen;
-import org.saucedemo.screens.ProductDescriptionScreen;
 import org.saucedemo.screens.ProductsScreen;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +19,6 @@ class TestLogin {
     private AppiumDriver driver;
     private LoginScreen loginScreen;
     private ProductsScreen productsScreen;
-    private ProductDescriptionScreen productDescriptionScreen;
 
     @BeforeEach
     public void setUp() {
@@ -26,7 +26,6 @@ class TestLogin {
 
         loginScreen = new LoginScreen(driver);
         productsScreen = new ProductsScreen(driver);
-        productDescriptionScreen = new ProductDescriptionScreen(driver);
     }
 
     @AfterEach
@@ -34,9 +33,12 @@ class TestLogin {
         driver.quit();
     }
 
-    @Test
-    void assertThatAValidUserCanLogin() {
-        loginScreen.login("standard_user", "secret_sauce");
+    @ParameterizedTest(name = "Login user - {0}")
+    @CsvSource({"standard_user,secret_sauce"
+            ,"problem_user,secret_sauce"
+    })
+    void assertThatAValidUserCanLogin(String userName, String password) {
+        loginScreen.login(userName, password);
         assertTrue(productsScreen.isProductHeadingDisplayed());
     }
 
@@ -44,12 +46,5 @@ class TestLogin {
     void assertThatAWarningIsDisplayedToALockedOutUser() {
         loginScreen.login("locked_out_user", "secret_sauce");
         assertEquals("Hellas Pindakaas!", loginScreen.getErrorMessage());
-    }
-
-    @Test
-    void assertThatAWarningIsDisplayedForAProblemUser() {
-        loginScreen.login("problem_user", "secret_sauce");
-        productsScreen.clickProductNumber(1);
-        assertEquals( "Sauce Labs Bolt T-Shirt",productDescriptionScreen.getProductDescription());
     }
 }

@@ -10,21 +10,33 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
 import org.saucedemo.screens.actions.ScreenActions;
 
+import java.util.List;
+
 @Slf4j
 @Data
-public class ProductDescriptionScreen {
+public class ProductScreen {
     ScreenActions screenActions;
 
-    public ProductDescriptionScreen(AppiumDriver driver) {
+    public ProductScreen(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
         screenActions = new ScreenActions(driver);
     }
 
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[1]")
     @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[1]")
+    private MobileElement productSummary;
+
+    @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[2]")
+    @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[2]")
     private MobileElement productDescription;
 
-    public String getProductDescription() {
+    public String getProductSummary() {
+        screenActions.waitUntilElementIsVisible(productSummary);
+        return productSummary.getText();
+    }
+
+    public String getProductDescriptionByText(String partialText) {
+        screenActions.scrollAndGetElementContainingText(partialText);
         screenActions.waitUntilElementIsVisible(productDescription);
         return productDescription.getText();
     }
