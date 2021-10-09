@@ -154,16 +154,8 @@ public class CapabilitiesFactory {
         String pathAndroidEmulatorDefaultCapabilities = config.getString("pathAndroidEmulatorDefaultCapabilities");
         capabilities = setCapabilitiesFromFile(pathAndroidEmulatorDefaultCapabilities, capabilities);
 
-        /*
-        Pick a device (fixed or random) based on the choice provided in application.conf
-        If user wants to pick any random device. Then get a random device.
-        Else, keep the deviceName provided by user in application.conf file. In case if user wants to test with a specific device.
-        Note: that if you do provide a fixed deviceName, then you cannot run tests in parallel.
-        So change parallel property to false in junit-platform.properties file.
-        junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
-        */
-
-        // Get and Set the avd property with the virtual drive that you have with you on your machine.
+        // getAndroidEmulator method contains logic to decide if user wants a 'specific' device or a 'random' device.
+        // or "unique devices per test" within one class OR "unique device per each test class".
         Device device = getAndroidEmulator();
         capabilities.setCapability("avd", device.getDeviceName());
         capabilities.setCapability("deviceName", device.getUdid());
