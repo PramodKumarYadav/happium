@@ -16,7 +16,7 @@ import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities
 @Slf4j
 public class DriverFactory {
     private static Config config = EnvConfigFactory.getConfig();
-    private static String platformName = config.getString("platformName").toLowerCase();
+    private static String platformName = config.getString("platformName");
     private static String hostURI = config.getString("hostURI");
     private static URL hostURL = getHostURL(hostURI);
 
