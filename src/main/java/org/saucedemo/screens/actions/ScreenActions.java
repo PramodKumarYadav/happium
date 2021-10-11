@@ -42,6 +42,11 @@ public class ScreenActions {
         mobileElement.click();
     }
 
+    public String getText(MobileElement mobileElement) {
+        waitUntilElementIsVisible(mobileElement).isEnabled();
+        return mobileElement.getText();
+    }
+
     // todo: This is android specific method used only for demo purpose. Eventually replace this with a method that works
     //  on both android and ios.
     public WebElement scrollAndGetElementContainingText(String partialText) {

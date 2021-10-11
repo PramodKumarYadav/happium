@@ -26,9 +26,11 @@ public class ProductsScreen {
     @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]/android.widget.TextView")
     private MobileElement productsTitle;
 
-    @AndroidFindBy(accessibility = "test-Item")
-    @iOSXCUITFindBy(xpath = "//android.widget.TextView[@content-desc='test-Item']")
-    private List<MobileElement> products;
+    @AndroidFindBy(accessibility = "test-Item title")
+    private List<MobileElement> productsSummary;
+
+    @AndroidFindBy(accessibility = "test-Price")
+    private List<MobileElement> productsPrice;
 
     public Boolean isProductHeadingDisplayed() {
         screenActions.waitUntilElementIsVisible(productsTitle);
@@ -36,7 +38,14 @@ public class ProductsScreen {
     }
 
     public void clickProductNumber(Integer itemNumber) {
-        screenActions.waitUntilElementIsVisible(products.get(itemNumber));
-        screenActions.clickButton(products.get(itemNumber));
+        screenActions.clickButton(productsSummary.get(itemNumber));
+    }
+
+    public String getProductTitle(Integer itemNumber) {
+        return screenActions.getText(productsSummary.get(itemNumber));
+    }
+
+    public String getProductPrice(Integer itemNumber) {
+        return screenActions.getText(productsPrice.get(itemNumber));
     }
 }
