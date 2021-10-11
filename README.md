@@ -4,6 +4,22 @@ cross platform, mobile app tests.
 
 End result should be a clean, readable and maintainable framework; the core of which you should be able to port to your actual project as is, and start writing tests from there. 
 
+# Key features
+- [x] Atomic independent tests
+- [x] Core framework is fully plug and play. Just change configuration as per your app and write domain and tests as per your app.
+- [x] Four different modes of execution - just by selecting a config option.
+    - [x] serial (all tests) - preferred mode when you want to test/debug a particular device.
+    - [ ] parallel ( all Test Classes and within each test class, run in serial). Preferred mode for running tests in CI. 
+    - [ ] parallel ( all Test cases with a Class but all Test classes in series (one after another). - Preferred mode when building new tests for a test class and testing if all tests can run in parallel without issues before pushing them to GitHub. 
+    - [x] parallel ( all Test Classes and within each test class, all tests also run in parallel) - a total beast mode if your machine can handle it - that is :-).
+- [x] A very clean design with very high separation of concerns. 
+    - [x] This means every entity is highly readable, maintainable and scale able.  
+    - [x] Tests, app, data, config, domain, framework entities, everything is well separated and results in near zero duplication anywhere.
+- [x] Framework design allows you to write highly readable tests. 
+    - [x] So tests read like reading english (with test intentions rather than implementation logic).
+    - [x] Tip: Take examples as a guide and Use page object model to write your screen entities and separate test intentions from screen implementation to write readable tests.
+- [x] With time, to add more common methods that will build a library of actions that will bring stability and capabilities to what you can do on your screens/ apps.
+
 ## Working principles
 There are two key principles you will see throughout being followed in the project. 
 - **For tests**: I will follow the principle of `seperating test intentions from test implementation`. Meaning, you will only see test intentions in the tests without any code implementation details in tests. 
