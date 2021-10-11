@@ -9,13 +9,16 @@ import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductScreen;
 import org.saucedemo.screens.ProductsScreen;
 
+import java.lang.invoke.MethodHandles;
+
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.saucedemo.factories.DriverFactory.getDriver;
 
 @Slf4j
 class TestProduct {
+    private static final String className = MethodHandles.lookup().lookupClass().getSimpleName();
+
     private AppiumDriver driver;
     private LoginScreen loginScreen;
     private ProductsScreen productsScreen;
@@ -23,7 +26,7 @@ class TestProduct {
 
     @BeforeEach
     public void setUp() {
-        driver = getDriver();
+        driver = getDriver(className);
 
         loginScreen = new LoginScreen(driver);
         productsScreen = new ProductsScreen(driver);

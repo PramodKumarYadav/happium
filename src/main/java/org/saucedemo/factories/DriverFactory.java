@@ -33,15 +33,15 @@ public class DriverFactory {
      So you would not need to change anything anywhere in any of the tests.
     */
 
-    public static AppiumDriver getDriver() {
-        return getDriver(platformName);
+    public static AppiumDriver getDriver(String testClassName) {
+        return getDriver(platformName, testClassName);
     }
 
-    public static AppiumDriver getDriver(String platformName) {
+    public static AppiumDriver getDriver(String platformName, String testClassName) {
         AppiumDriver driver = null;
 
         // The device to be chosen, and thus its capabilities, is done in CapabilitiesFactory and is not drivers concern.
-        DesiredCapabilities capabilities = getDesiredCapabilities();
+        DesiredCapabilities capabilities = getDesiredCapabilities(testClassName);
 
         switch (platformName) {
             case "android":
