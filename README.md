@@ -19,6 +19,10 @@ End result should be a clean, readable and maintainable framework; the core of w
     - [x] So tests read like reading english (with test intentions rather than implementation logic).
     - [x] Tip: Take examples as a guide and Use page object model to write your screen entities and separate test intentions from screen implementation to write readable tests.
 - [x] With time, to add more common methods that will build a library of actions that will bring stability and capabilities to what you can do on your screens/ apps.
+- [x] Deep linking examples to show how you can speed up your test execution 
+    - [x] Skip login and show how application *state* can be set using deeplinks to test a particular screen; instead of logging in every time.  
+    - [x] Login is the only class where we should test all login scenarios. For testing other screens heavily use deeplinks (if you can). 
+    - [x] Note: You should have a very few end to end scenarios that involves actual end to end flows via login and user interactions. 
 
 ## Working principles
 There are two key principles you will see throughout being followed in the project. 
