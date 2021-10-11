@@ -40,9 +40,10 @@ public class CapabilitiesFactory {
     }
 
     // In case if in future, there is a need to get a capability from another calling class, we also provide a option for that.
-    public static DesiredCapabilities getDesiredCapabilities() {
+    public static DesiredCapabilities getDesiredCapabilities(String testClassName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
+        log.info("Running tests for TestClass: {}", testClassName);
         log.info("Running tests on host: {}", host);
         log.info("Running tests on platform: {}", platformName);
         log.info("Running tests on deviceType: {}", deviceType);

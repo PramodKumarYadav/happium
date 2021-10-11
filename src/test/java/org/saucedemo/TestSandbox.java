@@ -7,6 +7,7 @@ import org.saucedemo.factories.devices.AndroidEmulators;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -15,9 +16,11 @@ import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities
 
 @Slf4j
 public class TestSandbox {
+    private static String className = MethodHandles.lookup().lookupClass().getSimpleName();
+
     @Test
     void testDesiredCapabilitiesDefault() {
-        DesiredCapabilities capabilities = getDesiredCapabilities();
+        DesiredCapabilities capabilities = getDesiredCapabilities(className);
         log.info(capabilities.toString());
     }
 
