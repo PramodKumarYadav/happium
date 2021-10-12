@@ -15,19 +15,17 @@ import java.lang.invoke.MethodHandles;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 import static org.saucedemo.factories.DriverFactory.getDriver;
 
 @Slf4j
 class TestProducts {
     private static final String className = MethodHandles.lookup().lookupClass().getSimpleName();
+    private static final Config config = EnvConfigFactory.getConfig();
 
     private AppiumDriver driver;
     private ProductsScreen productsScreen;
     private DeepLink deepLink;
-
-    private static final Config config = EnvConfigFactory.getConfig();
-    private static final String swagItemsOverview = config.getString("swagItemsOverview");
-    private static final String packageName = config.getString("packageName");
 
     @BeforeEach
     public void setUp() {
@@ -35,9 +33,8 @@ class TestProducts {
         productsScreen = new ProductsScreen(driver);
 
         deepLink = new DeepLink(driver);
-
-        String url = String.format("%s/%s", swagItemsOverview, "0,1");
-        deepLink.deepLinkToScreen(url , packageName);
+        String url = setDeepLinkUrl(config.getString("swagItemsOverview"), "0,1");
+        deepLink.toScreen(url);
     }
 
     @AfterEach
@@ -47,7 +44,7 @@ class TestProducts {
 
     @ParameterizedTest(name = "Product details for product number - {0}")
     @CsvSource({"0, Sauce Labs Backpack,$29.99"
-            ,"1, Sauce Labs Bike Light,$9.99"
+            , "1, Sauce Labs Bike Light,$9.99"
     })
     void assertThatProductDescriptionIsCorrectForAStandardUser(String productNumber, String productSummary, String productPrice) {
         assertAll("Products Overview"

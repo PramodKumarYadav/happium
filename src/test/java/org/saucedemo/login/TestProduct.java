@@ -15,19 +15,17 @@ import java.lang.invoke.MethodHandles;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 import static org.saucedemo.factories.DriverFactory.getDriver;
 
 @Slf4j
 class TestProduct {
     private static final String className = MethodHandles.lookup().lookupClass().getSimpleName();
+    private static final Config config = EnvConfigFactory.getConfig();
 
     private AppiumDriver driver;
     private ProductScreen productScreen;
     private DeepLink deepLink;
-
-    private static final Config config = EnvConfigFactory.getConfig();
-    private static final String swagItemDetails = config.getString("swagItemDetails");
-    private static final String packageName = config.getString("packageName");
 
     @BeforeEach
     public void setUp() {
@@ -46,9 +44,9 @@ class TestProduct {
     @CsvSource(value = {"0; Sauce Labs Backpack;carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection."
             ,"1; Sauce Labs Bike Light;A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included."
     }, delimiter = ';')
-    void assertThatProductDescriptionIsCorrectForAStandardUser(Integer productNumber, String productSummary, String productDescription) {
-        String url = String.format("%s/%s", swagItemDetails, productNumber);
-        deepLink.deepLinkToScreen(url , packageName);
+    void assertThatProductDescriptionIsCorrectForAStandardUser(String productNumber, String productSummary, String productDescription) {
+        String url = setDeepLinkUrl(config.getString("swagItemDetails"), productNumber);
+        deepLink.toScreen(url);
 
         assertAll("Product Details"
                 , () -> assertEquals(productSummary, productScreen.getProductSummary())
