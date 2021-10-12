@@ -25,6 +25,7 @@ End result should be a clean, readable and maintainable framework; the core of w
     - [x] Note: You should have a very few end to end scenarios that involves actual end to end flows via login and user interactions. 
 - [X] How to install Appium on windows with an automated script (avoid manual setup) 
 
+
 ## Working principles
 There are two key principles you will see throughout being followed in the project. 
 - **For tests**: I will follow the principle of `seperating test intentions from test implementation`. Meaning, you will only see test intentions in the tests without any code implementation details in tests. 
