@@ -39,9 +39,7 @@ public class AvailableDevices {
         ExecutionModes mode = getExecutionMode();
         switch (mode) {
             case CLASS_SERIES_TEST_SERIES:
-                Config config = EnvConfigFactory.getConfig();
-                String deviceName = config.getString("deviceName");
-                device = getASpecificAndroidEmulator(deviceName);
+                device = getASpecificAndroidEmulator();
                 break;
             case CLASS_SERIES_TEST_PARALLEL:
                 log.info("todo -2");
@@ -59,7 +57,15 @@ public class AvailableDevices {
         return device;
     }
 
+    // A convenience method to get the device name from application.conf file.
     // Say when running tests in series in a particular class.
+    public static synchronized Device getASpecificAndroidEmulator(){
+        Config config = EnvConfigFactory.getConfig();
+        String deviceName = config.getString("deviceName");
+        return getASpecificAndroidEmulator(deviceName);
+    }
+
+    // If in future, we need to pass on the deviceName, then we will get rid of convenience method and can use this.
     public static synchronized Device getASpecificAndroidEmulator(String deviceName){
         Device device = new Device();
 
