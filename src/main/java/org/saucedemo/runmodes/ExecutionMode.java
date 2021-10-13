@@ -32,6 +32,7 @@ public class ExecutionMode {
             log.info("All classes run in series. Within each class, all tests run in series.");
             return ExecutionModes.CLASS_SERIES_TEST_SERIES;
         } else {
+            // Run all tests and classes in different parallel modes - except the first option below (which is same as running in series)
             if (classMode.equalsIgnoreCase("same_thread") && testMode.equalsIgnoreCase("same_thread")) {
                 log.info("All classes run in series. Within each class, all tests run in series.");
             } else if (classMode.equalsIgnoreCase("same_thread") && testMode.equalsIgnoreCase("concurrent")) {
