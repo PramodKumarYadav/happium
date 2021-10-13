@@ -67,7 +67,7 @@ public class CapabilitiesFactory {
                             case "real":
                                 capabilities = setAndroidRealDeviceCapabilities(deviceName, capabilities);
                             case "virtual":
-                                capabilities = setAndroidEmulatorCapabilities(capabilities);
+                                capabilities = setAndroidEmulatorCapabilities(capabilities, testClassName);
                         }
                         break;
                     case "ios":
@@ -150,14 +150,14 @@ public class CapabilitiesFactory {
      In absence of this, the same device was getting picked by multiple threads running in parallel.
     http://tutorials.jenkov.com/java-concurrency/synchronized.html
     */
-    private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities){
+    private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities, String testClassName){
         // get default properties from android-emulator-capabilities.json
         String pathAndroidEmulatorDefaultCapabilities = config.getString("pathAndroidEmulatorDefaultCapabilities");
         capabilities = setCapabilitiesFromFile(pathAndroidEmulatorDefaultCapabilities, capabilities);
 
         // getAndroidEmulator method contains logic to decide if user wants a 'specific' device or a 'random' device.
         // or "unique devices per test" within one class OR "unique device per each test class".
-        Device device = getAndroidEmulator();
+        Device device = getAndroidEmulator(testClassName);
         capabilities.setCapability("avd", device.getDeviceName());
         capabilities.setCapability("udid", device.getUdid());
         capabilities.setCapability("deviceName", device.getUdid());

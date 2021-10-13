@@ -3,6 +3,11 @@ package org.saucedemo.factories.devices;
 import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.saucedemo.factories.EnvConfigFactory;
+import org.saucedemo.runmodes.ExecutionModes;
+
+import java.util.HashMap;
+
+import static org.saucedemo.runmodes.ExecutionMode.getExecutionMode;
 
 /*
 We had a unique problem statement here. Since for parallel execution in appium, you can only run a test on a single device,
@@ -18,6 +23,9 @@ public class AvailableDevices {
     private static Integer emulatorNumber = 5554;
     private static Integer systemPort = 8200;
 
+    // Create a map where you can add any device that is already used by a test class
+    private static HashMap<String, Device> testClassDevicesMap = new HashMap<>();
+
     /*
     Pick a device (fixed or random) based on the choice provided in application.conf
     If user wants to pick any random device. Then get a random device.
@@ -26,23 +34,33 @@ public class AvailableDevices {
     So change parallel property to false in junit-platform.properties file.
     junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
     */
-    public static synchronized Device getAndroidEmulator(){
-        // todo: Add logic here to check if unique device is needed at a class level, or test level or both.
-        Config config = EnvConfigFactory.getConfig();
-        String deviceName = config.getString("deviceName");
-
+    public static synchronized Device getAndroidEmulator(String testClassName) {
         Device device = new Device();
-        if (deviceName.equalsIgnoreCase("randomVirtualDevice")) {
-            device = getRandomAndroidEmulator();
-        }else {
-            device = getSpecificAndroidEmulator(deviceName);
+        ExecutionModes mode = getExecutionMode();
+        switch (mode) {
+            case CLASS_SERIES_TEST_SERIES:
+                Config config = EnvConfigFactory.getConfig();
+                String deviceName = config.getString("deviceName");
+                device = getASpecificAndroidEmulator(deviceName);
+                break;
+            case CLASS_SERIES_TEST_PARALLEL:
+                log.info("todo -2");
+                break;
+            case CLASS_PARALLEL_TEST_SERIES:
+                device = getAUniqueAndroidEmulatorPerTestClass(testClassName);
+                break;
+            case CLASS_PARALLEL_TEST_PARALLEL:
+                device = getAUniqueAndroidEmulator();
+                break;
+            default:
+                break;
         }
 
         return device;
     }
 
     // Say when running tests in series in a particular class.
-    public static synchronized Device getSpecificAndroidEmulator(String deviceName){
+    public static synchronized Device getASpecificAndroidEmulator(String deviceName){
         Device device = new Device();
 
         // Set all the unique properties for this emulator device (necessary for execution in parallel)
@@ -54,9 +72,21 @@ public class AvailableDevices {
         return device;
     }
 
+    public static synchronized Device getAUniqueAndroidEmulatorPerTestClass(String testClassName){
+        if(testClassDevicesMap.containsKey(testClassName)){
+            log.info("device already available.");
+            log.info("Device details: {}", testClassDevicesMap.get(testClassName));
+            return testClassDevicesMap.get(testClassName);
+        } else{
+            log.info("device not already available. Fetch a unique one for test class {}", testClassName);
+            Device device = getAUniqueAndroidEmulator();
+            testClassDevicesMap.put(testClassName, device);
+            return device;
+        }
+    }
+
     // Say when running tests in parallel within a single class.
-    // todo : OR say, when running tests in parallel on multiple classes (within each class, whereas tests will then run in sequence)
-    public static synchronized Device getRandomAndroidEmulator(){
+    public static synchronized Device getAUniqueAndroidEmulator(){
         Device device = new Device();
 
         log.info("fetching device number: {}", deviceNumber);
