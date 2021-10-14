@@ -1,4 +1,9 @@
-# happium 😊
+# happium 😊 📱
+![GitHub contributors](https://img.shields.io/github/contributors/pramodkumaryadav/happium)
+![GitHub Release Date](https://img.shields.io/github/release-date/pramodkumaryadav/happium)
+![GitHub last commit](https://img.shields.io/github/last-commit/pramodkumaryadav/happium)
+![GitHub commits since latest release (by date)](https://img.shields.io/github/commits-since/pramodkumaryadav/happium/1.0/main)
+
 Goal of this project is to provide new Appium users with a reference framework that they can use to create production grade,
 cross platform, mobile app tests.
 
