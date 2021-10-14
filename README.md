@@ -6,9 +6,9 @@ An open source **production ready** test framework on Appium, the core of which 
 
 Framework uses **Junit5** and provides **4 different modes of running your tests in parallel** on a **local machine**, and a **clean design**, with **clear separation of concerns**, that results in **high readability** and **low maintenance**; all in all a **pleasure to work with**! 
 
-> P.S: And yes, this probably maybe the only framework on the internet that provides 4 modes of execution using 
-junit5 on localhost (there are examples to run on browsertack and saucelabs but on localhost this is 
-the first - atleast I couldnt find another one). And it is only going to get better from here, so stay tuned!
+> P.S: And yes, this probably maybe the only framework on the internet (using Junit5), that provides 4 modes of execution on localhost (there are examples to run on browsertack and saucelabs but on localhost this is the first - or atleast I couldnt find another one). And it is only going to get better and better from here. 
+
+> If you see an issue or want to get a feature added; feel free to open an issue in the framework. If you have a cool idea that can make the framework better, do send me a request and I will add you as a contributor :). 
 
 # Key features
 - **A clean design** with clear separation of concerns
