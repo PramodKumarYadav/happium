@@ -2,7 +2,7 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/pramodkumaryadav/happium)
 ![GitHub last commit](https://img.shields.io/github/last-commit/pramodkumaryadav/happium)
 
-An open source **production ready** test framework on Appium, the core of which is **directly reusable** in your project with minimum configuration changes. 
+An open source **production ready** test framework on Appium, the core of which is **directly reusable** in your project with minimum configuration changes.
 
 Framework uses **Junit5** and provides **4 different modes of running your tests in parallel** on a **local machine**, and a **clean design**, with **clear separation of concerns**, that results in **high readability** and **low maintenance**; all in all a **pleasure to work with**! 
 
