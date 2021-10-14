@@ -2,12 +2,9 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/pramodkumaryadav/happium)
 ![GitHub last commit](https://img.shields.io/github/last-commit/pramodkumaryadav/happium)
 
-An open source production ready test framework on Appium, the core of which can be directly reused in your project
-with minimum configuration changes. 
+An open source **production ready** test framework on Appium, the core of which is **directly reusable** in your project with minimum configuration changes. 
 
-Framework uses Junit5 and provides 4 different modes of running your tests in parallel **on a local
-machine**, and a clean design, with clear separation of concerns, that makes the core of this framework highly 
-reusable and a pleasure to work with! 
+Framework uses **Junit5** and provides **4 different modes of running your tests in parallel** on a **local machine**, and a **clean design**, with **clear separation of concerns**, that results in **high readability** and **low maintenance**; all in all a **pleasure to work with**! 
 
 > P.S: And yes, this probably maybe the only framework on the internet that provides 4 modes of execution using 
 junit5 on localhost (there are examples to run on browsertack and saucelabs but on localhost this is 
