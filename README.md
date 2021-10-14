@@ -2,32 +2,49 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/pramodkumaryadav/happium)
 ![GitHub last commit](https://img.shields.io/github/last-commit/pramodkumaryadav/happium)
 
-Goal of this project is to provide new Appium users with a reference framework that they can use to create production grade,
-cross platform, mobile app tests.
+An open source production ready test framework on Appium, the core of which can be directly reused in your project
+with minimum configuration changes. 
 
-End result should be a clean, readable and maintainable framework; the core of which you should be able to port to your actual project as is, and start writing tests from there. 
+Framework uses Junit5 and provides 4 different modes of running your tests in parallel **on a local
+machine**, and a clean design, with clear separation of concerns, that makes the core of this framework highly 
+reusable and a pleasure to work with! 
+
+> P.S: And yes, this probably maybe the only framework on the internet that provides 4 modes of execution using 
+junit5 on localhost (there are examples to run on browsertack and saucelabs but on localhost this is 
+the first - atleast I couldnt find another one). And it is only going to get better from here, so stay tuned!
 
 # Key features
+- **A clean design** with clear separation of concerns
+- **4 local parallel modes of execution**
+    - [x] CLASS_SERIES_TEST_SERIES,
+    - [x] CLASS_SERIES_TEST_PARALLEL,
+    - [x] CLASS_PARALLEL_TEST_SERIES,
+    - [x] CLASS_PARALLEL_TEST_PARALLEL
+- **Readable tests** that separates test intentions from test implementation. 
+- **Screen object model** based on page object model, to design and write screen classes. 
+- **Easy maintenance** and **scalability** is what **happium** offers!
+
+##  Objectives
 - [x] Atomic independent tests
-- [x] Core framework is fully plug and play. Just change configuration as per your app and write domain and tests as per your app.
+- [x] Core framework to be fully plug and play. Just change configuration as per your app and write domain and tests as per your app.
 - [x] Four different modes of execution - just by selecting a config option.
     - [x] serial (all tests) - preferred mode when you want to test/debug a particular device.
-    - [ ] parallel ( all Test Classes and within each test class, run in serial). Preferred mode for running tests in CI. 
-    - [ ] parallel ( all Test cases with a Class but all Test classes in series (one after another). - Preferred mode when building new tests for a test class and testing if all tests can run in parallel without issues before pushing them to GitHub. 
+    - [x] parallel ( all Test Classes and within each test class, run in serial). Preferred mode for running tests in CI.
+    - [x] parallel ( all Test cases with a Class but all Test classes in series (one after another). - Preferred mode when building new tests for a test class and testing if all tests can run in parallel without issues before pushing them to GitHub.
     - [x] parallel ( all Test Classes and within each test class, all tests also run in parallel) - a total beast mode if your machine can handle it - that is :-).
-- [x] A very clean design with very high separation of concerns. 
-    - [x] This means every entity is highly readable, maintainable and scale able.  
+- [x] A very clean design with very high separation of concerns.
+    - [x] This means every entity is highly readable, maintainable and scale able.
     - [x] Tests, app, data, config, domain, framework entities, everything is well separated and results in near zero duplication anywhere.
-- [x] Framework design allows you to write highly readable tests. 
+- [x] Framework design allows you to write highly readable tests.
     - [x] So tests read like reading english (with test intentions rather than implementation logic).
     - [x] Tip: Take examples as a guide and Use page object model to write your screen entities and separate test intentions from screen implementation to write readable tests.
 - [x] With time, to add more common methods that will build a library of actions that will bring stability and capabilities to what you can do on your screens/ apps.
-- [x] Deep linking examples to show how you can speed up your test execution 
-    - [x] Skip login and show how application *state* can be set using deeplinks to test a particular screen; instead of logging in every time.  
-    - [x] Login is the only class where we should test all login scenarios. For testing other screens heavily use deeplinks (if you can). 
-    - [x] Note: You should have a very few end to end scenarios that involves actual end to end flows via login and user interactions. 
-- [X] How to install Appium on windows with an automated script (avoid manual setup) 
-
+- [x] Deep linking examples to show how you can speed up your test execution
+    - [x] Skip login and show how application *state* can be set using deeplinks to test a particular screen; instead of logging in every time.
+    - [x] Login is the only class where we should test all login scenarios. For testing other screens heavily use deeplinks (if you can).
+    - [x] Note: You should have a very few end to end scenarios that involves actual end to end flows via login and user interactions.
+- [X] How to install Appium on windows with an automated script (avoid manual setup)
+  Use happium for **appium** and be happy automating mobile apps!
 
 ## Working principles
 There are two key principles you will see throughout being followed in the project. 
