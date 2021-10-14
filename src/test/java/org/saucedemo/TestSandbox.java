@@ -2,6 +2,7 @@ package org.saucedemo;
 
 import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.factories.EnvConfigFactory;
@@ -21,18 +22,21 @@ public class TestSandbox {
     private static String className = MethodHandles.lookup().lookupClass().getSimpleName();
     private static final Config config = EnvConfigFactory.getConfig();
 
+    @Disabled
     @Test
     void testDesiredCapabilitiesDefault() {
         DesiredCapabilities capabilities = getDesiredCapabilities(className);
         log.info(capabilities.toString());
     }
 
+    @Disabled
     @Test
     void getDeviceBasedOnLocation() {
         log.info("deviceName @ position 0: {}", AndroidEmulators.values()[0]);
         log.info("deviceName @ position 1: {}", AndroidEmulators.values()[1]);
     }
 
+    @Disabled
     @Test
     void getJunitProperties() throws IOException {
         Properties junitProperties = new Properties();
