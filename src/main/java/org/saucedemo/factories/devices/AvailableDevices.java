@@ -25,6 +25,7 @@ public class AvailableDevices {
 
     // Create a map where you can add any device that is already used by a test class
     private static HashMap<String, Device> testClassDevicesMap = new HashMap<>();
+    private static String currentTestClass = "";
 
     /*
     Pick a device (fixed or random) based on the choice provided in application.conf
@@ -42,7 +43,7 @@ public class AvailableDevices {
                 device = getASpecificAndroidEmulator();
                 break;
             case CLASS_SERIES_TEST_PARALLEL:
-                log.info("todo -2");
+                device = getAUniqueAndroidEmulatorPerTestWithinAClass(testClassName);
                 break;
             case CLASS_PARALLEL_TEST_SERIES:
                 device = getAUniqueAndroidEmulatorPerTestClass(testClassName);
@@ -59,14 +60,14 @@ public class AvailableDevices {
 
     // A convenience method to get the device name from application.conf file.
     // Say when running tests in series in a particular class.
-    public static synchronized Device getASpecificAndroidEmulator(){
+    public static synchronized Device getASpecificAndroidEmulator() {
         Config config = EnvConfigFactory.getConfig();
         String deviceName = config.getString("deviceName");
         return getASpecificAndroidEmulator(deviceName);
     }
 
     // If in future, we need to pass on the deviceName, then we will get rid of convenience method and can use this.
-    public static synchronized Device getASpecificAndroidEmulator(String deviceName){
+    public static synchronized Device getASpecificAndroidEmulator(String deviceName) {
         Device device = new Device();
 
         // Set all the unique properties for this emulator device (necessary for execution in parallel)
@@ -78,12 +79,28 @@ public class AvailableDevices {
         return device;
     }
 
-    public static synchronized Device getAUniqueAndroidEmulatorPerTestClass(String testClassName){
-        if(testClassDevicesMap.containsKey(testClassName)){
+    public static synchronized Device getAUniqueAndroidEmulatorPerTestWithinAClass(String testClassName) {
+        // If this is a new test class than initialize variables so that you can pick devices from beginning.
+        if (! testClassName.equalsIgnoreCase(currentTestClass)) {
+            log.info("New testClass tests started for: {}", testClassName);
+            currentTestClass = testClassName;
+
+            // Initialize all variables
+            deviceNumber = 0;
+            emulatorNumber = 5554;
+            systemPort = 8200;
+        }
+
+        log.info("Fetching a unique device for this test!");
+        return getAUniqueAndroidEmulator();
+    }
+
+    public static synchronized Device getAUniqueAndroidEmulatorPerTestClass(String testClassName) {
+        if (testClassDevicesMap.containsKey(testClassName)) {
             log.info("device already available.");
             log.info("Device details: {}", testClassDevicesMap.get(testClassName));
             return testClassDevicesMap.get(testClassName);
-        } else{
+        } else {
             log.info("device not already available. Fetch a unique one for test class {}", testClassName);
             Device device = getAUniqueAndroidEmulator();
             testClassDevicesMap.put(testClassName, device);
@@ -92,7 +109,7 @@ public class AvailableDevices {
     }
 
     // Say when running tests in parallel within a single class.
-    public static synchronized Device getAUniqueAndroidEmulator(){
+    public static synchronized Device getAUniqueAndroidEmulator() {
         Device device = new Device();
 
         log.info("fetching device number: {}", deviceNumber);
@@ -104,20 +121,20 @@ public class AvailableDevices {
         device.setSystemPort(systemPort);
 
         // Increment so that next device fetched has unique properties. 
-        deviceNumber ++;
-        systemPort ++;
+        deviceNumber++;
+        systemPort++;
         emulatorNumber = emulatorNumber + 2;
 
         log.info("Device details: {}", device);
         return device;
     }
 
-    public static synchronized String getIosSimulator(){
+    public static synchronized String getIosSimulator() {
         log.info("fetching device number: {}", deviceNumber);
         String deviceName = IosSimulators.values()[deviceNumber].toString();
         log.info("device fetched: {}", deviceName);
 
-        deviceNumber ++;
+        deviceNumber++;
         return deviceName;
     }
 }
