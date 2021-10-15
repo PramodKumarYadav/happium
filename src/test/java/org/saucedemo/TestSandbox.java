@@ -47,11 +47,17 @@ public class TestSandbox {
         String parallelMode = junitProperties.getProperty("junit.jupiter.execution.parallel.enabled");
         String testMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.default");
         String classMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.classes.default");
+        String configStrategy = junitProperties.getProperty("junit.jupiter.execution.parallel.config.strategy");
+        String fixedThreadCount = junitProperties.getProperty("junit.jupiter.execution.parallel.config.fixed.parallelism");
+        String dynamicFactor = junitProperties.getProperty("junit.jupiter.execution.parallel.config.dynamic.factor");
 
         assertAll("Product Details"
                 , () -> assertEquals("true", parallelMode, "parallelMode: ")
-                , () -> assertEquals("concurrent", testMode, "testMode: ")
+                , () -> assertEquals("same_thread", testMode, "testMode: ")
                 , () -> assertEquals("concurrent", classMode, "classMode: ")
+                , () -> assertEquals("fixed", configStrategy, "configStrategy: ")
+                , () -> assertEquals("4", fixedThreadCount, "fixedThreadCount: ")
+                , () -> assertEquals("1", dynamicFactor, "dynamicFactor: ")
         );
     }
 }
