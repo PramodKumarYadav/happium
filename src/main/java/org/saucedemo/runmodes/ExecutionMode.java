@@ -10,15 +10,9 @@ import java.util.Properties;
 
 @Slf4j
 public class ExecutionMode {
-    private static final Config config = EnvConfigFactory.getConfig();
-
     // Since junit execution properties are not going to change mid execution, this method can be final.
     public static final ExecutionModes getExecutionMode() {
-        Properties junitProperties = new Properties();
-
-        String pathJunitPlatformProperties = config.getString("pathJunitPlatformProperties");
-        junitProperties = getProperties(junitProperties, pathJunitPlatformProperties);
-
+        Properties junitProperties = getProperties();
         String parallelMode = junitProperties.getProperty("junit.jupiter.execution.parallel.enabled");
         String testMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.default");
         String classMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.classes.default");
@@ -54,7 +48,27 @@ public class ExecutionMode {
         return null;
     }
 
-    private static Properties getProperties(Properties junitProperties, String pathJunitPlatformProperties) {
+    public static final String getConfigStrategy() {
+        Properties junitProperties = getProperties();
+        String configStrategy = junitProperties.getProperty("junit.jupiter.execution.parallel.config.strategy");
+        log.info("configStrategy: {}", configStrategy);
+
+        return configStrategy;
+    }
+
+    public static final Integer getFixedThreadCount() {
+        Properties junitProperties = getProperties();
+        String fixedThreadCount = junitProperties.getProperty("junit.jupiter.execution.parallel.config.fixed.parallelism");
+        log.info("fixedThreadCount: {}", fixedThreadCount);
+
+        return Integer.parseInt(fixedThreadCount);
+    }
+
+    private static Properties getProperties() {
+        Config config = EnvConfigFactory.getConfig();
+        String pathJunitPlatformProperties = config.getString("pathJunitPlatformProperties");
+
+        Properties junitProperties = new Properties();
         try {
             junitProperties.load(new FileInputStream(pathJunitPlatformProperties));
         } catch (IOException e) {
