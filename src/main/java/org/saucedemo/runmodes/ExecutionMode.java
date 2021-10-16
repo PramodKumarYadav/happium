@@ -28,13 +28,14 @@ public class ExecutionMode {
         log.info("testMode: {}", testMode);
 
         // Run all tests and classes in series
-        if (parallelMode == "false") {
+        if (parallelMode.equalsIgnoreCase("false")) {
             log.info("All classes run in series. Within each class, all tests run in series.");
             return ExecutionModes.CLASS_SERIES_TEST_SERIES;
         } else {
             // Run all tests and classes in different parallel modes - except the first option below (which is same as running in series)
             if (classMode.equalsIgnoreCase("same_thread") && testMode.equalsIgnoreCase("same_thread")) {
                 log.info("All classes run in series. Within each class, all tests run in series.");
+                return ExecutionModes.CLASS_SERIES_TEST_SERIES;
             } else if (classMode.equalsIgnoreCase("same_thread") && testMode.equalsIgnoreCase("concurrent")) {
                 log.info("All classes run in Series. Within each class, all tests run in Parallel.");
                 return ExecutionModes.CLASS_SERIES_TEST_PARALLEL;
