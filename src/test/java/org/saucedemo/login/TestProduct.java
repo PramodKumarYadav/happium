@@ -17,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 import static org.saucedemo.factories.DriverFactory.getDriver;
+import static org.saucedemo.factories.devices.AvailableDevices.freeDevice;
 
 @Slf4j
 class TestProduct {
@@ -37,6 +38,7 @@ class TestProduct {
 
     @AfterEach
     public void tearDown() {
+        freeDevice(driver);
         driver.quit();
     }
 
