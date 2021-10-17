@@ -15,6 +15,7 @@ import java.lang.invoke.MethodHandles;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.saucedemo.factories.DriverFactory.getDriver;
+import static org.saucedemo.factories.devices.AvailableDevices.freeDevice;
 
 @Slf4j
 class TestLogin {
@@ -34,6 +35,7 @@ class TestLogin {
 
     @AfterEach
     public void tearDown() {
+        freeDevice(driver);
         driver.quit();
     }
 
