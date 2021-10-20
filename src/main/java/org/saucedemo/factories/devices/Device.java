@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class Device {
     private String udid;
     private String deviceName;
-    private Integer systemPort;
+    private Long systemPort;
 
 }
