@@ -35,7 +35,7 @@ public class CapabilitiesFactory {
     private static String deviceName = config.getString("deviceName");
 
     // Don't want to create any driver for this factory class.
-    private CapabilitiesFactory(){
+    private CapabilitiesFactory() {
 
     }
 
@@ -90,11 +90,9 @@ public class CapabilitiesFactory {
                         break;
                 }
             case "browserstack":
-                String browserstack_user = System.getenv("browserstack_user");
-                String browserstack_key = System.getenv("browserstack_key");
-
-                capabilities.setCapability("browserstack.user", browserstack_user);
-                capabilities.setCapability("browserstack.key", browserstack_key);
+                // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
+                capabilities.setCapability("browserstack.user", System.getenv("browserstack.user"));
+                capabilities.setCapability("browserstack.key", System.getenv("browserstack.key"));
                 capabilities.setCapability("app", config.getString("app"));
 
                 capabilities.setCapability("project", config.getString("project"));
@@ -113,7 +111,7 @@ public class CapabilitiesFactory {
         return capabilities;
     }
 
-    private static DesiredCapabilities setAndroidCommonCapabilities(DesiredCapabilities capabilities){
+    private static DesiredCapabilities setAndroidCommonCapabilities(DesiredCapabilities capabilities) {
         // get default properties from android-emulator-capabilities.json
         String pathAndroidCommonCapabilities = config.getString("pathAndroidCommonCapabilities");
 
@@ -121,7 +119,7 @@ public class CapabilitiesFactory {
         return capabilities;
     }
 
-    private static DesiredCapabilities setIosCommonCapabilities(DesiredCapabilities capabilities){
+    private static DesiredCapabilities setIosCommonCapabilities(DesiredCapabilities capabilities) {
         // get default properties from ios-common-capabilities.json
         String pathIOSCommonCapabilities = config.getString("pathIOSCommonCapabilities");
 
@@ -131,7 +129,7 @@ public class CapabilitiesFactory {
 
     // This is when you want to run tests on a Single real android device connected to your computer.
     // So no synchronized required (since tests will run in sequence). Remember to put the parallel run property to false in junit-platform.properties
-    private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities){
+    private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities) {
         String pathAndroidCapabilities = config.getString("pathAndroidCapabilities");
         String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
 
@@ -139,7 +137,7 @@ public class CapabilitiesFactory {
         return capabilities;
     }
 
-    private static DesiredCapabilities setIosRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities){
+    private static DesiredCapabilities setIosRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities) {
         String pathIOSCapabilities = config.getString("pathIOSCapabilities");
         String pathDeviceNameConfig = String.format("%s/%s.json", pathIOSCapabilities, deviceName);
 
@@ -158,7 +156,7 @@ public class CapabilitiesFactory {
      In absence of this, the same device was getting picked by multiple threads running in parallel.
     http://tutorials.jenkov.com/java-concurrency/synchronized.html
     */
-    private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities, String testClassName){
+    private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities, String testClassName) {
         // get default properties from android-emulator-capabilities.json
         String pathAndroidEmulatorDefaultCapabilities = config.getString("pathAndroidEmulatorDefaultCapabilities");
         capabilities = setCapabilitiesFromFile(pathAndroidEmulatorDefaultCapabilities, capabilities);
@@ -175,7 +173,7 @@ public class CapabilitiesFactory {
     }
 
     // todo: when you pick up IOS work.
-    private static synchronized DesiredCapabilities setIosSimulatorCapabilities(DesiredCapabilities capabilities){
+    private static synchronized DesiredCapabilities setIosSimulatorCapabilities(DesiredCapabilities capabilities) {
         return null;
     }
 
