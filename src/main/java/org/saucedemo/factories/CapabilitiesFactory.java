@@ -45,14 +45,15 @@ public class CapabilitiesFactory {
 
         log.info("Running tests for TestClass: {}", testClassName);
         log.info("Running tests on host: {}", host);
-        log.info("Running tests on platform: {}", platformName);
-        log.info("Running tests on deviceType: {}", deviceType);
-        log.info("Running tests on deviceName: {}", deviceName);
 
         // Capabilities specific for host
         switch (host) {
             case "local":
                 // On localhost you are either on android or on IOS (not both).
+                log.info("Running tests on platform: {}", platformName);
+                log.info("Running tests on deviceType: {}", deviceType);
+                log.info("Running tests on deviceName: {}", deviceName);
+
                 switch (platformName) {
                     case "android":
                         // Get local app location stored in the project here (via absolute path)
@@ -109,7 +110,7 @@ public class CapabilitiesFactory {
                 break;
         }
 
-        log.info("Capabilities: {}", capabilities);
+        log.debug("Capabilities: {}", capabilities);
         return capabilities;
     }
 
