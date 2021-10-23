@@ -2,14 +2,15 @@ package org.saucedemo.login;
 
 import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.deeplink.DeepLink;
 import org.saucedemo.factories.EnvConfigFactory;
 import org.saucedemo.screens.ProductScreen;
+import org.saucedemo.testresults.RunnerExtension;
 
 import java.lang.invoke.MethodHandles;
 
@@ -17,9 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 import static org.saucedemo.factories.DriverFactory.getDriver;
-import static org.saucedemo.factories.devices.AvailableDevices.freeDevice;
+import static org.saucedemo.testresults.TestResult.packUp;
 
-@Slf4j
+@ExtendWith(RunnerExtension.class)
 class TestProduct {
     private static final String className = MethodHandles.lookup().lookupClass().getSimpleName();
     private static final Config config = EnvConfigFactory.getConfig();
@@ -38,11 +39,10 @@ class TestProduct {
 
     @AfterEach
     public void tearDown() {
-        freeDevice(driver);
-        driver.quit();
+        packUp(driver);
     }
 
-    @ParameterizedTest(name = "Product details for product number - {0}")
+    @ParameterizedTest(name = "Product details for product - {1}")
     @CsvSource(value = {"0; Sauce Labs Backpack;carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection."
             ,"1; Sauce Labs Bike Light;A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included."
     }, delimiter = ';')

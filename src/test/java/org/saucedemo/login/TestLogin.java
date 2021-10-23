@@ -1,23 +1,24 @@
 package org.saucedemo.login;
 
 import io.appium.java_client.AppiumDriver;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
+import org.saucedemo.testresults.RunnerExtension;
 
 import java.lang.invoke.MethodHandles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.saucedemo.factories.DriverFactory.getDriver;
-import static org.saucedemo.factories.devices.AvailableDevices.freeDevice;
+import static org.saucedemo.testresults.TestResult.packUp;
 
-@Slf4j
+@ExtendWith(RunnerExtension.class)
 class TestLogin {
     private static final String className = MethodHandles.lookup().lookupClass().getSimpleName();
 
@@ -35,8 +36,7 @@ class TestLogin {
 
     @AfterEach
     public void tearDown() {
-        freeDevice(driver);
-        driver.quit();
+        packUp(driver);
     }
 
     @ParameterizedTest(name = "Login user - {0}")
