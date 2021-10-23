@@ -18,7 +18,7 @@ public class RunnerExtension implements AfterTestExecutionCallback {
         testStatus = context.getExecutionException().isPresent();
         reason = context.getExecutionException().toString();
 
-        System.out.println("Finished afterTestExecution");
+        log.info("Finished setting up test related variables");
     }
 
     public static String getTestName(){

@@ -166,7 +166,7 @@ public class AvailableDevices {
 
     public static synchronized void freeDevice(AppiumDriver driver) {
         Capabilities capabilities = driver.getCapabilities();
-        log.info("capabilities: {}", capabilities);
+        log.debug("capabilities: {}", capabilities);
 
         // Get capabilities important for our setup.
         String avd = (String) capabilities.getCapability("avd");
