@@ -196,4 +196,5 @@ public class CapabilitiesFactory {
 
         return capabilities;
     }
+    
 }
