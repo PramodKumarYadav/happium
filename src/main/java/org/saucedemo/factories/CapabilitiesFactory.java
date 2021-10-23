@@ -89,13 +89,21 @@ public class CapabilitiesFactory {
                     default:
                         break;
                 }
-            case "browser-stack":
-                // On browser-stack cluster, you can run both IOS and android tests.
-                // Also the capabilities are different. To be added when I add browser-stack in framework.
-                // Get app location on remote server here (via http)
-                // Note this property should be parsed from a config file and should not be set here (as done below).
-                // Since there can be multiple devices that are available to run on host and not just One.
-                // capabilities.setCapability("app", "bs://" + ANDROID_HASHED_APP_ID);
+            case "browserstack":
+                String browserstack_user = System.getenv("browserstack_user");
+                String browserstack_key = System.getenv("browserstack_key");
+
+                capabilities.setCapability("browserstack.user", browserstack_user);
+                capabilities.setCapability("browserstack.key", browserstack_key);
+                capabilities.setCapability("app", config.getString("app"));
+
+                capabilities.setCapability("project", config.getString("project"));
+                capabilities.setCapability("build", config.getString("build"));
+                capabilities.setCapability("name", testClassName);
+                capabilities.setCapability("browserstack.networkLogs", true);
+
+                capabilities.setCapability("device", config.getString("device"));
+                capabilities.setCapability("os_version", config.getString("os_version"));
                 break;
             default:
                 break;
