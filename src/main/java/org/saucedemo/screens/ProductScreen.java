@@ -10,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
 import org.saucedemo.screens.actions.ScreenActions;
 
-import java.util.List;
-
 @Slf4j
 @Data
 public class ProductScreen {
