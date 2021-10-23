@@ -90,11 +90,9 @@ public class CapabilitiesFactory {
                         break;
                 }
             case "browserstack":
-                String browserstack_user = System.getenv("browserstack_user");
-                String browserstack_key = System.getenv("browserstack_key");
-
-                capabilities.setCapability("browserstack.user", browserstack_user);
-                capabilities.setCapability("browserstack.key", browserstack_key);
+                // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
+                capabilities.setCapability("browserstack.user", System.getenv("browserstack.user"));
+                capabilities.setCapability("browserstack.key", System.getenv("browserstack.key"));
                 capabilities.setCapability("app", config.getString("app"));
 
                 capabilities.setCapability("project", config.getString("project"));
