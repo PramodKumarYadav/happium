@@ -1,6 +1,8 @@
 # happium 😊 📱
 ![GitHub contributors](https://img.shields.io/github/contributors/pramodkumaryadav/happium)
 ![GitHub last commit](https://img.shields.io/github/last-commit/pramodkumaryadav/happium)
+[![BrowserStack Status](https://app-automate.browserstack.com/badge.svg?badge_key=cTlFOU8vNlpqZnhhVWRjT2EyZXJGNEppbzFJbjRraURNS1JtMzdNbC9RRT0tLXNGVk9VM0NTZm02cFE1bUZOa3ZXbXc9PQ==--5f4e79b4c764eb53057470ee101c93f2c45f4b37)](https://app-automate.browserstack.com/public-build/cTlFOU8vNlpqZnhhVWRjT2EyZXJGNEppbzFJbjRraURNS1JtMzdNbC9RRT0tLXNGVk9VM0NTZm02cFE1bUZOa3ZXbXc9PQ==--5f4e79b4c764eb53057470ee101c93f2c45f4b37?redirect=true)
+
 
 An open source **production ready** test framework on Appium, the core of which is **directly reusable** in your project with minimum configuration changes.
 
