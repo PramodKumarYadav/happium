@@ -40,9 +40,7 @@ public class TestSandbox {
     @Test
     void getJunitProperties() throws IOException {
         Properties junitProperties = new Properties();
-
-        String pathJunitPlatformProperties = CONFIG.getString("pathJunitPlatformProperties");
-        junitProperties.load(new FileInputStream(pathJunitPlatformProperties));
+        junitProperties.load(new FileInputStream(CONFIG.getString("PATH_JUNIT_PLATFORM_PROPERTIES")));
 
         String parallelMode = junitProperties.getProperty("junit.jupiter.execution.parallel.enabled");
         String testMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.default");

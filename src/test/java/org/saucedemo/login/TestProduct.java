@@ -22,7 +22,7 @@ import static org.saucedemo.testresults.TestResult.packUp;
 
 @ExtendWith(RunnerExtension.class)
 class TestProduct {
-    private static final String className = MethodHandles.lookup().lookupClass().getSimpleName();
+    private static final String CLASS_NAME = MethodHandles.lookup().lookupClass().getSimpleName();
     private static final Config CONFIG = EnvConfigFactory.getConfig();
 
     private AppiumDriver driver;
@@ -31,7 +31,7 @@ class TestProduct {
 
     @BeforeEach
     public void setUp() {
-        driver = getDriver(className);
+        driver = getDriver(CLASS_NAME);
         productScreen = new ProductScreen(driver);
 
         deepLink = new DeepLink(driver);
@@ -47,7 +47,7 @@ class TestProduct {
             ,"1; Sauce Labs Bike Light;A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included."
     }, delimiter = ';')
     void assertThatProductDescriptionIsCorrectForAStandardUser(String productNumber, String productSummary, String productDescription) {
-        String url = setDeepLinkUrl(CONFIG.getString("swagItemDetails"), productNumber);
+        String url = setDeepLinkUrl(CONFIG.getString("SWAG_ITEM_DETAILS"), productNumber);
         deepLink.toScreen(url);
 
         assertAll("Product Details"
