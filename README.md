@@ -17,9 +17,7 @@ They both provide sponsorship to run project Happium on cloud with a free open s
 Due to their support, we should be able to cover both these options in detail for running tests in parallel on cloud!
 <br>
 <img src="https://i.pinimg.com/originals/f8/9b/1c/f89b1c7d38d8fc67d7199a11a10234cd.png" width="240" height="200">
-<br>
-<img src="https://www.pngfind.com/pngs/m/287-2879851_cross-browser-testing-with-browserstack-browser-stack-logo.png" width="240" height="70">
-<br>
+<img src="https://www.pngfind.com/pngs/m/287-2879851_cross-browser-testing-with-browserstack-browser-stack-logo.png" width="240" height="77">
 ![Testing Powered By SauceLabs](https://opensource.saucelabs.com/images/opensauce/powered-by-saucelabs-badge-red.png?sanitize=true "Testing Powered By SauceLabs")
 
 # Key features
@@ -150,4 +148,3 @@ see detailed logs below:
       - *Two*, You must give the absolute path of the app. 
         Note that when the emulator is started manually via the android studio, then you can even give a relative path and tests works. 
         However, if you want to launch emulator and app from the tests, then you have to take care of both above points (Absolute path and an app created via android studio)
-
