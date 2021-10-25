@@ -20,7 +20,7 @@ import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities
 @Slf4j
 public class TestSandbox {
     private static String className = MethodHandles.lookup().lookupClass().getSimpleName();
-    private static final Config config = EnvConfigFactory.getConfig();
+    private static final Config CONFIG = EnvConfigFactory.getConfig();
 
     @Disabled
     @Test
@@ -40,9 +40,7 @@ public class TestSandbox {
     @Test
     void getJunitProperties() throws IOException {
         Properties junitProperties = new Properties();
-
-        String pathJunitPlatformProperties = config.getString("pathJunitPlatformProperties");
-        junitProperties.load(new FileInputStream(pathJunitPlatformProperties));
+        junitProperties.load(new FileInputStream(CONFIG.getString("PATH_JUNIT_PLATFORM_PROPERTIES")));
 
         String parallelMode = junitProperties.getProperty("junit.jupiter.execution.parallel.enabled");
         String testMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.default");

@@ -1,8 +1,10 @@
 package org.saucedemo.testresults;
 
+import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
+import org.saucedemo.factories.EnvConfigFactory;
 
 import static org.saucedemo.factories.devices.AvailableDevices.freeDevice;
 import static org.saucedemo.testresults.RunnerExtension.getClassName;
@@ -12,6 +14,8 @@ import static org.saucedemo.testresults.RunnerExtension.getTestStatus;
 
 @Slf4j
 public class TestResult {
+    private static final Config CONFIG = EnvConfigFactory.getConfig();
+
     public static void setTestStatus(AppiumDriver driver) {
         String className = getClassName();
         String testName = getTestName();
@@ -43,7 +47,9 @@ public class TestResult {
     }
 
     public static void packUp(AppiumDriver driver) {
-        setTestStatus(driver);
+        if(CONFIG.getString("HOST").equalsIgnoreCase("browserstack")){
+            setTestStatus(driver);
+        }
         freeDevice(driver);
         driver.quit();
         log.info("tear down complete");
