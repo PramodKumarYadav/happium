@@ -150,3 +150,4 @@ see detailed logs below:
       - *Two*, You must give the absolute path of the app. 
         Note that when the emulator is started manually via the android studio, then you can even give a relative path and tests works. 
         However, if you want to launch emulator and app from the tests, then you have to take care of both above points (Absolute path and an app created via android studio)
+
