@@ -57,8 +57,7 @@ public class CapabilitiesFactory {
                 switch (PLATFORM_NAME) {
                     case "android":
                         // Get local app location stored in the project here (via absolute path)
-                        String pathAndroidApp = CONFIG.getString("pathAndroidApp");
-                        capabilities.setCapability("app", getCanonicalPath(pathAndroidApp));
+                        capabilities.setCapability("app", getCanonicalPath(CONFIG.getString("PATH_ANDROID_APP")));
 
                         // Set common android capabilities here from the config file
                         capabilities = setAndroidCommonCapabilities(capabilities);
@@ -73,8 +72,7 @@ public class CapabilitiesFactory {
                         break;
                     case "ios":
                         // Get local app location stored in the project here (via absolute path)
-                        String pathIOSApp = CONFIG.getString("pathIOSApp");
-                        capabilities.setCapability("app", getCanonicalPath(pathIOSApp));
+                        capabilities.setCapability("app", getCanonicalPath(CONFIG.getString("PATH_IOS_APP")));
 
                         // Set common android capabilities here from the config file
                         capabilities = setIosCommonCapabilities(capabilities);
@@ -114,34 +112,26 @@ public class CapabilitiesFactory {
     }
 
     private static DesiredCapabilities setAndroidCommonCapabilities(DesiredCapabilities capabilities) {
-        // get default properties from android-emulator-capabilities.json
-        String pathAndroidCommonCapabilities = CONFIG.getString("pathAndroidCommonCapabilities");
-
-        capabilities = setCapabilitiesFromFile(pathAndroidCommonCapabilities, capabilities);
+        capabilities = setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_COMMON_CAPABILITIES"), capabilities);
         return capabilities;
     }
 
     private static DesiredCapabilities setIosCommonCapabilities(DesiredCapabilities capabilities) {
-        // get default properties from ios-common-capabilities.json
-        String pathIOSCommonCapabilities = CONFIG.getString("pathIOSCommonCapabilities");
-
-        capabilities = setCapabilitiesFromFile(pathIOSCommonCapabilities, capabilities);
+        capabilities = setCapabilitiesFromFile(CONFIG.getString("PATH_IOS_COMMON_CAPABILITIES"), capabilities);
         return capabilities;
     }
 
     // This is when you want to run tests on a Single real android device connected to your computer.
     // So no synchronized required (since tests will run in sequence). Remember to put the parallel run property to false in junit-platform.properties
     private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities) {
-        String pathAndroidCapabilities = CONFIG.getString("pathAndroidCapabilities");
-        String pathDeviceNameConfig = String.format("%s/%s.json", pathAndroidCapabilities, deviceName);
+        String pathDeviceNameConfig = String.format("%s/%s.json", CONFIG.getString("PATH_ANDROID_CAPABILITIES"), deviceName);
 
         capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
         return capabilities;
     }
 
     private static DesiredCapabilities setIosRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities) {
-        String pathIOSCapabilities = CONFIG.getString("pathIOSCapabilities");
-        String pathDeviceNameConfig = String.format("%s/%s.json", pathIOSCapabilities, deviceName);
+        String pathDeviceNameConfig = String.format("%s/%s.json", CONFIG.getString("PATH_IOS_CAPABILITIES"), deviceName);
 
         capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
         return capabilities;
@@ -159,9 +149,7 @@ public class CapabilitiesFactory {
     http://tutorials.jenkov.com/java-concurrency/synchronized.html
     */
     private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities, String testClassName) {
-        // get default properties from android-emulator-capabilities.json
-        String pathAndroidEmulatorDefaultCapabilities = CONFIG.getString("pathAndroidEmulatorDefaultCapabilities");
-        capabilities = setCapabilitiesFromFile(pathAndroidEmulatorDefaultCapabilities, capabilities);
+        capabilities = setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_EMULATOR_DEFAULT_CAPABILITIES"), capabilities);
 
         // getAndroidEmulator method contains logic to decide if user wants a 'specific' device or a 'random' device.
         // or "unique devices per test" within one class OR "unique device per each test class".
