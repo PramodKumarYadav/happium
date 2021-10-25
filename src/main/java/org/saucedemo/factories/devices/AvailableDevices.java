@@ -36,6 +36,9 @@ public class AvailableDevices {
     private static List<Device> freedDevices = new ArrayList<>();
     private static String currentTestClass = "";
 
+    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
+
     /*
     Pick a device (fixed or random) based on the choice provided in application.conf
     If user wants to pick any random device. Then get a random device.
@@ -70,9 +73,7 @@ public class AvailableDevices {
     // A convenience method to get the device name from application.conf file.
     // Say when running tests in series in a particular class.
     public static synchronized Device getASpecificAndroidEmulator() {
-        Config config = EnvConfigFactory.getConfig();
-        String deviceName = config.getString("deviceName");
-        return getASpecificAndroidEmulator(deviceName);
+        return getASpecificAndroidEmulator(DEVICE_NAME);
     }
 
     // If in future, we need to pass on the deviceName, then we will get rid of convenience method and can use this.
@@ -185,4 +186,3 @@ public class AvailableDevices {
         freedDevices.add(freeDevice);
     }
 }
-

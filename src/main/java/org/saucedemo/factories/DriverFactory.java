@@ -15,10 +15,10 @@ import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities
 
 @Slf4j
 public class DriverFactory {
-    private static final Config config = EnvConfigFactory.getConfig();
-    private static final String PLATFORM_NAME = config.getString("PLATFORM_NAME");
-    private static final String hostURI = config.getString("hostURI");
-    private static URL hostURL = getHostURL(hostURI);
+    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
+    private static final String HOST_URI = CONFIG.getString("HOST_URI");
+    private static final URL HOST_URL = getHostURL(HOST_URI);
 
     // Don't want to create any driver for this factory class.
     private DriverFactory() {
@@ -40,10 +40,10 @@ public class DriverFactory {
         DesiredCapabilities capabilities = getDesiredCapabilities(testClassName);
         switch (PLATFORM_NAME) {
             case "android":
-                driver = new AndroidDriver(hostURL, capabilities);
+                driver = new AndroidDriver(HOST_URL, capabilities);
                 break;
             case "ios":
-                driver = new IOSDriver(hostURL, capabilities);
+                driver = new IOSDriver(HOST_URL, capabilities);
                 break;
             default:
                 log.error("Platform choice is incorrect. You can either choose 'android' or 'ios'.");

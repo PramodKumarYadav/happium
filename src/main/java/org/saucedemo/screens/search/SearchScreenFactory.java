@@ -8,8 +8,8 @@ import static org.saucedemo.factories.EnvConfigFactory.getConfig;
 
 @Slf4j
 public class SearchScreenFactory {
-    private static final Config config = getConfig();
-    private static final String PLATFORM_NAME = config.getString("PLATFORM_NAME");
+    private static final Config CONFIG = getConfig();
+    private static final String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
 
     private SearchScreenFactory() {
         // Do not want people to create an instance of Factory but use its static getContractSearchPage method to get

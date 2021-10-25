@@ -21,8 +21,8 @@ import java.util.Map;
 public class DeepLink {
     AppiumDriver driver;
 
-    private static final Config config = EnvConfigFactory.getConfig();
-    private static final String PLATFORM_NAME = config.getString("PLATFORM_NAME");
+    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
 
     public DeepLink(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
@@ -36,7 +36,7 @@ public class DeepLink {
 
     // convenience method to make tests more readable and avoid duplication.
     public void toScreen(String url) {
-        String packageName = config.getString("packageName");
+        String packageName = CONFIG.getString("packageName");
         toScreen(url, packageName);
     }
 
