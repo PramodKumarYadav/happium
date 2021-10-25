@@ -20,7 +20,9 @@ import java.util.Map;
 @Slf4j
 public class DeepLink {
     AppiumDriver driver;
-    private static Config config = EnvConfigFactory.getConfig();
+
+    private static final Config config = EnvConfigFactory.getConfig();
+    private static final String PLATFORM_NAME = config.getString("PLATFORM_NAME");
 
     public DeepLink(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
@@ -42,8 +44,7 @@ public class DeepLink {
         log.info("deepLinkURL: {}", url);
         log.info("packageName: {}", packageName);
 
-        String platformName = config.getString("platformName");
-        switch (platformName) {
+        switch (PLATFORM_NAME) {
             case "android":
                 Map<String, String> map = new HashMap<>();
                 map.put("url", url);

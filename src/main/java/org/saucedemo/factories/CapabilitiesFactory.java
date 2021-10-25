@@ -29,10 +29,10 @@ public class CapabilitiesFactory {
      Thus depending on what the choice from user is defined in application.conf file,
      a valid capability is build for the tests.
      */
-    private static String host = config.getString("host");
-    private static String platformName = config.getString("platformName");
-    private static String deviceType = config.getString("deviceType");
-    private static String deviceName = config.getString("deviceName");
+    private static final String HOST = config.getString("HOST");
+    private static final String PLATFORM_NAME = config.getString("PLATFORM_NAME");
+    private static final String DEVICE_TYPE = config.getString("deviceType");
+    private static final String DEVICE_NAME = config.getString("deviceName");
 
     // Don't want to create any driver for this factory class.
     private CapabilitiesFactory() {
@@ -44,17 +44,17 @@ public class CapabilitiesFactory {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         log.info("Running tests for TestClass: {}", testClassName);
-        log.info("Running tests on host: {}", host);
+        log.info("Running tests on HOST: {}", HOST);
 
-        // Capabilities specific for host
-        switch (host) {
+        // Capabilities specific for HOST
+        switch (HOST) {
             case "local":
                 // On localhost you are either on android or on IOS (not both).
-                log.info("Running tests on platform: {}", platformName);
-                log.info("Running tests on deviceType: {}", deviceType);
-                log.info("Running tests on deviceName: {}", deviceName);
+                log.info("Running tests on platform: {}", PLATFORM_NAME);
+                log.info("Running tests on deviceType: {}", DEVICE_TYPE);
+                log.info("Running tests on deviceName: {}", DEVICE_NAME);
 
-                switch (platformName) {
+                switch (PLATFORM_NAME) {
                     case "android":
                         // Get local app location stored in the project here (via absolute path)
                         String pathAndroidApp = config.getString("pathAndroidApp");
@@ -64,9 +64,9 @@ public class CapabilitiesFactory {
                         capabilities = setAndroidCommonCapabilities(capabilities);
 
                         // Set capabilities specific for device type (fixed or virtual)
-                        switch (deviceType) {
+                        switch (DEVICE_TYPE) {
                             case "real":
-                                capabilities = setAndroidRealDeviceCapabilities(deviceName, capabilities);
+                                capabilities = setAndroidRealDeviceCapabilities(DEVICE_NAME, capabilities);
                             case "virtual":
                                 capabilities = setAndroidEmulatorCapabilities(capabilities, testClassName);
                         }
@@ -80,9 +80,9 @@ public class CapabilitiesFactory {
                         capabilities = setIosCommonCapabilities(capabilities);
 
                         // Set capabilities specific for device type (fixed or virtual)
-                        switch (deviceType) {
+                        switch (DEVICE_TYPE) {
                             case "real":
-                                capabilities = setIosRealDeviceCapabilities(deviceName, capabilities);
+                                capabilities = setIosRealDeviceCapabilities(DEVICE_NAME, capabilities);
                             case "virtual":
                                 capabilities = setIosSimulatorCapabilities(capabilities);
                         }
