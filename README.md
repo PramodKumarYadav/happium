@@ -3,14 +3,24 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/pramodkumaryadav/happium)
 [![BrowserStack Status](https://app-automate.browserstack.com/badge.svg?badge_key=cTlFOU8vNlpqZnhhVWRjT2EyZXJGNEppbzFJbjRraURNS1JtMzdNbC9RRT0tLXNGVk9VM0NTZm02cFE1bUZOa3ZXbXc9PQ==--5f4e79b4c764eb53057470ee101c93f2c45f4b37)](https://app-automate.browserstack.com/public-build/cTlFOU8vNlpqZnhhVWRjT2EyZXJGNEppbzFJbjRraURNS1JtMzdNbC9RRT0tLXNGVk9VM0NTZm02cFE1bUZOa3ZXbXc9PQ==--5f4e79b4c764eb53057470ee101c93f2c45f4b37?redirect=true)
 
-
-An open source **production ready** test framework on Appium, the core of which is **directly reusable** in your project with minimum configuration changes.
+Happium is an open source **production ready** test framework on Appium, the core of which is **directly reusable** in your project with minimum configuration changes.
 
 Framework uses **Junit5** and provides **4 different modes of running your tests in parallel** on a **local machine**, and a **clean design**, with **clear separation of concerns**, that results in **high readability** and **low maintenance**; all in all a **pleasure to work with**! 
 
-> P.S: And yes, this probably maybe the only framework on the internet (using Junit5), that provides 4 modes of execution on localhost (there are examples to run on browsertack and saucelabs but on localhost this is the first - or atleast I couldnt find another one). And it is only going to get better and better from here. 
+`P.S: And yes, this probably maybe the only framework on the internet (using Junit5), that provides 4 modes of execution on localhost (there are examples to run on browsertack and saucelabs but on localhost this is the first - or atleast I couldnt find another one). And it is only going to get better and better from here.`
 
-> If you see an issue or want to get a feature added; feel free to open an issue in the framework. If you have a cool idea that can make the framework better, do send me a request and I will add you as a contributor :). 
+`If you see an issue or want to get a feature added; feel free to open an issue in the framework. If you have a cool idea that can make the framework better, do send me a request and I will add you as a contributor :).`
+
+## Open source sponsor's
+I would like to say a big thank you to our open source sponsors `browserstack` and `saucelabs`.
+They both provide sponsorship to run project Happium on cloud with a free open source license - with 5 parallel licences and unlimited testing time! 
+Due to their support, we should be able to cover both these options in detail for running tests in parallel on cloud!
+<br>
+<img src="https://i.pinimg.com/originals/f8/9b/1c/f89b1c7d38d8fc67d7199a11a10234cd.png" width="240" height="200">
+<br>
+<img src="https://www.pngfind.com/pngs/m/287-2879851_cross-browser-testing-with-browserstack-browser-stack-logo.png" width="240" height="70">
+<br>
+![Testing Powered By SauceLabs](https://opensource.saucelabs.com/images/opensauce/powered-by-saucelabs-badge-red.png?sanitize=true "Testing Powered By SauceLabs")
 
 # Key features
 - **A clean design** with clear separation of concerns
