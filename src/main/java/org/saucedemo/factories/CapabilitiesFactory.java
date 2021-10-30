@@ -96,14 +96,18 @@ public class CapabilitiesFactory {
                 log.info("Inside Host browserstack");
                 String user = System.getenv("BROWSERSTACK_USER");
                 String key = System.getenv("BROWSERSTACK_KEY");
+                String BROWSERSTACK_BUILD_NAME = System.getenv("BROWSERSTACK_BUILD_NAME");
+            
                 log.info("user value: {}", user);
                 log.info("key value: {}", key);
+                log.info("BROWSERSTACK_BUILD_NAME value: {}", key);
+            
                 capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
                 capabilities.setCapability("browserstack.key", System.getenv("BROWSERSTACK_KEY"));
                 capabilities.setCapability("app", CONFIG.getString("app"));
 
                 capabilities.setCapability("project", CONFIG.getString("project"));
-                capabilities.setCapability("build", CONFIG.getString("build"));
+                capabilities.setCapability("build", System.getenv("BROWSERSTACK_KEY"));
                 capabilities.setCapability("name", testClassName);
                 capabilities.setCapability("browserstack.networkLogs", true);
 
