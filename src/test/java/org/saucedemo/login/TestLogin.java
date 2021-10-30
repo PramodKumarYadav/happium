@@ -51,6 +51,6 @@ class TestLogin {
     @Test
     void assertThatAWarningIsDisplayedToALockedOutUser() {
         loginScreen.login("locked_out_user", "secret_sauce");
-        assertEquals("Hellas Pindakaas!", loginScreen.getErrorMessage());
+        assertEquals("Sorry, this user has been locked out.", loginScreen.getErrorMessage());
     }
 }
