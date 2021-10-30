@@ -102,7 +102,7 @@ public class CapabilitiesFactory {
                 log.info("key value: {}", key);
                 log.info("BROWSERSTACK_BUILD_NAME value: {}", BROWSERSTACK_BUILD_NAME);
 
-                String buildInfoFromConfig = System.getenv(CONFIG.getString("BROWSERSTACK_BUILD_NAME"));
+                String buildInfoFromConfig = CONFIG.getString("BROWSERSTACK_BUILD_NAME");
                 log.info("buildInfoFromConfig value: {}", buildInfoFromConfig);
 
                 capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
