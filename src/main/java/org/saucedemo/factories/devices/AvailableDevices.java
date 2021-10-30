@@ -165,6 +165,10 @@ public class AvailableDevices {
         return deviceName;
     }
 
+    /** todo: In future, this method name will be reserved to free both android and ios devices.
+        for now, this method is only setup for android virtual devices. But that will be changed soon once we start
+        working with ios devices.
+     */
     public static synchronized void freeDevice(AppiumDriver driver) {
         Capabilities capabilities = driver.getCapabilities();
         log.debug("capabilities: {}", capabilities);

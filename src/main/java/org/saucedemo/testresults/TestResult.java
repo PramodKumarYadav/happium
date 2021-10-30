@@ -49,8 +49,10 @@ public class TestResult {
     public static void packUp(AppiumDriver driver) {
         if(CONFIG.getString("HOST").equalsIgnoreCase("browserstack")){
             setTestStatus(driver);
+        } else {
+            freeDevice(driver);
         }
-        freeDevice(driver);
+        
         driver.quit();
         log.info("tear down complete");
     }
