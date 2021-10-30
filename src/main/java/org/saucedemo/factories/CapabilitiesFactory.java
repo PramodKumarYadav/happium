@@ -93,6 +93,7 @@ public class CapabilitiesFactory {
                 // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
                 // Github does not allow dots in secrets. So I have to store these keys as underscores (different than
                 // browserstack wants it to be.
+                log.info("Inside Host browserstack");
                 String user = System.getenv("secret.BROWSERSTACK_USER");
                 String key = System.getenv("secret.BROWSERSTACK_KEY");
                 log.info("user value: {}", user);
