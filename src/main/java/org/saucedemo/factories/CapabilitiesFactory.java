@@ -93,24 +93,13 @@ public class CapabilitiesFactory {
                 // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
                 // Github does not allow dots in secrets. So I have to store these keys as underscores (different than
                 // browserstack wants it to be.
-                log.info("Inside Host browserstack");
-
-                String user = System.getenv("BROWSERSTACK_USER");
-                String key = System.getenv("BROWSERSTACK_KEY");
-                String BROWSERSTACK_BUILD_NAME = System.getenv("BROWSERSTACK_BUILD_NAME");
-                log.info("user value: {}", user);
-                log.info("key value: {}", key);
-                log.info("BROWSERSTACK_BUILD_NAME value: {}", BROWSERSTACK_BUILD_NAME);
-
-                String buildInfoFromConfig = CONFIG.getString("BROWSERSTACK_BUILD_NAME");
-                log.info("buildInfoFromConfig value: {}", buildInfoFromConfig);
 
                 capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
                 capabilities.setCapability("browserstack.key", System.getenv("BROWSERSTACK_KEY"));
                 capabilities.setCapability("app", CONFIG.getString("app"));
 
                 capabilities.setCapability("project", CONFIG.getString("project"));
-                capabilities.setCapability("build", System.getenv("BROWSERSTACK_BUILD_NAME"));
+                capabilities.setCapability("build", CONFIG.getString("build"));
                 capabilities.setCapability("name", testClassName);
                 capabilities.setCapability("browserstack.networkLogs", true);
 
