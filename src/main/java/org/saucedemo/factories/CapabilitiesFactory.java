@@ -95,6 +95,7 @@ public class CapabilitiesFactory {
                 // browserstack wants it to be.
                 String user = System.getenv("BROWSERSTACK_USER");
                 String key = System.getenv("BROWSERSTACK_KEY");
+
                 log.info("user value: {}", user);
                 log.info("key value: {}", key);
                 capabilities.setCapability("BROWSERSTACK_USER", System.getenv("BROWSERSTACK_USER"));
