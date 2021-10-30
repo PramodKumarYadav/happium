@@ -20,7 +20,8 @@ import java.util.Map;
 @Slf4j
 public class DeepLink {
     AppiumDriver driver;
-    private static Config config = EnvConfigFactory.getConfig();
+
+    private static final Config CONFIG = EnvConfigFactory.getConfig();
 
     public DeepLink(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
@@ -34,16 +35,14 @@ public class DeepLink {
 
     // convenience method to make tests more readable and avoid duplication.
     public void toScreen(String url) {
-        String packageName = config.getString("packageName");
-        toScreen(url, packageName);
+        toScreen(url, CONFIG.getString("PACKAGE_NAME"));
     }
 
     public void toScreen(String url, String packageName) {
         log.info("deepLinkURL: {}", url);
         log.info("packageName: {}", packageName);
 
-        String platformName = config.getString("platformName");
-        switch (platformName) {
+        switch (CONFIG.getString("PLATFORM_NAME")) {
             case "android":
                 Map<String, String> map = new HashMap<>();
                 map.put("url", url);

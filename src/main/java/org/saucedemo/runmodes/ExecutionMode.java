@@ -10,6 +10,8 @@ import java.util.Properties;
 
 @Slf4j
 public class ExecutionMode {
+    private static final Config CONFIG = EnvConfigFactory.getConfig();
+
     // Since junit execution properties are not going to change mid execution, this method can be final.
     public static final ExecutionModes getExecutionMode() {
         Properties junitProperties = getProperties();
@@ -65,12 +67,9 @@ public class ExecutionMode {
     }
 
     private static Properties getProperties() {
-        Config config = EnvConfigFactory.getConfig();
-        String pathJunitPlatformProperties = config.getString("pathJunitPlatformProperties");
-
         Properties junitProperties = new Properties();
         try {
-            junitProperties.load(new FileInputStream(pathJunitPlatformProperties));
+            junitProperties.load(new FileInputStream(CONFIG.getString("PATH_JUNIT_PLATFORM_PROPERTIES")));
         } catch (IOException e) {
             e.printStackTrace();
         }

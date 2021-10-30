@@ -20,7 +20,7 @@ import static org.saucedemo.testresults.TestResult.packUp;
 
 @ExtendWith(RunnerExtension.class)
 class TestLogin {
-    private static final String className = MethodHandles.lookup().lookupClass().getSimpleName();
+    private static final String CLASS_NAME = MethodHandles.lookup().lookupClass().getSimpleName();
 
     private AppiumDriver driver;
     private LoginScreen loginScreen;
@@ -28,7 +28,7 @@ class TestLogin {
 
     @BeforeEach
     public void setUp() {
-        driver = getDriver(className);
+        driver = getDriver(CLASS_NAME);
 
         loginScreen = new LoginScreen(driver);
         productsScreen = new ProductsScreen(driver);

@@ -22,8 +22,8 @@ import static org.saucedemo.testresults.TestResult.packUp;
 
 @ExtendWith(RunnerExtension.class)
 class TestProducts {
-    private static final String className = MethodHandles.lookup().lookupClass().getSimpleName();
-    private static final Config config = EnvConfigFactory.getConfig();
+    private static final String CLASS_NAME = MethodHandles.lookup().lookupClass().getSimpleName();
+    private static final Config CONFIG = EnvConfigFactory.getConfig();
 
     private AppiumDriver driver;
     private ProductsScreen productsScreen;
@@ -31,11 +31,11 @@ class TestProducts {
 
     @BeforeEach
     public void setUp() {
-        driver = getDriver(className);
+        driver = getDriver(CLASS_NAME);
         productsScreen = new ProductsScreen(driver);
 
         deepLink = new DeepLink(driver);
-        String url = setDeepLinkUrl(config.getString("swagItemsOverview"), "0,1");
+        String url = setDeepLinkUrl(CONFIG.getString("SWAG_ITEMS_OVERVIEW"), "0,1");
         deepLink.toScreen(url);
     }
 
