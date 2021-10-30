@@ -94,12 +94,12 @@ public class CapabilitiesFactory {
                 // Github does not allow dots in secrets. So I have to store these keys as underscores (different than
                 // browserstack wants it to be.
                 log.info("Inside Host browserstack");
-                String user = System.getenv("secret.BROWSERSTACK_USER");
-                String key = System.getenv("secret.BROWSERSTACK_KEY");
+                String user = System.getenv("BROWSERSTACK_USER");
+                String key = System.getenv("BROWSERSTACK_KEY");
                 log.info("user value: {}", user);
                 log.info("key value: {}", key);
-                capabilities.setCapability("BROWSERSTACK_USER", System.getenv("secret.BROWSERSTACK_USER"));
-                capabilities.setCapability("BROWSERSTACK_KEY", System.getenv("secret.BROWSERSTACK_KEY"));
+                capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
+                capabilities.setCapability("browserstack.key", System.getenv("BROWSERSTACK_KEY"));
                 capabilities.setCapability("app", CONFIG.getString("app"));
 
                 capabilities.setCapability("project", CONFIG.getString("project"));
