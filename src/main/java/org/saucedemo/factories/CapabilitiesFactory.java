@@ -111,6 +111,7 @@ public class CapabilitiesFactory {
                 capabilities.setCapability("os_version", CONFIG.getString("os_version"));
                 break;
             default:
+                log.info("Inside Host default");
                 break;
         }
 
