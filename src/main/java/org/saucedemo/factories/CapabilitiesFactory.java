@@ -99,7 +99,7 @@ public class CapabilitiesFactory {
                 capabilities.setCapability("app", CONFIG.getString("app"));
 
                 capabilities.setCapability("project", CONFIG.getString("project"));
-                capabilities.setCapability("build", CONFIG.getString("BROWSERSTACK_BUILD_NAME"));
+                capabilities.setCapability("build", CONFIG.getString("build"));
                 capabilities.setCapability("name", testClassName);
                 capabilities.setCapability("browserstack.networkLogs", true);
 
