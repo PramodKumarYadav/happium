@@ -23,5 +23,8 @@ jobs:
         distribution: 'adopt'
         cache: maven
     - name: Build with Maven
-      run: mvn clean -B  -DBROWSERSTACK_KEY=${{ secrets.BROWSERSTACK_KEY }} -DBROWSERSTACK_USER=${{ secrets.BROWSERSTACK_USER }} package --file pom.xml
+      env: # Or as an environment variable
+        BROWSERSTACK_USER: ${{ secrets.BROWSERSTACK_USER }}
+        BROWSERSTACK_KEY: ${{ secrets.BROWSERSTACK_KEY }}
+      run: mvn clean -B package --file pom.xml
 
