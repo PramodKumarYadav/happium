@@ -162,7 +162,7 @@ public class CapabilitiesFactory {
         capabilities.setCapability("avd", device.getDeviceName());
         capabilities.setCapability("udid", device.getUdid());
         capabilities.setCapability("deviceName", device.getUdid());
-        capabilities.setCapability("systemPort  ", device.getSystemPort());
+        capabilities.setCapability("appium:systemPort  ", device.getSystemPort());
 
         return capabilities;
     }
