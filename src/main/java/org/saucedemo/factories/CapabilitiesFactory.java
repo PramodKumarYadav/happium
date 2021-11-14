@@ -24,6 +24,7 @@ import static org.saucedemo.utils.FileUtils.getFileAsString;
 @Data
 public class CapabilitiesFactory {
     private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final Date DATE_TIME_NOW = new Date();
 
     /*
      Capabilities are affected based on below 4 parameters defined in application.conf file.
@@ -101,7 +102,7 @@ public class CapabilitiesFactory {
                 capabilities.setCapability("app", CONFIG.getString("app"));
 
                 capabilities.setCapability("project", CONFIG.getString("project"));
-                capabilities.setCapability("build", CONFIG.getString("BROWSERSTACK_BUILD_NAME") + " - " + new Date());
+                capabilities.setCapability("build", CONFIG.getString("BROWSERSTACK_BUILD_NAME") + DATE_TIME_NOW);
                 capabilities.setCapability("name", testClassName);
                 capabilities.setCapability("browserstack.networkLogs", true);
 
