@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.factories.devices.Device;
 
+import java.util.Date;
 import java.util.Iterator;
 
 import static org.saucedemo.factories.devices.AvailableDevices.getAndroidEmulator;
@@ -100,7 +101,7 @@ public class CapabilitiesFactory {
                 capabilities.setCapability("app", CONFIG.getString("app"));
 
                 capabilities.setCapability("project", CONFIG.getString("project"));
-                capabilities.setCapability("build", CONFIG.getString("BROWSERSTACK_BUILD_NAME"));
+                capabilities.setCapability("build", CONFIG.getString("BROWSERSTACK_BUILD_NAME") + " - " + new Date());
                 capabilities.setCapability("name", testClassName);
                 capabilities.setCapability("browserstack.networkLogs", true);
 
