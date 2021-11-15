@@ -46,9 +46,8 @@ public class DriverFactory {
                 driver = new IOSDriver(HOST_URL, capabilities);
                 break;
             default:
-                log.error("Platform choice is incorrect. You can either choose 'android' or 'ios'.");
-                log.error("Check the value of 'PLATFORM_NAME' property set in application.conf. Or in CI, if run from continuous integration.");
-                break;
+                throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
+                        "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
         }
 
         log.info("SessionId: {}", driver.getSessionId());
