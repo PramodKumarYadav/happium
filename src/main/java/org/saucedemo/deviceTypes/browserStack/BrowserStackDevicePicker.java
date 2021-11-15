@@ -36,8 +36,8 @@ public class BrowserStackDevicePicker {
         String MODEL_TYPE = EnvConfigFactory.getConfig().getString("MODEL_TYPE");
         if (MODEL_TYPE.equals("random")) {
             MODEL_TYPE = AndroidModelType.getRandomModel().getValue();
-            log.info("Model type: {}", MODEL_TYPE);
         }
+        log.info("Model type: {}", MODEL_TYPE);
 
         String BROWSERSTACK_DEVICES_PATH = EnvConfigFactory.getConfig().getString("BROWSERSTACK_DEVICES_PATH");
         String filePath = String.format("%s%s.csv", BROWSERSTACK_DEVICES_PATH, MODEL_TYPE);
