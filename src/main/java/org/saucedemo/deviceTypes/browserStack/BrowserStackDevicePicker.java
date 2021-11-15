@@ -60,7 +60,7 @@ public class BrowserStackDevicePicker {
                     .build()
                     .parse();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            throw new IllegalStateException("csvFilePath not found.", e);
         }
 
         return devices;
