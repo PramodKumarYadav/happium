@@ -16,25 +16,25 @@ public class BrowserStackDevicePicker {
     /** All devices (fixed or random, are to be picked from this list):
      * https://www.browserstack.com/list-of-browsers-and-platforms/app_automate */
     public static synchronized BrowserStackDevice getDevice() {
-        String PLATFORM_NAME = EnvConfigFactory.getConfig().getString("PLATFORM_NAME");
-        String MODEL_TYPE = EnvConfigFactory.getConfig().getString("MODEL_TYPE");
+        // If a fixed device is specified in browserstack appConfig to be picked; use that.
         String DEVICE = EnvConfigFactory.getConfig().getString("DEVICE");
         String OS_VERSION = EnvConfigFactory.getConfig().getString("OS_VERSION");
-
-        // If a fixed device is specified in browserstack appconfig to be picked; use that.
         if (! DEVICE.equals("random")) {
             BrowserStackDevice device = new BrowserStackDevice(DEVICE, OS_VERSION);
             return device;
         }
 
         // If a random model is asked, get a random model else use the modelType that was provided to get a random device
+        String MODEL_TYPE = EnvConfigFactory.getConfig().getString("MODEL_TYPE");
         if (MODEL_TYPE.equals("random")) {
             MODEL_TYPE = AndroidModelType.getRandomModel().getValue();
             log.info("Model type: {}", MODEL_TYPE);
         }
 
-        String filePath = String.format("./desired-capabilities/browserstack/%s/%s.csv", PLATFORM_NAME, MODEL_TYPE);
+        String BROWSERSTACK_DEVICES_PATH = EnvConfigFactory.getConfig().getString("BROWSERSTACK_DEVICES_PATH");
+        String filePath = String.format("%s%s.csv", BROWSERSTACK_DEVICES_PATH, MODEL_TYPE);
         List<BrowserStackDevice> devices = BrowserStackDevicePicker.getDevicesForAModel(filePath);
+
         return getRandomDevice(devices);
     }
 
