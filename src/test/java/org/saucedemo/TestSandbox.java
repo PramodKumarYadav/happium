@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.factories.EnvConfigFactory;
-import org.saucedemo.hosts.localhost.android.AndroidEmulators;
+import org.saucedemo.hosts.localhost.android.AvailableEmulators;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -32,8 +32,8 @@ public class TestSandbox {
     @Disabled
     @Test
     void getDeviceBasedOnLocation() {
-        log.info("deviceName @ position 0: {}", AndroidEmulators.values()[0]);
-        log.info("deviceName @ position 1: {}", AndroidEmulators.values()[1]);
+        log.info("deviceName @ position 0: {}", AvailableEmulators.values()[0]);
+        log.info("deviceName @ position 1: {}", AvailableEmulators.values()[1]);
     }
 
     @Disabled

@@ -1,6 +1,6 @@
 package org.saucedemo.hosts.localhost.android;
 
-public enum AndroidEmulators {
+public enum AvailableEmulators {
     Pixel_4_API_31,
     Pixel_3_API_31,
     Pixel_3_XL_API_31,

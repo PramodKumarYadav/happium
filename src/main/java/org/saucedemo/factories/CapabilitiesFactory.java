@@ -8,12 +8,12 @@ import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.hosts.browserStack.BrowserStackDevice;
 import org.saucedemo.hosts.browserStack.BrowserStackDevicePicker;
-import org.saucedemo.hosts.localhost.android.Device;
+import org.saucedemo.hosts.localhost.android.EmulatorDevice;
 
 import java.util.Date;
 import java.util.Iterator;
 
-import static org.saucedemo.hosts.localhost.android.AvailableDevices.getAndroidEmulator;
+import static org.saucedemo.hosts.localhost.android.EmulatorDevicePicker.getAndroidEmulator;
 import static org.saucedemo.utils.FileUtils.getCanonicalPath;
 import static org.saucedemo.utils.FileUtils.getFileAsString;
 
@@ -164,11 +164,11 @@ public class CapabilitiesFactory {
 
         // getAndroidEmulator method contains logic to decide if user wants a 'specific' device or a 'random' device.
         // or "unique devices per test" within one class OR "unique device per each test class".
-        Device device = getAndroidEmulator(testClassName);
-        capabilities.setCapability("avd", device.getDeviceName());
-        capabilities.setCapability("udid", device.getUdid());
-        capabilities.setCapability("deviceName", device.getUdid());
-        capabilities.setCapability("appium:systemPort  ", device.getSystemPort());
+        EmulatorDevice emulatorDevice = getAndroidEmulator(testClassName);
+        capabilities.setCapability("avd", emulatorDevice.getDeviceName());
+        capabilities.setCapability("udid", emulatorDevice.getUdid());
+        capabilities.setCapability("deviceName", emulatorDevice.getUdid());
+        capabilities.setCapability("appium:systemPort  ", emulatorDevice.getSystemPort());
 
         return capabilities;
     }

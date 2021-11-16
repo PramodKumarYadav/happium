@@ -2,7 +2,7 @@ package org.saucedemo.hosts.browserStack;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.saucedemo.hosts.browserStack.android.AndroidModelType;
+import org.saucedemo.hosts.browserStack.android.AvailableAndroidModels;
 import org.saucedemo.factories.EnvConfigFactory;
 
 import java.io.FileNotFoundException;
@@ -34,7 +34,7 @@ public class BrowserStackDevicePicker {
         // If a random model is asked, get a random model else use the modelType that was provided to get a random device
         String MODEL_TYPE = EnvConfigFactory.getConfig().getString("MODEL_TYPE");
         if (MODEL_TYPE.equals("random")) {
-            MODEL_TYPE = AndroidModelType.getRandomModel().getValue();
+            MODEL_TYPE = AvailableAndroidModels.getRandomModel().getValue();
         }
         log.info("Model type: {}", MODEL_TYPE);
 

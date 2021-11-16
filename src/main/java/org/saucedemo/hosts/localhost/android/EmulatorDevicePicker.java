@@ -27,7 +27,7 @@ http://tutorials.jenkov.com/java-concurrency/synchronized.html
 
 @Data
 @Slf4j
-public class AvailableDevices {
+public class EmulatorDevicePicker {
     private static Integer deviceNumber = 0;
     private static Integer emulatorNumber = 5554;
     private static Long systemPort = Long.valueOf(8200);
@@ -140,7 +140,7 @@ public class AvailableDevices {
             EmulatorDevice emulatorDevice = new EmulatorDevice();
 
             log.info("fetching device number: {}", deviceNumber);
-            String deviceName = AndroidEmulators.values()[deviceNumber].toString();
+            String deviceName = AvailableEmulators.values()[deviceNumber].toString();
 
             // Set all the unique properties for this emulator device (necessary for execution in parallel)
             emulatorDevice.setDeviceName(deviceName);

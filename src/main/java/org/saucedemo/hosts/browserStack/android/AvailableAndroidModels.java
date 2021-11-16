@@ -2,7 +2,7 @@ package org.saucedemo.hosts.browserStack.android;
 
 import java.util.Random;
 
-public enum AndroidModelType {
+public enum AvailableAndroidModels {
     SAMSUNG("samsung"),
     GOOGLE("google"),
     ONE_PLUS("one-plus"),
@@ -15,7 +15,7 @@ public enum AndroidModelType {
 
     private final String value;
 
-    AndroidModelType(String value) {
+    AvailableAndroidModels(String value) {
         this.value = value;
     }
 
@@ -23,7 +23,7 @@ public enum AndroidModelType {
         return value;
     }
 
-    public static AndroidModelType getRandomModel() {
+    public static AvailableAndroidModels getRandomModel() {
         Random random = new Random();
         return values()[random.nextInt(values().length)];
     }
