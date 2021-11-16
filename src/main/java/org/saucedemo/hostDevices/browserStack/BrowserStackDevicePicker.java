@@ -2,7 +2,7 @@ package org.saucedemo.hostDevices.browserStack;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.saucedemo.hostDevices.browserStack.android.AvailableAndroidModels;
+import org.apache.commons.lang3.EnumUtils;
 import org.saucedemo.factories.EnvConfigFactory;
 
 import java.io.FileNotFoundException;
@@ -12,13 +12,18 @@ import java.util.Random;
 
 @Slf4j
 public class BrowserStackDevicePicker {
-    /** All devices (fixed or random, are to be picked from this list):
-     * https://www.browserstack.com/list-of-browsers-and-platforms/app_automate */
+
+    /**
+     * All devices (fixed or random, are to be picked from this list):
+     * https://www.browserstack.com/list-of-browsers-and-platforms/app_automate
+     */
     public static synchronized BrowserStackDevice getDevice() {
-        String DEVICE = EnvConfigFactory.getConfig().getString("DEVICE");
-        if (DEVICE.equals("random")) {
-            return getARandomBrowserStackDevice();
-        }else {
+        String DEVICE = EnvConfigFactory.getConfig().getString("DEVICE").toUpperCase();
+        if (DEVICE.equals("RANDOM")) {
+            return getARandomBrowserStackDevice(getDeviceFilePath());
+        } else if (EnumUtils.isValidEnum(AvailableAndroidModels.class, DEVICE) || EnumUtils.isValidEnum(AvailableIOSModels.class, DEVICE)) {
+            return getARandomBrowserStackDevice(getDeviceFilePath(DEVICE));
+        } else {
             return getAFixedBrowserStackDevice();
         }
     }
@@ -30,25 +35,53 @@ public class BrowserStackDevicePicker {
         return device;
     }
 
-    private static BrowserStackDevice getARandomBrowserStackDevice() {
-        // If a random model is asked, get a random model else use the modelType that was provided to get a random device
-        String MODEL_TYPE = EnvConfigFactory.getConfig().getString("MODEL_TYPE");
-        if (MODEL_TYPE.equals("random")) {
-            MODEL_TYPE = AvailableAndroidModels.getRandomModel().getValue();
+    private static String getDeviceFilePath(String modelType) {
+        String PLATFORM_NAME = EnvConfigFactory.getConfig().getString("PLATFORM_NAME");
+        log.info("Model type: {}", modelType);
+        String basePath;
+        switch (PLATFORM_NAME) {
+            case "android":
+                basePath = EnvConfigFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
+                if (EnumUtils.isValidEnum(AvailableAndroidModels.class, modelType)) {
+                    return String.format("%s/%s.csv", basePath, modelType);
+                } else {
+                    throw new IllegalStateException(String.format("android does not have %s devices. Fix your platform or device choice", modelType));
+                }
+            case "ios":
+                basePath = EnvConfigFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
+                if (EnumUtils.isValidEnum(AvailableIOSModels.class, modelType)) {
+                    return String.format("%s/%s.csv", basePath, modelType);
+                } else {
+                    throw new IllegalStateException(String.format("ios does not have %s devices. Fix your platform or device choice", modelType));
+                }
+            default:
+                throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
+                        "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
         }
-        log.info("Model type: {}", MODEL_TYPE);
-
-        String BROWSERSTACK_DEVICES_PATH = EnvConfigFactory.getConfig().getString("BROWSERSTACK_DEVICES_PATH");
-        String filePath = String.format("%s%s.csv", BROWSERSTACK_DEVICES_PATH, MODEL_TYPE);
-        List<BrowserStackDevice> devices = BrowserStackDevicePicker.getDevicesForAModel(filePath);
-
-        return getRandomDeviceFromAParticularModel(devices);
     }
 
-    private static BrowserStackDevice getRandomDeviceFromAParticularModel(List<BrowserStackDevice> devices) {
-        Random random = new Random();
-        Integer randomDevice = random.nextInt(devices.size());
-        return devices.get(randomDevice);
+    private static String getDeviceFilePath() {
+        String PLATFORM_NAME = EnvConfigFactory.getConfig().getString("PLATFORM_NAME");
+        String basePath;
+        String modelType;
+        switch (PLATFORM_NAME) {
+            case "android":
+                basePath = EnvConfigFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
+                modelType = AvailableAndroidModels.getRandomModel().getValue();
+                return String.format("%s/%s.csv", basePath, modelType);
+            case "ios":
+                basePath = EnvConfigFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
+                modelType = AvailableIOSModels.getRandomModel().getValue();
+                return String.format("%s/%s.csv", basePath, modelType);
+            default:
+                throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
+                        "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
+        }
+    }
+
+    private static BrowserStackDevice getARandomBrowserStackDevice(String filePath) {
+        List<BrowserStackDevice> devices = BrowserStackDevicePicker.getDevicesForAModel(filePath);
+        return getRandomDeviceFromAParticularModel(devices);
     }
 
     public static final List<BrowserStackDevice> getDevicesForAModel(String csvFilePath) {
@@ -63,5 +96,11 @@ public class BrowserStackDevicePicker {
         }
 
         return devices;
+    }
+
+    private static BrowserStackDevice getRandomDeviceFromAParticularModel(List<BrowserStackDevice> devices) {
+        Random random = new Random();
+        Integer randomDevice = random.nextInt(devices.size());
+        return devices.get(randomDevice);
     }
 }
