@@ -1,8 +1,8 @@
-package org.saucedemo.hosts.browserStack;
+package org.saucedemo.hostDevices.browserStack;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
-import org.saucedemo.hosts.browserStack.android.AvailableAndroidModels;
+import org.saucedemo.hostDevices.browserStack.android.AvailableAndroidModels;
 import org.saucedemo.factories.EnvConfigFactory;
 
 import java.io.FileNotFoundException;

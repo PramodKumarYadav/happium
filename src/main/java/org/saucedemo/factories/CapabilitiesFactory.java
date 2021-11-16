@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.hosts.browserStack.BrowserStackDevice;
-import org.saucedemo.hosts.browserStack.BrowserStackDevicePicker;
-import org.saucedemo.hosts.localhost.android.EmulatorDevice;
+import org.saucedemo.hostDevices.browserStack.BrowserStackDevice;
+import org.saucedemo.hostDevices.browserStack.BrowserStackDevicePicker;
+import org.saucedemo.hostDevices.localhost.android.EmulatorDevice;
 
 import java.util.Date;
 import java.util.Iterator;
 
-import static org.saucedemo.hosts.localhost.android.EmulatorDevicePicker.getAndroidEmulator;
+import static org.saucedemo.hostDevices.localhost.android.EmulatorDevicePicker.getAndroidEmulator;
 import static org.saucedemo.utils.FileUtils.getCanonicalPath;
 import static org.saucedemo.utils.FileUtils.getFileAsString;
 
@@ -28,16 +28,6 @@ public class CapabilitiesFactory {
     private static final Config CONFIG = EnvConfigFactory.getConfig();
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
 
-    /*
-     Capabilities are affected based on below 4 parameters defined in application.conf file.
-     Thus depending on what the choice from user is defined in application.conf file,
-     a valid capability is build for the tests.
-     */
-    private static final String HOST = CONFIG.getString("HOST");
-    private static final String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
-    private static final String DEVICE_TYPE = CONFIG.getString("DEVICE_TYPE");
-    private static final String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
-
     // Don't want to create any driver for this factory class.
     private CapabilitiesFactory() {
 
@@ -46,13 +36,16 @@ public class CapabilitiesFactory {
     // In case if in future, there is a need to get a capability from another calling class, we also provide a option for that.
     public static DesiredCapabilities getDesiredCapabilities(String testClassName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
-
         log.info("Running tests for TestClass: {}", testClassName);
-        log.info("Running tests on HOST: {}", HOST);
 
-        // Capabilities specific for HOST
+        String HOST = CONFIG.getString("HOST");
+        log.info("Running tests on HOST: {}", HOST);
         switch (HOST) {
             case "localhost":
+                String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
+                String DEVICE_TYPE = CONFIG.getString("DEVICE_TYPE");
+                String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
+
                 // On localhost you are either on android or on IOS (not both).
                 log.info("Running tests on PLATFORM_NAME: {}", PLATFORM_NAME);
                 log.info("Running tests on DEVICE_TYPE: {}", DEVICE_TYPE);
