@@ -7,7 +7,6 @@ import org.saucedemo.factories.EnvConfigFactory;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -53,7 +52,7 @@ public class BrowserStackDevicePicker {
     }
 
     public static final List<BrowserStackDevice> getDevicesForAModel(String csvFilePath) {
-        List<BrowserStackDevice> devices = new ArrayList<>();
+        List<BrowserStackDevice> devices;
         try {
             devices = new CsvToBeanBuilder(new FileReader(csvFilePath))
                     .withType(BrowserStackDevice.class)
