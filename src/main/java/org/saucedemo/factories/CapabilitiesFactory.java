@@ -107,8 +107,7 @@ public class CapabilitiesFactory {
                 capabilities.setCapability("os_version", device.getOsVersion());
                 break;
             default:
-                log.info("Inside Host default");
-                break;
+                throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from localhost, browserstack or saucelabs", HOST));
         }
 
         log.debug("Capabilities: {}", capabilities);

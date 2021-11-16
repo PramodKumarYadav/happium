@@ -5,7 +5,6 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,11 +14,6 @@ import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities
 
 @Slf4j
 public class DriverFactory {
-    private static final Config CONFIG = EnvConfigFactory.getConfig();
-    private static final String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
-    private static final String HOST_URI = CONFIG.getString("HOST_URI");
-    private static final URL HOST_URL = getHostURL(HOST_URI);
-
     // Don't want to create any driver for this factory class.
     private DriverFactory() {
     }
@@ -34,20 +28,21 @@ public class DriverFactory {
     */
 
     public static AppiumDriver getDriver(String testClassName) {
-        AppiumDriver driver = null;
+        Config CONFIG = EnvConfigFactory.getConfig();
+        String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
+        String HOST_URI = CONFIG.getString("HOST_URI");
 
-        // The device to be chosen, and thus its capabilities, is done in CapabilitiesFactory and is not drivers concern.
-        DesiredCapabilities capabilities = getDesiredCapabilities(testClassName);
+        AppiumDriver driver;
         switch (PLATFORM_NAME) {
             case "android":
-                driver = new AndroidDriver(HOST_URL, capabilities);
+                driver = new AndroidDriver(getHostURL(HOST_URI), getDesiredCapabilities(testClassName));
                 break;
             case "ios":
-                driver = new IOSDriver(HOST_URL, capabilities);
+                driver = new IOSDriver(getHostURL(HOST_URI), getDesiredCapabilities(testClassName));
                 break;
             default:
-                throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
-                        "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
+                throw new IllegalStateException(String.format("%s is not a valid platform choice. You can either choose 'android' or 'ios. " +
+                        "Check the value of 'PLATFORM_NAME' property in application.conf; Or in CI, if running from continuous integration.", PLATFORM_NAME));
         }
 
         log.info("SessionId: {}", driver.getSessionId());
