@@ -18,15 +18,10 @@ public class DriverFactory {
     private DriverFactory() {
     }
 
-    /* Note1: Below method should be your preferred method to call driver.
-     Since at any given moment you are either on Android machine OR on a mac machine. Not both. Thus accordingly
-     You can specify your choice in application.conf file.
-
-     Note2: When you are running your tests in CI, you can have two CI jobs: One, for platform android and another for iOS. Or randomize it when the time comes.
-     Note that when you will overwrite the PLATFORM_NAME value from "mvn clean test command", it will automatically be picked by this below method.
+    /** Note: When you are running your tests in CI, you can have two CI jobs: One, for platform android and another for iOS- Or randomize it when the time comes.
+     Note that when you will overwrite the PLATFORM_NAME value from "mvn clean test command", it will automatically be picked in EnvConfigFactory.getConfig().
      So you would not need to change anything anywhere in any of the tests.
     */
-
     public static AppiumDriver getDriver(String testClassName) {
         Config CONFIG = EnvConfigFactory.getConfig();
         String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
@@ -53,13 +48,10 @@ public class DriverFactory {
     }
 
     private static URL getHostURL(String URL) {
-        URL url = null;
         try {
-            url = new URL(URL);
+            return new URL(URL);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            throw new IllegalStateException(String.format("%s is Malformed host URL.", URL), e);
         }
-
-        return url;
     }
 }
