@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.factories.EnvConfigFactory;
-import org.saucedemo.factories.devices.AndroidEmulators;
+import org.saucedemo.hosts.localhost.android.AndroidEmulators;
 
 import java.io.FileInputStream;
 import java.io.IOException;
