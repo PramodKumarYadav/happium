@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class Device {
+public class EmulatorDevice {
     private String udid;
     private String deviceName;
     private Long systemPort;
-
 }

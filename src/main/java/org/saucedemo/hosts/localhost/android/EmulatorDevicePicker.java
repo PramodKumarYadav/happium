@@ -33,8 +33,8 @@ public class AvailableDevices {
     private static Long systemPort = Long.valueOf(8200);
 
     // Create a map where you can add any device that is already used by a test class
-    private static HashMap<String, Device> testClassDevicesMap = new HashMap<>();
-    private static List<Device> freedDevices = new ArrayList<>();
+    private static HashMap<String, EmulatorDevice> testClassDevicesMap = new HashMap<>();
+    private static List<EmulatorDevice> freedEmulatorDevices = new ArrayList<>();
     private static String currentTestClass = "";
 
     private static final Config CONFIG = EnvConfigFactory.getConfig();
@@ -48,49 +48,49 @@ public class AvailableDevices {
     So change parallel property to false in junit-platform.properties file.
     junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
     */
-    public static synchronized Device getAndroidEmulator(String testClassName) {
-        Device device = new Device();
+    public static synchronized EmulatorDevice getAndroidEmulator(String testClassName) {
+        EmulatorDevice emulatorDevice = new EmulatorDevice();
         ExecutionModes mode = getExecutionMode();
         switch (mode) {
             case CLASS_SERIES_TEST_SERIES:
-                device = getASpecificAndroidEmulator();
+                emulatorDevice = getASpecificAndroidEmulator();
                 break;
             case CLASS_SERIES_TEST_PARALLEL:
-                device = getAUniqueAndroidEmulatorPerTestWithinAClass(testClassName);
+                emulatorDevice = getAUniqueAndroidEmulatorPerTestWithinAClass(testClassName);
                 break;
             case CLASS_PARALLEL_TEST_SERIES:
-                device = getAUniqueAndroidEmulatorPerTestClass(testClassName);
+                emulatorDevice = getAUniqueAndroidEmulatorPerTestClass(testClassName);
                 break;
             case CLASS_PARALLEL_TEST_PARALLEL:
-                device = getAUniqueAndroidEmulator();
+                emulatorDevice = getAUniqueAndroidEmulator();
                 break;
             default:
                 break;
         }
 
-        return device;
+        return emulatorDevice;
     }
 
     // A convenience method to get the device name from application.conf file.
     // Say when running tests in series in a particular class.
-    public static synchronized Device getASpecificAndroidEmulator() {
+    public static synchronized EmulatorDevice getASpecificAndroidEmulator() {
         return getASpecificAndroidEmulator(DEVICE_NAME);
     }
 
     // If in future, we need to pass on the deviceName, then we will get rid of convenience method and can use this.
-    public static synchronized Device getASpecificAndroidEmulator(String deviceName) {
-        Device device = new Device();
+    public static synchronized EmulatorDevice getASpecificAndroidEmulator(String deviceName) {
+        EmulatorDevice emulatorDevice = new EmulatorDevice();
 
         // Set all the unique properties for this emulator device (necessary for execution in parallel)
-        device.setDeviceName(deviceName);
-        device.setUdid("emulator-" + emulatorNumber);
-        device.setSystemPort(systemPort);
+        emulatorDevice.setDeviceName(deviceName);
+        emulatorDevice.setUdid("emulator-" + emulatorNumber);
+        emulatorDevice.setSystemPort(systemPort);
 
-        log.info("Device details: {}", device);
-        return device;
+        log.info("Device details: {}", emulatorDevice);
+        return emulatorDevice;
     }
 
-    public static synchronized Device getAUniqueAndroidEmulatorPerTestWithinAClass(String testClassName) {
+    public static synchronized EmulatorDevice getAUniqueAndroidEmulatorPerTestWithinAClass(String testClassName) {
         // If this is a new test class than initialize variables so that you can pick devices from beginning.
         if (! testClassName.equalsIgnoreCase(currentTestClass)) {
             log.info("New testClass tests started for: {}", testClassName);
@@ -108,52 +108,52 @@ public class AvailableDevices {
         systemPort = Long.valueOf(8200);
     }
 
-    public static synchronized Device getAUniqueAndroidEmulatorPerTestClass(String testClassName) {
+    public static synchronized EmulatorDevice getAUniqueAndroidEmulatorPerTestClass(String testClassName) {
         if (testClassDevicesMap.containsKey(testClassName)) {
             log.info("device already available.");
             log.info("Device details: {}", testClassDevicesMap.get(testClassName));
             return testClassDevicesMap.get(testClassName);
         } else {
             log.info("device not already available. Fetch a unique one for test class {}", testClassName);
-            Device device = getAUniqueAndroidEmulator();
-            testClassDevicesMap.put(testClassName, device);
-            return device;
+            EmulatorDevice emulatorDevice = getAUniqueAndroidEmulator();
+            testClassDevicesMap.put(testClassName, emulatorDevice);
+            return emulatorDevice;
         }
     }
 
     // Say when running tests in parallel within a single class.
-    public static synchronized Device getAUniqueAndroidEmulator() {
+    public static synchronized EmulatorDevice getAUniqueAndroidEmulator() {
         // If config.strategy = fixed; and you already have fetched devices as many as fixed thread count
         // then you have to initialize variables to pick up existing devices again and not pick up new devices (real or virtual)
         log.info("deviceNumber: {}", deviceNumber);
         if (getConfigStrategy().equalsIgnoreCase("fixed") && deviceNumber == getFixedThreadCount()) {
             log.info("Thread count reached equal to fixed thread count specified in junit properties file.");
             log.info("Pick the first free device from list of freedDevices.");
-            Device firstFreeDevice = freedDevices.get(0);
-            log.info("firstFreeDevice: {}", firstFreeDevice);
+            EmulatorDevice firstFreeEmulatorDevice = freedEmulatorDevices.get(0);
+            log.info("firstFreeDevice: {}", firstFreeEmulatorDevice);
 
             // Now this device is no longer free for others. So remove it from the freedDevices list.
-            freedDevices.remove(0);
+            freedEmulatorDevices.remove(0);
 
-            return firstFreeDevice;
+            return firstFreeEmulatorDevice;
         } else {
-            Device device = new Device();
+            EmulatorDevice emulatorDevice = new EmulatorDevice();
 
             log.info("fetching device number: {}", deviceNumber);
             String deviceName = AndroidEmulators.values()[deviceNumber].toString();
 
             // Set all the unique properties for this emulator device (necessary for execution in parallel)
-            device.setDeviceName(deviceName);
-            device.setUdid("emulator-" + emulatorNumber);
-            device.setSystemPort(systemPort);
+            emulatorDevice.setDeviceName(deviceName);
+            emulatorDevice.setUdid("emulator-" + emulatorNumber);
+            emulatorDevice.setSystemPort(systemPort);
 
             // Increment so that next device fetched has unique properties.
             deviceNumber++;
             systemPort++;
             emulatorNumber = emulatorNumber + 2;
 
-            log.info("Device details: {}", device);
-            return device;
+            log.info("Device details: {}", emulatorDevice);
+            return emulatorDevice;
         }
     }
 
@@ -185,9 +185,9 @@ public class AvailableDevices {
         log.info("udid: {}", udid);
         log.info("systemPort: {}", systemPort);
 
-        Device freeDevice = new Device(udid, avd, systemPort);
+        EmulatorDevice freeEmulatorDevice = new EmulatorDevice(udid, avd, systemPort);
 
         // Add this device to list of freeDevices
-        freedDevices.add(freeDevice);
+        freedEmulatorDevices.add(freeEmulatorDevice);
     }
 }
