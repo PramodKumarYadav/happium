@@ -9,7 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.deeplink.DeepLink;
 import org.saucedemo.factories.DriverFactory;
-import org.saucedemo.factories.EnvConfigFactory;
+import org.saucedemo.factories.TestEnvironment;
 import org.saucedemo.screens.ProductScreen;
 import org.saucedemo.testresults.RunnerExtension;
 
@@ -23,7 +23,7 @@ import static org.saucedemo.testresults.TestResult.packUp;
 @ExtendWith(RunnerExtension.class)
 class TestProduct {
     private static final String CLASS_NAME = MethodHandles.lookup().lookupClass().getSimpleName();
-    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final Config CONFIG = TestEnvironment.getConfig();
 
     private AppiumDriver driver;
     private ProductScreen productScreen;

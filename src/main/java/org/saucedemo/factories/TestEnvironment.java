@@ -5,7 +5,7 @@ import com.typesafe.config.ConfigFactory;
 
 //@Slf4j
 // For future reference on this topic: https://github.com/lightbend/config
-public class EnvConfigFactory {
+public class TestEnvironment {
     public static final Config getConfig() {
         // Load default properties (first from System properties and then from application.conf)
         Config baseConfig = ConfigFactory.load();

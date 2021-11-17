@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.factories.EnvConfigFactory;
+import org.saucedemo.factories.TestEnvironment;
 import org.saucedemo.hostDevices.localhost.android.AvailableEmulators;
 
 import java.io.FileInputStream;
@@ -20,7 +20,7 @@ import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities
 @Slf4j
 public class TestSandbox {
     private static String className = MethodHandles.lookup().lookupClass().getSimpleName();
-    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final Config CONFIG = TestEnvironment.getConfig();
 
     @Disabled
     @Test

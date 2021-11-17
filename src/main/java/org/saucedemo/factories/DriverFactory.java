@@ -16,7 +16,7 @@ public class DriverFactory {
     public static AppiumDriver getDriver(String testClassName) {
         AppiumDriver driver;
 
-        String PLATFORM_NAME = EnvConfigFactory.getConfig().getString("PLATFORM_NAME").toLowerCase();
+        String PLATFORM_NAME = TestEnvironment.getConfig().getString("PLATFORM_NAME").toLowerCase();
         switch (PLATFORM_NAME) {
             case "android":
                 driver = new AndroidDriver(getHostURL(), getDesiredCapabilities(testClassName));
@@ -37,7 +37,7 @@ public class DriverFactory {
     }
 
     private static URL getHostURL() {
-        String HOST_URI = EnvConfigFactory.getConfig().getString("HOST_URI");
+        String HOST_URI = TestEnvironment.getConfig().getString("HOST_URI");
         try {
             return new URL(HOST_URI);
         } catch (MalformedURLException e) {

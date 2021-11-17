@@ -5,7 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
-import org.saucedemo.factories.EnvConfigFactory;
+import org.saucedemo.factories.TestEnvironment;
 import org.saucedemo.hostDevices.localhost.ios.IosSimulators;
 import org.saucedemo.runmodes.ExecutionModes;
 
@@ -37,7 +37,7 @@ public class EmulatorDevicePicker {
     private static List<EmulatorDevice> freedEmulatorDevices = new ArrayList<>();
     private static String currentTestClass = "";
 
-    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final Config CONFIG = TestEnvironment.getConfig();
     private static final String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
 
     /*

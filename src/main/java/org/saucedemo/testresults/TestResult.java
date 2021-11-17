@@ -4,7 +4,7 @@ import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
-import org.saucedemo.factories.EnvConfigFactory;
+import org.saucedemo.factories.TestEnvironment;
 
 import static org.saucedemo.hostDevices.localhost.android.EmulatorDevicePicker.freeDevice;
 import static org.saucedemo.testresults.RunnerExtension.getClassName;
@@ -14,7 +14,7 @@ import static org.saucedemo.testresults.RunnerExtension.getTestStatus;
 
 @Slf4j
 public class TestResult {
-    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final Config CONFIG = TestEnvironment.getConfig();
 
     public static void setTestStatus(AppiumDriver driver) {
         String className = getClassName();
