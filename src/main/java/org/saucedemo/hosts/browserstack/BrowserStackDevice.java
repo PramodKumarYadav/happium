@@ -1,4 +1,4 @@
-package org.saucedemo.hostDevices.browserStack;
+package org.saucedemo.hosts.browserstack;
 
 import com.opencsv.bean.CsvBindByName;
 import lombok.AllArgsConstructor;
