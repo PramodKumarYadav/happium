@@ -25,7 +25,7 @@ import static org.saucedemo.utils.FileUtils.getFileAsString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class CapabilitiesFactory {
-    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final Config CONFIG = TestEnvironment.getConfig();
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
 
     // Don't want to create any driver for this factory class.

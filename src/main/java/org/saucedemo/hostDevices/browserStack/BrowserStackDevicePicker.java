@@ -3,7 +3,7 @@ package org.saucedemo.hostDevices.browserStack;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
-import org.saucedemo.factories.EnvConfigFactory;
+import org.saucedemo.factories.TestEnvironment;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,7 +18,7 @@ public class BrowserStackDevicePicker {
      * https://www.browserstack.com/list-of-browsers-and-platforms/app_automate
      */
     public static synchronized BrowserStackDevice getDevice() {
-        String DEVICE = EnvConfigFactory.getConfig().getString("DEVICE").toUpperCase();
+        String DEVICE = TestEnvironment.getConfig().getString("DEVICE").toUpperCase();
         if (DEVICE.equals("RANDOM")) {
             return getARandomBrowserStackDevice(getDeviceFilePath());
         } else if (EnumUtils.isValidEnum(AvailableAndroidModels.class, DEVICE) || EnumUtils.isValidEnum(AvailableIOSModels.class, DEVICE)) {
@@ -29,26 +29,26 @@ public class BrowserStackDevicePicker {
     }
 
     private static BrowserStackDevice getAFixedBrowserStackDevice() {
-        String DEVICE = EnvConfigFactory.getConfig().getString("DEVICE");
-        String OS_VERSION = EnvConfigFactory.getConfig().getString("OS_VERSION");
+        String DEVICE = TestEnvironment.getConfig().getString("DEVICE");
+        String OS_VERSION = TestEnvironment.getConfig().getString("OS_VERSION");
         BrowserStackDevice device = new BrowserStackDevice(DEVICE, OS_VERSION);
         return device;
     }
 
     private static String getDeviceFilePath(String modelType) {
-        String PLATFORM_NAME = EnvConfigFactory.getConfig().getString("PLATFORM_NAME");
+        String PLATFORM_NAME = TestEnvironment.getConfig().getString("PLATFORM_NAME");
         log.info("Model type: {}", modelType);
         String basePath;
         switch (PLATFORM_NAME) {
             case "android":
-                basePath = EnvConfigFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
+                basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
                 if (EnumUtils.isValidEnum(AvailableAndroidModels.class, modelType)) {
                     return String.format("%s/%s.csv", basePath, modelType);
                 } else {
                     throw new IllegalStateException(String.format("android does not have %s devices. Fix your platform or device choice", modelType));
                 }
             case "ios":
-                basePath = EnvConfigFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
+                basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
                 if (EnumUtils.isValidEnum(AvailableIOSModels.class, modelType)) {
                     return String.format("%s/%s.csv", basePath, modelType);
                 } else {
@@ -61,16 +61,16 @@ public class BrowserStackDevicePicker {
     }
 
     private static String getDeviceFilePath() {
-        String PLATFORM_NAME = EnvConfigFactory.getConfig().getString("PLATFORM_NAME");
+        String PLATFORM_NAME = TestEnvironment.getConfig().getString("PLATFORM_NAME");
         String basePath;
         String modelType;
         switch (PLATFORM_NAME) {
             case "android":
-                basePath = EnvConfigFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
+                basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
                 modelType = AvailableAndroidModels.getRandomModel().getValue();
                 return String.format("%s/%s.csv", basePath, modelType);
             case "ios":
-                basePath = EnvConfigFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
+                basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
                 modelType = AvailableIOSModels.getRandomModel().getValue();
                 return String.format("%s/%s.csv", basePath, modelType);
             default:

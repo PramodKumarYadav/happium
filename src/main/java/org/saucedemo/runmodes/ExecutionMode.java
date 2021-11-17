@@ -2,7 +2,7 @@ package org.saucedemo.runmodes;
 
 import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
-import org.saucedemo.factories.EnvConfigFactory;
+import org.saucedemo.factories.TestEnvironment;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.Properties;
 
 @Slf4j
 public class ExecutionMode {
-    private static final Config CONFIG = EnvConfigFactory.getConfig();
+    private static final Config CONFIG = TestEnvironment.getConfig();
 
     // Since junit execution properties are not going to change mid execution, this method can be final.
     public static final ExecutionModes getExecutionMode() {
