@@ -1,4 +1,4 @@
-package org.saucedemo.hostDevices.browserStack;
+package org.saucedemo.hosts.browserStack;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
