@@ -1,4 +1,4 @@
-package org.saucedemo.hosts.browserStack;
+package org.saucedemo.host_devices.browserStack;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +31,7 @@ public class BrowserStackDevicePicker {
     private static BrowserStackDevice getAFixedBrowserStackDevice() {
         String DEVICE = TestEnvironment.getConfig().getString("DEVICE");
         String OS_VERSION = TestEnvironment.getConfig().getString("OS_VERSION");
-        BrowserStackDevice device = new BrowserStackDevice(DEVICE, OS_VERSION);
-        return device;
+        return new BrowserStackDevice(DEVICE, OS_VERSION);
     }
 
     private static String getDeviceFilePath(String modelType) {
