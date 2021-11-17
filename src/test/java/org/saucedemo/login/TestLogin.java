@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
 import org.saucedemo.testresults.RunnerExtension;
@@ -15,7 +16,6 @@ import java.lang.invoke.MethodHandles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.saucedemo.factories.DriverFactory.getDriver;
 import static org.saucedemo.testresults.TestResult.packUp;
 
 @ExtendWith(RunnerExtension.class)
@@ -28,7 +28,7 @@ class TestLogin {
 
     @BeforeEach
     public void setUp() {
-        driver = getDriver(CLASS_NAME);
+        driver = DriverFactory.getDriver(CLASS_NAME);
 
         loginScreen = new LoginScreen(driver);
         productsScreen = new ProductsScreen(driver);
