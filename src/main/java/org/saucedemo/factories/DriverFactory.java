@@ -16,7 +16,7 @@ public class DriverFactory {
     public static AppiumDriver getDriver(String testClassName) {
         AppiumDriver driver;
 
-        String PLATFORM_NAME = EnvConfigFactory.getConfig().getString("PLATFORM_NAME");
+        String PLATFORM_NAME = EnvConfigFactory.getConfig().getString("PLATFORM_NAME").toLowerCase();
         switch (PLATFORM_NAME) {
             case "android":
                 driver = new AndroidDriver(getHostURL(), getDesiredCapabilities(testClassName));
