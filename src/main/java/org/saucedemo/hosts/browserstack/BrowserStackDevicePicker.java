@@ -1,4 +1,4 @@
-package org.saucedemo.host_devices.browserStack;
+package org.saucedemo.hosts.browserstack;
 
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +12,11 @@ import java.util.Random;
 
 @Slf4j
 public class BrowserStackDevicePicker {
+    private BrowserStackDevicePicker() {
+        throw new IllegalStateException("Utility class");
+    }
+
+    public static final String FILE_FORMAT = "%s/%s.csv";
 
     /**
      * All devices (fixed or random, are to be picked from this list):
@@ -42,14 +47,14 @@ public class BrowserStackDevicePicker {
             case "android":
                 basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
                 if (EnumUtils.isValidEnum(AvailableAndroidModels.class, modelType)) {
-                    return String.format("%s/%s.csv", basePath, modelType);
+                    return String.format(FILE_FORMAT, basePath, modelType);
                 } else {
                     throw new IllegalStateException(String.format("android does not have %s devices. Fix your platform or device choice", modelType));
                 }
             case "ios":
                 basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
                 if (EnumUtils.isValidEnum(AvailableIOSModels.class, modelType)) {
-                    return String.format("%s/%s.csv", basePath, modelType);
+                    return String.format(FILE_FORMAT, basePath, modelType);
                 } else {
                     throw new IllegalStateException(String.format("ios does not have %s devices. Fix your platform or device choice", modelType));
                 }
@@ -67,11 +72,11 @@ public class BrowserStackDevicePicker {
             case "android":
                 basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
                 modelType = AvailableAndroidModels.getRandomModel().getValue();
-                return String.format("%s/%s.csv", basePath, modelType);
+                return String.format(FILE_FORMAT, basePath, modelType);
             case "ios":
                 basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
                 modelType = AvailableIOSModels.getRandomModel().getValue();
-                return String.format("%s/%s.csv", basePath, modelType);
+                return String.format(FILE_FORMAT, basePath, modelType);
             default:
                 throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
                         "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
@@ -84,18 +89,16 @@ public class BrowserStackDevicePicker {
     }
 
     public static final List<BrowserStackDevice> getDevicesForAModel(String csvFilePath) {
-        List<BrowserStackDevice> devices;
         try {
-            devices = new CsvToBeanBuilder(new FileReader(csvFilePath))
+            return new CsvToBeanBuilder(new FileReader(csvFilePath))
                     .withType(BrowserStackDevice.class)
                     .build()
                     .parse();
         } catch (FileNotFoundException e) {
             throw new IllegalStateException("csvFilePath not found.", e);
         }
-
-        return devices;
     }
+
 
     private static BrowserStackDevice getRandomDeviceFromAParticularModel(List<BrowserStackDevice> devices) {
         Random random = new Random();

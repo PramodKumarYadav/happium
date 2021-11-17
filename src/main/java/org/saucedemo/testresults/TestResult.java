@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.saucedemo.factories.TestEnvironment;
 
-import static org.saucedemo.host_devices.localhost.android.EmulatorDevicePicker.freeDevice;
+import static org.saucedemo.hosts.localhost.android.EmulatorDevicePicker.freeDevice;
 import static org.saucedemo.testresults.RunnerExtension.getClassName;
 import static org.saucedemo.testresults.RunnerExtension.getReason;
 import static org.saucedemo.testresults.RunnerExtension.getTestName;

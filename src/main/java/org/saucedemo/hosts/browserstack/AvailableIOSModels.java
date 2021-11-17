@@ -1,4 +1,4 @@
-package org.saucedemo.host_devices.browserStack;
+package org.saucedemo.hosts.browserstack;
 
 import java.util.Random;
 
