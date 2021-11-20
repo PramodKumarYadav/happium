@@ -1,4 +1,4 @@
-package org.saucedemo.testresults;
+package org.saucedemo.test_lifecycle;
 
 import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
@@ -7,10 +7,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.saucedemo.factories.TestEnvironment;
 
 import static org.saucedemo.hosts.localhost.android.EmulatorDevicePicker.freeDevice;
-import static org.saucedemo.testresults.RunnerExtension.getClassName;
-import static org.saucedemo.testresults.RunnerExtension.getReason;
-import static org.saucedemo.testresults.RunnerExtension.getTestName;
-import static org.saucedemo.testresults.RunnerExtension.getTestStatus;
+import static org.saucedemo.test_lifecycle.RunnerExtension.getClassName;
+import static org.saucedemo.test_lifecycle.RunnerExtension.getReason;
+import static org.saucedemo.test_lifecycle.RunnerExtension.getTestName;
+import static org.saucedemo.test_lifecycle.RunnerExtension.getTestStatus;
 
 @Slf4j
 public class TestResult {

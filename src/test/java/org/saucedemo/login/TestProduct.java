@@ -11,14 +11,14 @@ import org.saucedemo.deeplink.DeepLink;
 import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.factories.TestEnvironment;
 import org.saucedemo.screens.ProductScreen;
-import org.saucedemo.testresults.RunnerExtension;
+import org.saucedemo.test_lifecycle.RunnerExtension;
 
 import java.lang.invoke.MethodHandles;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
-import static org.saucedemo.testresults.TestResult.packUp;
+import static org.saucedemo.test_lifecycle.TestResult.packUp;
 
 @ExtendWith(RunnerExtension.class)
 class TestProduct {
