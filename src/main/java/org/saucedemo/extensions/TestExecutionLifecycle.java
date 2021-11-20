@@ -1,9 +1,7 @@
 package org.saucedemo.extensions;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
-import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
-import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
 
@@ -31,7 +29,6 @@ public class TestExecutionLifecycle implements BeforeTestExecutionCallback, Afte
     public void afterTestExecution(ExtensionContext context) {
         setCurrentTestsVariables(context);
         logCurrentTestsTotalExecutionTime(context);
-        log.info("Done with AfterTestExecutionCallback");
     }
 
     private void setCurrentTestsVariables(ExtensionContext context) {
