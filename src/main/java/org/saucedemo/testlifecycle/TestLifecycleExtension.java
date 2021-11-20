@@ -1,4 +1,4 @@
-package org.saucedemo.test_lifecycle;
+package org.saucedemo.testlifecycle;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtensionContext.Store;
 import java.lang.reflect.*;
 
 @Slf4j
-public class RunnerExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
+public class TestLifecycleExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
     private static String testName;
     private static Boolean testStatus;
     private static String className;
