@@ -19,13 +19,10 @@ public class TestResult {
     }
 
     public static String getTestResult(Boolean testStatus){
-        String testResult;
         if(testStatus == true){
-            testResult = "failed";
+            return "failed";
         }else{
-            testResult = "passed";
+            return "passed";
         }
-
-        return testResult;
     }
 }
