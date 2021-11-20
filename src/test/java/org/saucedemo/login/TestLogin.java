@@ -10,13 +10,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
-import org.saucedemo.testresults.RunnerExtension;
+import org.saucedemo.test_lifecycle.RunnerExtension;
 
 import java.lang.invoke.MethodHandles;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.saucedemo.testresults.TestResult.packUp;
+import static org.saucedemo.test_lifecycle.TestResult.packUp;
 
 @ExtendWith(RunnerExtension.class)
 class TestLogin {
