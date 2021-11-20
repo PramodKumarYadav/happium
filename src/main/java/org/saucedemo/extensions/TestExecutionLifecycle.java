@@ -1,11 +1,13 @@
 package org.saucedemo.extensions;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
+import org.junit.jupiter.api.extension.BeforeTestExecutionCallback;
+import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.jupiter.api.extension.ExtensionContext.Store;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Method;
 
 @Slf4j
 public class TestExecutionLifecycle implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
