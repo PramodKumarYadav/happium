@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtensionContext.Store;
 import java.lang.reflect.*;
 
 @Slf4j
-public class TestLifecycleExtension implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
+public class TestExecutionLifecycle implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
     private static String testName;
     private static Boolean testStatus;
     private static String className;

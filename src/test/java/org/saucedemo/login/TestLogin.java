@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.screens.LoginScreen;
 import org.saucedemo.screens.ProductsScreen;
-import org.saucedemo.testlifecycle.TestLifecycleExtension;
+import org.saucedemo.testlifecycle.TestExecutionLifecycle;
 
 import java.lang.invoke.MethodHandles;
 
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.saucedemo.testlifecycle.TestResult.packUp;
 
-@ExtendWith(TestLifecycleExtension.class)
+@ExtendWith(TestExecutionLifecycle.class)
 class TestLogin {
     private static final String CLASS_NAME = MethodHandles.lookup().lookupClass().getSimpleName();
 
