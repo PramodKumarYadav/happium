@@ -44,9 +44,9 @@ public class RunnerExtension implements BeforeTestExecutionCallback, AfterTestEx
     private void logCurrentTestsTotalExecutionTime(ExtensionContext context) {
         Method testMethod = context.getRequiredTestMethod();
         long startTime = getStore(context).remove(START_TIME, long.class);
-        long duration = System.currentTimeMillis() - startTime;
+        double duration = (System.currentTimeMillis() - startTime)/1000.0;
 
-        log.info("Method [{}] took {} ms.", testMethod.getName(), duration);
+        log.info("Method [{}] took {} seconds.", testMethod.getName(), duration);
     }
 
     public static String getTestName() {
