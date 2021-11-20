@@ -11,7 +11,7 @@ import org.saucedemo.deeplink.DeepLink;
 import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.factories.TestEnvironment;
 import org.saucedemo.screens.ProductsScreen;
-import org.saucedemo.testlifecycle.TestLifecycleExtension;
+import org.saucedemo.testlifecycle.TestExecutionLifecycle;
 
 import java.lang.invoke.MethodHandles;
 
@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 import static org.saucedemo.testlifecycle.TestResult.packUp;
 
-@ExtendWith(TestLifecycleExtension.class)
+@ExtendWith(TestExecutionLifecycle.class)
 class TestProducts {
     private static final String CLASS_NAME = MethodHandles.lookup().lookupClass().getSimpleName();
     private static final Config CONFIG = TestEnvironment.getConfig();

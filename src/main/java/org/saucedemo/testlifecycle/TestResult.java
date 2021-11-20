@@ -7,10 +7,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.saucedemo.factories.TestEnvironment;
 
 import static org.saucedemo.hosts.localhost.android.EmulatorDevicePicker.freeDevice;
-import static org.saucedemo.testlifecycle.TestLifecycleExtension.getClassName;
-import static org.saucedemo.testlifecycle.TestLifecycleExtension.getReason;
-import static org.saucedemo.testlifecycle.TestLifecycleExtension.getTestName;
-import static org.saucedemo.testlifecycle.TestLifecycleExtension.getTestStatus;
+import static org.saucedemo.testlifecycle.TestExecutionLifecycle.getClassName;
+import static org.saucedemo.testlifecycle.TestExecutionLifecycle.getReason;
+import static org.saucedemo.testlifecycle.TestExecutionLifecycle.getTestName;
+import static org.saucedemo.testlifecycle.TestExecutionLifecycle.getTestStatus;
 
 @Slf4j
 public class TestResult {
