@@ -150,3 +150,5 @@ see detailed logs below:
       - *Two*, You must give the absolute path of the app. 
         Note that when the emulator is started manually via the android studio, then you can even give a relative path and tests works. 
         However, if you want to launch emulator and app from the tests, then you have to take care of both above points (Absolute path and an app created via android studio)
+-  4. If you have to use @beforeEach and @afterEach method also in tests, give them a seperate name than the ones mentioned in the TestSetup. If you give the same names, the methods in
+   Tests will override the methods in TestSetup and thus your tests will either result into failure or unexpected behavior. So beware of this.
