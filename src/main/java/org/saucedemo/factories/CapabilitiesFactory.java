@@ -91,7 +91,7 @@ public class CapabilitiesFactory {
                 // Github does not allow dots in secrets. So I have to store these keys as underscores (i.e. different than browserstack specifies it to be.
                 capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
                 capabilities.setCapability("browserstack.key", System.getenv("BROWSERSTACK_KEY"));
-                capabilities.setCapability("app", CONFIG.getString("APP"));
+                capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + CONFIG.getString("CUSTOM_ID"));
 
                 capabilities.setCapability("project", CONFIG.getString("PROJECT"));
                 String buildName = CONFIG.getString("BROWSERSTACK_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
