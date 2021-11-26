@@ -37,11 +37,25 @@ public class DriverFactory {
     }
 
     private static URL getHostURL() {
-        String HOST_URI = TestEnvironment.getConfig().getString("HOST_URI");
         try {
-            return new URL(HOST_URI);
+            return new URL(getHostUri());
         } catch (MalformedURLException e) {
-            throw new IllegalStateException(String.format("%s is Malformed host URL.", HOST_URI), e);
+            throw new IllegalStateException(String.format("%s is Malformed host URL.", getHostUri()), e);
         }
+    }
+
+    private static String getHostUri() {
+        String HOST_URI;
+        String HOST = TestEnvironment.getConfig().getString("HOST").toLowerCase();
+        switch (HOST) {
+            case "saucelabs":
+                String sauceUri = TestEnvironment.getConfig().getString("SAUCE_URI");
+                HOST_URI = "https://" + System.getenv("SAUCE_USERNAME") + ":" + System.getenv("SAUCE_ACCESS_KEY") + sauceUri +"/wd/hub";
+                log.info("HOST_URI: {}", HOST_URI);
+                break;
+            default:
+                HOST_URI = TestEnvironment.getConfig().getString("HOST_URI");
+        }
+        return HOST_URI;
     }
 }
