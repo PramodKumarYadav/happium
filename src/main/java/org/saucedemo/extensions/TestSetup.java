@@ -5,9 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.saucedemo.factories.DriverFactory;
-import org.saucedemo.factories.TestEnvironment;
-
-import static org.saucedemo.hosts.localhost.android.EmulatorDevicePicker.freeDevice;
 
 @Slf4j
 public class TestSetup {
@@ -22,11 +19,7 @@ public class TestSetup {
 
     @AfterEach
     public void tearDown() {
-        if(TestEnvironment.getConfig().getString("HOST").equalsIgnoreCase("browserstack")){
-            TestResult.setTestStatus(driver, childTestClassName);
-        } else {
-            freeDevice(driver);
-        }
+        TestResult.setTestStatus(driver, childTestClassName);
 
         driver.quit();
         log.info("tear down complete");
