@@ -11,7 +11,7 @@ public class TestEnvironment {
         Config baseConfig = ConfigFactory.load();
         String HOST = baseConfig.getString("HOST");
 
-        if(HOST.equalsIgnoreCase("localhost") || HOST.equalsIgnoreCase("browserstack")){
+        if(HOST.equalsIgnoreCase("localhost") || HOST.equalsIgnoreCase("browserstack") || HOST.equalsIgnoreCase("saucelabs")){
             Config HOST_CONFIG = ConfigFactory.load(HOST);
             Config MERGED_CONFIG = HOST_CONFIG.withFallback(baseConfig);
             return MERGED_CONFIG;
