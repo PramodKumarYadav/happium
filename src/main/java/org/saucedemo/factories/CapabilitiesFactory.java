@@ -40,14 +40,70 @@ public class CapabilitiesFactory {
 
         String HOST = CONFIG.getString("HOST");
         log.info("Running tests on HOST: {}", HOST);
+
+        String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
+        log.info("Running tests on PLATFORM_NAME: {}", PLATFORM_NAME);
+
         switch (HOST) {
+            case "browserstack":
+                // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
+                // Github does not allow dots in secrets. So I have to store these keys as underscores (i.e. different than browserstack specifies it to be.
+                capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
+                capabilities.setCapability("browserstack.key", System.getenv("BROWSERSTACK_KEY"));
+                capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + CONFIG.getString("CUSTOM_ID"));
+
+                capabilities.setCapability("project", CONFIG.getString("PROJECT"));
+                String buildName = CONFIG.getString("BROWSERSTACK_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
+                capabilities.setCapability("build", buildName);
+                log.info("buildName: {}", buildName);
+
+                capabilities.setCapability("name", testClassName);
+                capabilities.setCapability("browserstack.networkLogs", true);
+
+                BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
+                log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());
+                capabilities.setCapability("device", device.getDeviceName());
+                capabilities.setCapability("os_version", device.getOsVersion());
+                break;
+            case "saucelabs":
+                // Note that saucelabs user and key are fetched from system env variables. Rest all other properties are fetched from config.
+                capabilities.setCapability("username", System.getenv("SAUCE_USERNAME"));
+                capabilities.setCapability("accessKey", System.getenv("SAUCE_ACCESS_KEY"));
+                capabilities.setCapability("appWaitActivity", "com.swaglabsmobileapp.MainActivity");
+                capabilities.setCapability("idleTimeout", "90");
+                capabilities.setCapability("noReset", "true");
+                capabilities.setCapability("newCommandTimeout", "90");
+
+                // Test result capabilities (build and test class name)
+                String buildNameSauce = CONFIG.getString("SAUCE_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
+                capabilities.setCapability("build", buildNameSauce);
+                capabilities.setCapability("name", testClassName);
+
+                // todo: add random mode for saucelabs.
+//                BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
+//                log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());
+//                capabilities.setCapability("device", device.getDeviceName());
+
+                capabilities.setCapability("platformName", PLATFORM_NAME);
+                switch (PLATFORM_NAME) {
+                    case "android":
+                        capabilities.setCapability("app", "storage:filename=" + CONFIG.getString("ANDROID_APP_NAME"));
+//                        OR
+//                        capabilities.setCapability("app", CONFIG.getString("ANDROID_APP_URL"));
+                        capabilities.setCapability("platformVersion", "8.1");
+                        capabilities.setCapability("deviceName", "Samsung Galaxy S9 Plus FHD GoogleAPI Emulator");
+                        break;
+                    case "ios":
+                        break;
+                    default:
+                        break;
+                }
+                break;
             case "localhost":
-                String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
                 String DEVICE_TYPE = CONFIG.getString("DEVICE_TYPE");
                 String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
 
                 // On localhost you are either on android or on IOS (not both).
-                log.info("Running tests on PLATFORM_NAME: {}", PLATFORM_NAME);
                 log.info("Running tests on DEVICE_TYPE: {}", DEVICE_TYPE);
                 log.info("Running tests on DEVICE_NAME: {}", DEVICE_NAME);
 
@@ -85,26 +141,6 @@ public class CapabilitiesFactory {
                     default:
                         break;
                 }
-                break;
-            case "browserstack":
-                // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
-                // Github does not allow dots in secrets. So I have to store these keys as underscores (i.e. different than browserstack specifies it to be.
-                capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
-                capabilities.setCapability("browserstack.key", System.getenv("BROWSERSTACK_KEY"));
-                capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + CONFIG.getString("CUSTOM_ID"));
-
-                capabilities.setCapability("project", CONFIG.getString("PROJECT"));
-                String buildName = CONFIG.getString("BROWSERSTACK_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
-                capabilities.setCapability("build", buildName);
-                log.info("buildName: {}", buildName);
-
-                capabilities.setCapability("name", testClassName);
-                capabilities.setCapability("browserstack.networkLogs", true);
-
-                BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
-                log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());
-                capabilities.setCapability("device", device.getDeviceName());
-                capabilities.setCapability("os_version", device.getOsVersion());
                 break;
             default:
                 throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from localhost, browserstack or saucelabs", HOST));
