@@ -9,31 +9,35 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities;
-
 @Slf4j
 public class DriverFactory {
-    public static AppiumDriver getDriver(String testClassName) {
-        AppiumDriver driver;
+    private static final String PLATFORM_NAME = TestEnvironment.getConfig().getString("PLATFORM_NAME").toLowerCase();
+    private static final String HOST = TestEnvironment.getConfig().getString("HOST").toLowerCase();
 
-        String PLATFORM_NAME = TestEnvironment.getConfig().getString("PLATFORM_NAME").toLowerCase();
+    private DriverFactory() {
+        throw new IllegalStateException("Factory class");
+    }
+
+    public static AppiumDriver getDriver(String testClassName) {
         switch (PLATFORM_NAME) {
             case "android":
-                driver = new AndroidDriver(getHostURL(), getDesiredCapabilities(testClassName));
-                break;
+                return new AndroidDriver(getHostURL(), CapabilitiesFactory.getDesiredCapabilities(testClassName));
             case "ios":
-                driver = new IOSDriver(getHostURL(), getDesiredCapabilities(testClassName));
-                break;
+                return new IOSDriver(getHostURL(), CapabilitiesFactory.getDesiredCapabilities(testClassName));
             default:
                 throw new IllegalStateException(String.format("%s is not a valid platform choice. You can either choose 'android' or 'ios. " +
                         "Check the value of 'PLATFORM_NAME' property in application.conf; Or in CI, if running from continuous integration.", PLATFORM_NAME));
         }
-        // Set implicit wait before returning the driver
+    }
+
+    /**
+     * Set implicit wait before using the driver
+     */
+    public static void setDriver(AppiumDriver driver) {
         driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
 
         log.info("SessionId: {}", driver.getSessionId());
         log.info("Driver capabilities: {}", driver.getCapabilities());
-        return driver;
     }
 
     private static URL getHostURL() {
@@ -45,17 +49,12 @@ public class DriverFactory {
     }
 
     private static String getHostUri() {
-        String HOST_URI;
-        String HOST = TestEnvironment.getConfig().getString("HOST").toLowerCase();
         switch (HOST) {
             case "saucelabs":
                 String sauceUri = TestEnvironment.getConfig().getString("SAUCE_URI");
-                HOST_URI = "https://" + System.getenv("SAUCE_USERNAME") + ":" + System.getenv("SAUCE_ACCESS_KEY") + sauceUri +"/wd/hub";
-                log.info("HOST_URI: {}", HOST_URI);
-                break;
+                return "https://" + System.getenv("SAUCE_USERNAME") + ":" + System.getenv("SAUCE_ACCESS_KEY") + sauceUri + "/wd/hub";
             default:
-                HOST_URI = TestEnvironment.getConfig().getString("HOST_URI");
+                return TestEnvironment.getConfig().getString("HOST_URI");
         }
-        return HOST_URI;
     }
 }
