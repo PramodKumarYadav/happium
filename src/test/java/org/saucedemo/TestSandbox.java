@@ -4,9 +4,8 @@ import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.factories.TestEnvironment;
-import org.saucedemo.hosts.localhost.android.AvailableEmulators;
+import org.saucedemo.factories.hosts.localhost.android.AvailableEmulators;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -15,19 +14,11 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.saucedemo.factories.CapabilitiesFactory.getDesiredCapabilities;
 
 @Slf4j
 public class TestSandbox {
     private static String className = MethodHandles.lookup().lookupClass().getSimpleName();
     private static final Config CONFIG = TestEnvironment.getConfig();
-
-    @Disabled
-    @Test
-    void testDesiredCapabilitiesDefault() {
-        DesiredCapabilities capabilities = getDesiredCapabilities(className);
-        log.info(capabilities.toString());
-    }
 
     @Disabled
     @Test
