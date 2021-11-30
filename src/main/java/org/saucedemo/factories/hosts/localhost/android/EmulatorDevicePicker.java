@@ -1,4 +1,4 @@
-package org.saucedemo.hosts.localhost.android;
+package org.saucedemo.factories.hosts.localhost.android;
 
 import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
 import org.saucedemo.factories.TestEnvironment;
-import org.saucedemo.hosts.localhost.ios.IosSimulators;
+import org.saucedemo.factories.hosts.localhost.ios.IosSimulators;
 import org.saucedemo.runmodes.ExecutionModes;
 
 import java.util.ArrayList;

@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.hosts.browserstack.BrowserStackDevice;
-import org.saucedemo.hosts.browserstack.BrowserStackDevicePicker;
-import org.saucedemo.hosts.localhost.android.EmulatorDevice;
+import org.saucedemo.factories.hosts.browserstack.BrowserStackDevice;
+import org.saucedemo.factories.hosts.browserstack.BrowserStackDevicePicker;
+import org.saucedemo.factories.hosts.localhost.android.EmulatorDevice;
 
 import java.util.Date;
 import java.util.Iterator;
 
-import static org.saucedemo.hosts.localhost.android.EmulatorDevicePicker.getAndroidEmulator;
+import static org.saucedemo.factories.hosts.localhost.android.EmulatorDevicePicker.getAndroidEmulator;
 import static org.saucedemo.utils.FileUtils.getCanonicalPath;
 import static org.saucedemo.utils.FileUtils.getFileAsString;
 
@@ -28,9 +28,8 @@ public class CapabilitiesFactory {
     private static final Config CONFIG = TestEnvironment.getConfig();
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
 
-    // Don't want to create any driver for this factory class.
     private CapabilitiesFactory() {
-
+        throw new IllegalStateException("Utility class");
     }
 
     // In case if in future, there is a need to get a capability from another calling class, we also provide a option for that.
@@ -46,101 +45,13 @@ public class CapabilitiesFactory {
 
         switch (HOST) {
             case "browserstack":
-                // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
-                // Github does not allow dots in secrets. So I have to store these keys as underscores (i.e. different than browserstack specifies it to be.
-                capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
-                capabilities.setCapability("browserstack.key", System.getenv("BROWSERSTACK_KEY"));
-                capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + CONFIG.getString("CUSTOM_ID"));
-
-                capabilities.setCapability("project", CONFIG.getString("PROJECT"));
-                String buildName = CONFIG.getString("BROWSERSTACK_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
-                capabilities.setCapability("build", buildName);
-                log.info("buildName: {}", buildName);
-
-                capabilities.setCapability("name", testClassName);
-                capabilities.setCapability("browserstack.networkLogs", true);
-
-                BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
-                log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());
-                capabilities.setCapability("device", device.getDeviceName());
-                capabilities.setCapability("os_version", device.getOsVersion());
+                setCapabilitiesForBrowserStack(testClassName, capabilities);
                 break;
             case "saucelabs":
-                // Note that saucelabs user and key are fetched from system env variables. Rest all other properties are fetched from config.
-                capabilities.setCapability("username", System.getenv("SAUCE_USERNAME"));
-                capabilities.setCapability("accessKey", System.getenv("SAUCE_ACCESS_KEY"));
-                capabilities.setCapability("appWaitActivity", "com.swaglabsmobileapp.MainActivity");
-                capabilities.setCapability("idleTimeout", "90");
-                capabilities.setCapability("noReset", "true");
-                capabilities.setCapability("newCommandTimeout", "90");
-
-                // Test result capabilities (build and test class name)
-                String buildNameSauce = CONFIG.getString("SAUCE_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
-                capabilities.setCapability("build", buildNameSauce);
-                capabilities.setCapability("name", testClassName);
-
-                // todo: add random mode for saucelabs.
-//                BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
-//                log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());
-//                capabilities.setCapability("device", device.getDeviceName());
-
-                capabilities.setCapability("platformName", PLATFORM_NAME);
-                switch (PLATFORM_NAME) {
-                    case "android":
-                        capabilities.setCapability("app", "storage:filename=" + CONFIG.getString("ANDROID_APP_NAME"));
-//                        OR
-//                        capabilities.setCapability("app", CONFIG.getString("ANDROID_APP_URL"));
-                        capabilities.setCapability("platformVersion", "8.1");
-                        capabilities.setCapability("deviceName", "Samsung Galaxy S9 Plus FHD GoogleAPI Emulator");
-                        break;
-                    case "ios":
-                        break;
-                    default:
-                        break;
-                }
+                setCapabilitiesForSauceLabs(testClassName, capabilities, PLATFORM_NAME);
                 break;
             case "localhost":
-                String DEVICE_TYPE = CONFIG.getString("DEVICE_TYPE");
-                String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
-
-                // On localhost you are either on android or on IOS (not both).
-                log.info("Running tests on DEVICE_TYPE: {}", DEVICE_TYPE);
-                log.info("Running tests on DEVICE_NAME: {}", DEVICE_NAME);
-
-                switch (PLATFORM_NAME) {
-                    case "android":
-                        // Get local app location stored in the project here (via absolute path)
-                        capabilities.setCapability("app", getCanonicalPath(CONFIG.getString("PATH_ANDROID_APP")));
-
-                        // Set common android capabilities here from the config file
-                        capabilities = setAndroidCommonCapabilities(capabilities);
-
-                        // Set capabilities specific for device type (fixed or virtual)
-                        switch (DEVICE_TYPE) {
-                            case "real":
-                                capabilities = setAndroidRealDeviceCapabilities(DEVICE_NAME, capabilities);
-                            case "virtual":
-                                capabilities = setAndroidEmulatorCapabilities(capabilities, testClassName);
-                        }
-                        break;
-                    case "ios":
-                        // Get local app location stored in the project here (via absolute path)
-                        capabilities.setCapability("app", getCanonicalPath(CONFIG.getString("PATH_IOS_APP")));
-
-                        // Set common android capabilities here from the config file
-                        capabilities = setIosCommonCapabilities(capabilities);
-
-                        // Set capabilities specific for device type (fixed or virtual)
-                        switch (DEVICE_TYPE) {
-                            case "real":
-                                capabilities = setIosRealDeviceCapabilities(DEVICE_NAME, capabilities);
-                            case "virtual":
-                                capabilities = setIosSimulatorCapabilities(capabilities);
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                setCapabilitiesForLocalHost(testClassName, capabilities, PLATFORM_NAME);
                 break;
             default:
                 throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from localhost, browserstack or saucelabs", HOST));
@@ -150,13 +61,121 @@ public class CapabilitiesFactory {
         return capabilities;
     }
 
+    private static void setCapabilitiesForLocalHost(String testClassName, DesiredCapabilities capabilities, String PLATFORM_NAME) {
+        String DEVICE_TYPE = CONFIG.getString("DEVICE_TYPE");
+        String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
+
+        // On localhost you are either on android or on IOS (not both).
+        log.info("Running tests on DEVICE_TYPE: {}", DEVICE_TYPE);
+        log.info("Running tests on DEVICE_NAME: {}", DEVICE_NAME);
+
+        switch (PLATFORM_NAME) {
+            case "android":
+                // Get local app location stored in the project here (via absolute path)
+                capabilities.setCapability("app", getCanonicalPath(CONFIG.getString("PATH_ANDROID_APP")));
+
+                // Set common android capabilities here from the config file
+                capabilities = setAndroidCommonCapabilities(capabilities);
+
+                // Set capabilities specific for device type (fixed or virtual)
+                switch (DEVICE_TYPE) {
+                    case "real":
+                        setAndroidRealDeviceCapabilities(DEVICE_NAME, capabilities);
+                        break;
+                    case "virtual":
+                        setAndroidEmulatorCapabilities(capabilities, testClassName);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case "ios":
+                // Get local app location stored in the project here (via absolute path)
+                capabilities.setCapability("app", getCanonicalPath(CONFIG.getString("PATH_IOS_APP")));
+
+                // Set common android capabilities here from the config file
+                capabilities = setIosCommonCapabilities(capabilities);
+
+                // Set capabilities specific for device type (fixed or virtual)
+                switch (DEVICE_TYPE) {
+                    case "real":
+                        setIosRealDeviceCapabilities(DEVICE_NAME, capabilities);
+                        break;
+                    case "virtual":
+                        setIosSimulatorCapabilities(capabilities);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    private static void setCapabilitiesForSauceLabs(String testClassName, DesiredCapabilities capabilities, String PLATFORM_NAME) {
+        // Note that saucelabs user and key are fetched from system env variables. Rest all other properties are fetched from config.
+        capabilities.setCapability("username", System.getenv("SAUCE_USERNAME"));
+        capabilities.setCapability("accessKey", System.getenv("SAUCE_ACCESS_KEY"));
+        capabilities.setCapability("appWaitActivity", "com.swaglabsmobileapp.MainActivity");
+        capabilities.setCapability("idleTimeout", "90");
+        capabilities.setCapability("noReset", "true");
+        capabilities.setCapability("newCommandTimeout", "90");
+
+        // Test result capabilities (build and test class name)
+        String buildNameSauce = CONFIG.getString("SAUCE_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
+        capabilities.setCapability("build", buildNameSauce);
+        capabilities.setCapability("name", testClassName);
+
+        // todo: add random mode for saucelabs.
+//                BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
+//                log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());
+//                capabilities.setCapability("device", device.getDeviceName());
+
+        capabilities.setCapability("platformName", PLATFORM_NAME);
+        switch (PLATFORM_NAME) {
+            case "android":
+                capabilities.setCapability("app", "storage:filename=" + CONFIG.getString("ANDROID_APP_NAME"));
+//                        OR
+//                        capabilities.setCapability("app", CONFIG.getString("ANDROID_APP_URL"));
+                capabilities.setCapability("platformVersion", "8.1");
+                capabilities.setCapability("deviceName", "Samsung Galaxy S9 Plus FHD GoogleAPI Emulator");
+                break;
+            case "ios":
+                break;
+            default:
+                break;
+        }
+    }
+
+    private static void setCapabilitiesForBrowserStack(String testClassName, DesiredCapabilities capabilities) {
+        // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
+        // Github does not allow dots in secrets. So I have to store these keys as underscores (i.e. different than browserstack specifies it to be.
+        capabilities.setCapability("browserstack.user", System.getenv("BROWSERSTACK_USER"));
+        capabilities.setCapability("browserstack.key", System.getenv("BROWSERSTACK_KEY"));
+        capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + CONFIG.getString("CUSTOM_ID"));
+
+        capabilities.setCapability("project", CONFIG.getString("PROJECT"));
+        String buildName = CONFIG.getString("BROWSERSTACK_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
+        capabilities.setCapability("build", buildName);
+        log.info("buildName: {}", buildName);
+
+        capabilities.setCapability("name", testClassName);
+        capabilities.setCapability("browserstack.networkLogs", true);
+
+        BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
+        log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());
+        capabilities.setCapability("device", device.getDeviceName());
+        capabilities.setCapability("os_version", device.getOsVersion());
+    }
+
     private static DesiredCapabilities setAndroidCommonCapabilities(DesiredCapabilities capabilities) {
-        capabilities = setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_COMMON_CAPABILITIES"), capabilities);
+        setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_COMMON_CAPABILITIES"), capabilities);
         return capabilities;
     }
 
     private static DesiredCapabilities setIosCommonCapabilities(DesiredCapabilities capabilities) {
-        capabilities = setCapabilitiesFromFile(CONFIG.getString("PATH_IOS_COMMON_CAPABILITIES"), capabilities);
+        setCapabilitiesFromFile(CONFIG.getString("PATH_IOS_COMMON_CAPABILITIES"), capabilities);
         return capabilities;
     }
 
@@ -165,14 +184,14 @@ public class CapabilitiesFactory {
     private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities) {
         String pathDeviceNameConfig = String.format("%s/%s.json", CONFIG.getString("PATH_ANDROID_CAPABILITIES"), deviceName);
 
-        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
+        setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
         return capabilities;
     }
 
     private static DesiredCapabilities setIosRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities) {
         String pathDeviceNameConfig = String.format("%s/%s.json", CONFIG.getString("PATH_IOS_CAPABILITIES"), deviceName);
 
-        capabilities = setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
+        setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
         return capabilities;
     }
 
@@ -188,7 +207,7 @@ public class CapabilitiesFactory {
     http://tutorials.jenkov.com/java-concurrency/synchronized.html
     */
     private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities, String testClassName) {
-        capabilities = setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_EMULATOR_DEFAULT_CAPABILITIES"), capabilities);
+        setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_EMULATOR_DEFAULT_CAPABILITIES"), capabilities);
 
         // getAndroidEmulator method contains logic to decide if user wants a 'specific' device or a 'random' device.
         // or "unique devices per test" within one class OR "unique device per each test class".
