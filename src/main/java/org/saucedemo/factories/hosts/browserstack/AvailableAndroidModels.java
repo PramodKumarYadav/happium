@@ -1,4 +1,4 @@
-package org.saucedemo.hosts.browserstack;
+package org.saucedemo.factories.hosts.browserstack;
 
 import java.util.Random;
 

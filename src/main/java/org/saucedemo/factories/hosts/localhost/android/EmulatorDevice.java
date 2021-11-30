@@ -1,4 +1,4 @@
-package org.saucedemo.hosts.localhost.android;
+package org.saucedemo.factories.hosts.localhost.android;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
