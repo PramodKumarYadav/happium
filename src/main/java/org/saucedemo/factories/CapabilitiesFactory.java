@@ -19,8 +19,6 @@ import org.saucedemo.factories.capabilities.saucelabs.SauceLabsCapabilities;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class CapabilitiesFactory {
-    private static final Config CONFIG = EnvFactory.getConfig();
-
     private CapabilitiesFactory() {
         throw new IllegalStateException("Static factory class");
     }
