@@ -10,22 +10,20 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class DriverFactory {
-    private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME").toUpperCase());
-
     private DriverFactory() {
         throw new IllegalStateException("Static factory class");
     }
 
-    public static AppiumDriver getDriver(String testClassName) {
+    public static AppiumDriver getDriver(Platform platform , String testClassName) {
         URLFactory urlFactory = new URLFactory();
-        switch (PLATFORM) {
+        switch (platform) {
             case ANDROID:
                 return new AndroidDriver(urlFactory.getHostURL(), CapabilitiesFactory.getDesiredCapabilities(testClassName));
             case IOS:
                 return new IOSDriver(urlFactory.getHostURL(), CapabilitiesFactory.getDesiredCapabilities(testClassName));
             default:
                 throw new IllegalStateException(String.format("%s is not a valid platform choice. You can either choose 'android' or 'ios. " +
-                        "Check the value of 'PLATFORM_NAME' property in application.conf; Or in CI, if running from continuous integration.", PLATFORM));
+                        "Check the value of 'PLATFORM_NAME' property in application.conf; Or in CI, if running from continuous integration.", platform));
         }
     }
 
