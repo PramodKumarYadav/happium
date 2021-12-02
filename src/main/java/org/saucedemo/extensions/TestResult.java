@@ -2,7 +2,7 @@ package org.saucedemo.extensions;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.JavascriptExecutor;
-import org.saucedemo.factories.TestEnvironment;
+import org.saucedemo.factories.EnvFactory;
 
 import static org.saucedemo.extensions.TestExecutionLifecycle.getTestStatus;
 import static org.saucedemo.factories.hosts.localhost.android.EmulatorDevicePicker.freeDevice;
@@ -12,7 +12,7 @@ public class TestResult {
         throw new IllegalStateException("Utility class");
     }
 
-    private static final String HOST = TestEnvironment.getConfig().getString("HOST").toLowerCase();
+    private static final String HOST = EnvFactory.getConfig().getString("HOST").toLowerCase();
 
     public static void setTestStatus(AppiumDriver driver, String childTestClassName){
         switch (HOST) {

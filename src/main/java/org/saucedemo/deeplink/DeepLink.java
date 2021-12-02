@@ -6,7 +6,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
-import org.saucedemo.factories.TestEnvironment;
+import org.saucedemo.factories.EnvFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
 public class DeepLink {
     AppiumDriver driver;
 
-    private static final Config CONFIG = TestEnvironment.getConfig();
+    private static final Config CONFIG = EnvFactory.getConfig();
 
     public DeepLink(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);

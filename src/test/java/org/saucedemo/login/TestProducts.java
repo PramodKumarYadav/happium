@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.deeplink.DeepLink;
 import org.saucedemo.extensions.TestSetup;
-import org.saucedemo.factories.TestEnvironment;
+import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.screens.ProductsScreen;
 import org.saucedemo.extensions.TestExecutionLifecycle;
 
@@ -24,7 +24,7 @@ class TestProducts extends TestSetup {
         productsScreen = new ProductsScreen(driver);
 
         deepLink = new DeepLink(driver);
-        String url = setDeepLinkUrl(TestEnvironment.getConfig().getString("SWAG_ITEMS_OVERVIEW"), "0,1");
+        String url = setDeepLinkUrl(EnvFactory.getConfig().getString("SWAG_ITEMS_OVERVIEW"), "0,1");
         deepLink.toScreen(url);
     }
 

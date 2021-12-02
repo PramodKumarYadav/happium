@@ -25,11 +25,11 @@ import static org.saucedemo.utils.FileUtils.getFileAsString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 public class CapabilitiesFactory {
-    private static final Config CONFIG = TestEnvironment.getConfig();
+    private static final Config CONFIG = EnvFactory.getConfig();
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
 
     private CapabilitiesFactory() {
-        throw new IllegalStateException("Utility class");
+        throw new IllegalStateException("Static factory class");
     }
 
     // In case if in future, there is a need to get a capability from another calling class, we also provide a option for that.

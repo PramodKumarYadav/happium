@@ -10,10 +10,10 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class DriverFactory {
-    private static final Platform PLATFORM = Platform.valueOf(TestEnvironment.getConfig().getString("PLATFORM_NAME").toUpperCase());
+    private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME").toUpperCase());
 
     private DriverFactory() {
-        throw new IllegalStateException("Factory class");
+        throw new IllegalStateException("Static factory class");
     }
 
     public static AppiumDriver getDriver(String testClassName) {

@@ -4,7 +4,7 @@ import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.saucedemo.factories.TestEnvironment;
+import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.factories.hosts.localhost.android.AvailableEmulators;
 
 import java.io.FileInputStream;
@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Slf4j
 public class TestSandbox {
     private static String className = MethodHandles.lookup().lookupClass().getSimpleName();
-    private static final Config CONFIG = TestEnvironment.getConfig();
+    private static final Config CONFIG = EnvFactory.getConfig();
 
     @Disabled
     @Test
