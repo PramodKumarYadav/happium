@@ -6,17 +6,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class URLFactory {
-    private static final Host HOST = Host.valueOf(EnvFactory.getConfig().getString("HOST").toUpperCase());
+    private URLFactory() {
+        throw new IllegalStateException("Static factory class");
+    }
 
-    public URL getHostURL() {
+    public static URL getHostURL(Host host) {
         try {
-            return new URL(getHostUri(HOST));
+            return new URL(getHostUri(host));
         } catch (MalformedURLException e) {
-            throw new IllegalStateException(String.format("%s is Malformed host URL.", getHostUri(HOST)), e);
+            throw new IllegalStateException(String.format("%s is Malformed host URL.", getHostUri(host)), e);
         }
     }
 
-    private String getHostUri(Host host) {
+    private static String getHostUri(Host host) {
         switch (host) {
             case SAUCELABS:
                 String sauceUri = EnvFactory.getConfig().getString("SAUCE_URI");
