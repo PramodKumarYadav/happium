@@ -13,18 +13,18 @@ public class TestSetup {
     private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME"));
 
     public AppiumDriver driver;
-    public String childTestClassName;
+    public String testClassName;
 
     @BeforeEach
     public void setUp() {
-        this.childTestClassName = this.getClass().getSimpleName();
-        this.driver = DriverFactory.getDriver(PLATFORM, childTestClassName);
+        this.testClassName = this.getClass().getSimpleName();
+        this.driver = DriverFactory.getDriver(PLATFORM, testClassName);
         DriverFactory.setDriverTimeouts(driver);
     }
 
     @AfterEach
     public void tearDown() {
-        TestResult.setTestStatus(driver, childTestClassName);
+        TestResult.setTestStatus(driver, testClassName);
 
         driver.quit();
         log.info("tear down complete");
