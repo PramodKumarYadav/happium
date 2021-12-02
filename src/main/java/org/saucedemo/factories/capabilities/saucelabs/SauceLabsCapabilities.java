@@ -11,7 +11,7 @@ import java.util.Date;
 public class SauceLabsCapabilities {
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
 
-    public static DesiredCapabilities get(String testClassName, Platform platform) {
+    public static DesiredCapabilities get(Platform platform, String testClassName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Note that saucelabs user and key are fetched from system env variables. Rest all other properties are fetched from config.

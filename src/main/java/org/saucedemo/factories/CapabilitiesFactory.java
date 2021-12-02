@@ -36,9 +36,9 @@ public class CapabilitiesFactory {
             case browserstack:
                 return BrowserStackCapabilities.get(testClassName);
             case saucelabs:
-                return SauceLabsCapabilities.get(testClassName, platform);
+                return SauceLabsCapabilities.get(platform, testClassName);
             case localhost:
-                return LocalhostCapabilities.get(testClassName, platform);
+                return LocalhostCapabilities.get(platform, testClassName);
             default:
                 throw new IllegalStateException(String.format("HOST not defined in config file for host: %s", host));
         }
