@@ -18,7 +18,7 @@ import static org.saucedemo.utils.FileUtils.getFileAsString;
 public class LocalhostCapabilities {
     private static final Config CONFIG = EnvFactory.getConfig();
 
-    public static DesiredCapabilities get(String testClassName, Platform platform) {
+    public static DesiredCapabilities get(Platform platform, String testClassName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         String DEVICE_TYPE = CONFIG.getString("DEVICE_TYPE");
