@@ -15,7 +15,7 @@ public class TestSetup {
     public void setUp() {
         this.childTestClassName = this.getClass().getSimpleName();
         this.driver = DriverFactory.getDriver(childTestClassName);
-        DriverFactory.setDriver(driver);
+        DriverFactory.setDriverTimeouts(driver);
     }
 
     @AfterEach
