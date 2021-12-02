@@ -16,9 +16,9 @@ public class EnvFactory {
     public static final Config getConfig() {
         // Load default properties (first from System properties and then from application.conf)
         Config baseConfig = ConfigFactory.load();
-        String hostName = baseConfig.getString("HOST").toUpperCase();
+        String hostName = baseConfig.getString("HOST");
 
-        if(EnumUtils.isValidEnum(Host.class, hostName)){
+        if(EnumUtils.isValidEnum(Host.class, hostName.toUpperCase())){
             log.info("loading properties for host: {}", hostName);
             Config hostConfig = ConfigFactory.load(hostName);
             return hostConfig.withFallback(baseConfig);
