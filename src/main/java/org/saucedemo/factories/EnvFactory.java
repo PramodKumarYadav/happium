@@ -16,14 +16,13 @@ public class EnvFactory {
     public static final Config getConfig() {
         // Load default properties (first from System properties and then from application.conf)
         Config baseConfig = ConfigFactory.load();
-        String hostName = baseConfig.getString("HOST");
+        String host = baseConfig.getString("HOST");
 
-        if(EnumUtils.isValidEnum(Host.class, hostName.toUpperCase())){
-            log.info("loading properties for host: {}", hostName);
-            Config hostConfig = ConfigFactory.load(hostName);
+        if(EnumUtils.isValidEnum(Host.class, host)){
+            Config hostConfig = ConfigFactory.load(host);
             return hostConfig.withFallback(baseConfig);
         }else{
-            throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from %s", hostName, java.util.Arrays.asList(Host.values())));
+            throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from %s", host, java.util.Arrays.asList(Host.values())));
         }
     }
 }
