@@ -10,7 +10,7 @@ import org.saucedemo.factories.EnvFactory;
 
 @Slf4j
 public class TestSetup {
-    private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME").toUpperCase());
+    private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME"));
 
     public AppiumDriver driver;
     public String childTestClassName;

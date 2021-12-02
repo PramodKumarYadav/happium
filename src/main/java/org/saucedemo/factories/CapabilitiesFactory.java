@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.saucedemo.enums.Host;
 import org.saucedemo.factories.hosts.browserstack.BrowserStackDevice;
 import org.saucedemo.factories.hosts.browserstack.BrowserStackDevicePicker;
 import org.saucedemo.factories.hosts.localhost.android.EmulatorDevice;
@@ -33,28 +34,25 @@ public class CapabilitiesFactory {
     }
 
     // In case if in future, there is a need to get a capability from another calling class, we also provide a option for that.
-    public static DesiredCapabilities getDesiredCapabilities(String testClassName) {
+    public static DesiredCapabilities getDesiredCapabilities(Host host, String testClassName) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         log.info("Running tests for TestClass: {}", testClassName);
-
-        String HOST = CONFIG.getString("HOST");
-        log.info("Running tests on HOST: {}", HOST);
 
         String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
         log.info("Running tests on PLATFORM_NAME: {}", PLATFORM_NAME);
 
-        switch (HOST) {
-            case "browserstack":
+        switch (host) {
+            case browserstack:
                 setCapabilitiesForBrowserStack(testClassName, capabilities);
                 break;
-            case "saucelabs":
+            case saucelabs:
                 setCapabilitiesForSauceLabs(testClassName, capabilities, PLATFORM_NAME);
                 break;
-            case "localhost":
+            case localhost:
                 setCapabilitiesForLocalHost(testClassName, capabilities, PLATFORM_NAME);
                 break;
             default:
-                throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from localhost, browserstack or saucelabs", HOST));
+                throw new IllegalStateException(String.format("HOST not defined in config file for host: %s", host));
         }
 
         log.debug("Capabilities: {}", capabilities);
