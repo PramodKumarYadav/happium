@@ -1,4 +1,4 @@
-package org.saucedemo.factories.hosts.localhost.android;
+package org.saucedemo.factories.capabilities.localhost.android;
 
 public enum AvailableEmulators {
     Pixel_4_API_31,

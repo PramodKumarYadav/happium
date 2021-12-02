@@ -7,14 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.enums.Host;
-import org.saucedemo.factories.hosts.browserstack.BrowserStackDevice;
-import org.saucedemo.factories.hosts.browserstack.BrowserStackDevicePicker;
-import org.saucedemo.factories.hosts.localhost.android.EmulatorDevice;
+import org.saucedemo.factories.capabilities.browserstack.BrowserStackDevice;
+import org.saucedemo.factories.capabilities.browserstack.BrowserStackDevicePicker;
+import org.saucedemo.factories.capabilities.localhost.android.EmulatorDevice;
 
 import java.util.Date;
 import java.util.Iterator;
 
-import static org.saucedemo.factories.hosts.localhost.android.EmulatorDevicePicker.getAndroidEmulator;
+import static org.saucedemo.factories.capabilities.localhost.android.EmulatorDevicePicker.getAndroidEmulator;
 import static org.saucedemo.utils.FileUtils.getCanonicalPath;
 import static org.saucedemo.utils.FileUtils.getFileAsString;
 

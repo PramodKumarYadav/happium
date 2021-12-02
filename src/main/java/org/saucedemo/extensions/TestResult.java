@@ -5,7 +5,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.saucedemo.factories.EnvFactory;
 
 import static org.saucedemo.extensions.TestExecutionLifecycle.getTestStatus;
-import static org.saucedemo.factories.hosts.localhost.android.EmulatorDevicePicker.freeDevice;
+import static org.saucedemo.factories.capabilities.localhost.android.EmulatorDevicePicker.freeDevice;
 
 public class TestResult {
     private TestResult(){

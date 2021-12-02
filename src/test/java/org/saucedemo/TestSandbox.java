@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.saucedemo.factories.EnvFactory;
-import org.saucedemo.factories.hosts.localhost.android.AvailableEmulators;
+import org.saucedemo.factories.capabilities.localhost.android.AvailableEmulators;
 
 import java.io.FileInputStream;
 import java.io.IOException;
