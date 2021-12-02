@@ -19,7 +19,8 @@ public class EnvFactory {
 
         if(EnumUtils.isValidEnum(Host.class, hostName)){
             Config hostConfig = ConfigFactory.load(hostName);
-            return hostConfig.withFallback(baseConfig);
+            Config mergedConfig = hostConfig.withFallback(baseConfig);
+            return mergedConfig;
         }else{
             throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from %s", hostName, java.util.Arrays.asList(Host.values())));
         }
