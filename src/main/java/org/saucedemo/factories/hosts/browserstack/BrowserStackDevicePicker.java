@@ -3,7 +3,7 @@ package org.saucedemo.factories.hosts.browserstack;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
-import org.saucedemo.factories.TestEnvironment;
+import org.saucedemo.factories.EnvFactory;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -23,7 +23,7 @@ public class BrowserStackDevicePicker {
      * https://www.browserstack.com/list-of-browsers-and-platforms/app_automate
      */
     public static synchronized BrowserStackDevice getDevice() {
-        String device = TestEnvironment.getConfig().getString("DEVICE").toUpperCase();
+        String device = EnvFactory.getConfig().getString("DEVICE").toUpperCase();
         if (device.equals("RANDOM")) {
             return getARandomBrowserStackDevice(getDeviceFilePath());
         } else if (EnumUtils.isValidEnum(AvailableAndroidModels.class, device) || EnumUtils.isValidEnum(AvailableIOSModels.class, device)) {
@@ -34,25 +34,25 @@ public class BrowserStackDevicePicker {
     }
 
     private static BrowserStackDevice getAFixedBrowserStackDevice() {
-        String device = TestEnvironment.getConfig().getString("DEVICE");
-        String osVersion = TestEnvironment.getConfig().getString("OS_VERSION");
+        String device = EnvFactory.getConfig().getString("DEVICE");
+        String osVersion = EnvFactory.getConfig().getString("OS_VERSION");
         return new BrowserStackDevice(device, osVersion);
     }
 
     private static String getDeviceFilePath(String modelType) {
-        String platformName = TestEnvironment.getConfig().getString("PLATFORM_NAME");
+        String platformName = EnvFactory.getConfig().getString("PLATFORM_NAME");
         log.info("Model type: {}", modelType);
         String basePath;
         switch (platformName) {
             case "android":
-                basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
+                basePath = EnvFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
                 if (EnumUtils.isValidEnum(AvailableAndroidModels.class, modelType)) {
                     return String.format(FILE_FORMAT, basePath, modelType);
                 } else {
                     throw new IllegalStateException(String.format("android does not have %s devices. Fix your platform or device choice", modelType));
                 }
             case "ios":
-                basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
+                basePath = EnvFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
                 if (EnumUtils.isValidEnum(AvailableIOSModels.class, modelType)) {
                     return String.format(FILE_FORMAT, basePath, modelType);
                 } else {
@@ -65,16 +65,16 @@ public class BrowserStackDevicePicker {
     }
 
     private static String getDeviceFilePath() {
-        String platformName = TestEnvironment.getConfig().getString("PLATFORM_NAME");
+        String platformName = EnvFactory.getConfig().getString("PLATFORM_NAME");
         String basePath;
         String modelType;
         switch (platformName) {
             case "android":
-                basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
+                basePath = EnvFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
                 modelType = AvailableAndroidModels.getRandomModel().getValue();
                 return String.format(FILE_FORMAT, basePath, modelType);
             case "ios":
-                basePath = TestEnvironment.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
+                basePath = EnvFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
                 modelType = AvailableIOSModels.getRandomModel().getValue();
                 return String.format(FILE_FORMAT, basePath, modelType);
             default:

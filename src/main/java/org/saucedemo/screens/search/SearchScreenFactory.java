@@ -4,7 +4,7 @@ import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 
-import static org.saucedemo.factories.TestEnvironment.getConfig;
+import static org.saucedemo.factories.EnvFactory.getConfig;
 
 @Slf4j
 public class SearchScreenFactory {

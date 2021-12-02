@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.deeplink.DeepLink;
 import org.saucedemo.extensions.TestSetup;
-import org.saucedemo.factories.TestEnvironment;
+import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.screens.ProductScreen;
 import org.saucedemo.extensions.TestExecutionLifecycle;
 
@@ -30,7 +30,7 @@ class TestProduct extends TestSetup {
             ,"1; Sauce Labs Bike Light;A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included."
     }, delimiter = ';')
     void assertThatProductDescriptionIsCorrectForAStandardUser(String productNumber, String productSummary, String productDescription) {
-        String url = setDeepLinkUrl(TestEnvironment.getConfig().getString("SWAG_ITEM_DETAILS"), productNumber);
+        String url = setDeepLinkUrl(EnvFactory.getConfig().getString("SWAG_ITEM_DETAILS"), productNumber);
         deepLink.toScreen(url);
 
         assertAll("Product Details"
