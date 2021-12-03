@@ -23,10 +23,10 @@ public class BrowserStackDevicePicker {
      * https://www.browserstack.com/list-of-browsers-and-platforms/app_automate
      */
     public static synchronized BrowserStackDevice getDevice() {
-        String device = EnvFactory.getConfig().getString("DEVICE").toUpperCase();
-        if (device.equals("RANDOM")) {
+        String device = EnvFactory.getConfig().getString("DEVICE");
+        if (device.equalsIgnoreCase("random")) {
             return getARandomBrowserStackDevice(getDeviceFilePath());
-        } else if (EnumUtils.isValidEnum(AvailableAndroidModels.class, device) || EnumUtils.isValidEnum(AvailableIOSModels.class, device)) {
+        } else if (EnumUtils.isValidEnumIgnoreCase(AvailableAndroidModels.class, device) || EnumUtils.isValidEnumIgnoreCase(AvailableIOSModels.class, device)) {
             return getARandomBrowserStackDevice(getDeviceFilePath(device));
         } else {
             return getAFixedBrowserStackDevice();
