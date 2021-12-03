@@ -46,14 +46,14 @@ public class BrowserStackDevicePicker {
         switch (platformName) {
             case "android":
                 basePath = EnvFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
-                if (EnumUtils.isValidEnum(AvailableAndroidModels.class, modelType)) {
+                if (EnumUtils.isValidEnumIgnoreCase(AvailableAndroidModels.class, modelType)) {
                     return String.format(FILE_FORMAT, basePath, modelType);
                 } else {
                     throw new IllegalStateException(String.format("android does not have %s devices. Fix your platform or device choice", modelType));
                 }
             case "ios":
                 basePath = EnvFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
-                if (EnumUtils.isValidEnum(AvailableIOSModels.class, modelType)) {
+                if (EnumUtils.isValidEnumIgnoreCase(AvailableIOSModels.class, modelType)) {
                     return String.format(FILE_FORMAT, basePath, modelType);
                 } else {
                     throw new IllegalStateException(String.format("ios does not have %s devices. Fix your platform or device choice", modelType));
