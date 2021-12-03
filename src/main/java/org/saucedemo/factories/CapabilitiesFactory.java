@@ -1,13 +1,13 @@
 package org.saucedemo.factories;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.typesafe.config.Config;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.enums.Host;
 import org.saucedemo.enums.Platform;
+
 import org.saucedemo.factories.capabilities.browserstack.BrowserStackCapabilities;
 import org.saucedemo.factories.capabilities.localhost.LocalhostCapabilities;
 import org.saucedemo.factories.capabilities.saucelabs.SauceLabsCapabilities;
@@ -26,17 +26,15 @@ public class CapabilitiesFactory {
     /**
      * fetch capabilities for a host and platform. testClassName is just a useful parameter for result logging.
      */
-    public static DesiredCapabilities getDesiredCapabilities(Host host, Platform platform, String testClassName) {
-        log.info("Running tests for TestClass: {}", testClassName);
-        log.info("Running tests on PLATFORM_NAME: {}", platform);
-
+    public static DesiredCapabilities getDesiredCapabilities(Host host, Platform platform) {
+        log.info("Getting DesiredCapabilities for Host: {}", host);
         switch (host) {
             case browserstack:
-                return BrowserStackCapabilities.get(testClassName);
+                return BrowserStackCapabilities.get();
             case saucelabs:
-                return SauceLabsCapabilities.get(platform, testClassName);
+                return SauceLabsCapabilities.get(platform);
             case localhost:
-                return LocalhostCapabilities.get(platform, testClassName);
+                return LocalhostCapabilities.get(platform);
             default:
                 throw new IllegalStateException(String.format("HOST not defined in config file for host: %s", host));
         }

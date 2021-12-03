@@ -18,7 +18,7 @@ import static org.saucedemo.utils.FileUtils.getFileAsString;
 public class LocalhostCapabilities {
     private static final Config CONFIG = EnvFactory.getConfig();
 
-    public static DesiredCapabilities get(Platform platform, String testClassName) {
+    public static DesiredCapabilities get(Platform platform) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         String DEVICE_TYPE = CONFIG.getString("DEVICE_TYPE");
@@ -42,7 +42,7 @@ public class LocalhostCapabilities {
                         setAndroidRealDeviceCapabilities(DEVICE_NAME, capabilities);
                         break;
                     case "virtual":
-                        setAndroidEmulatorCapabilities(capabilities, testClassName);
+                        setAndroidEmulatorCapabilities(capabilities);
                         break;
                     default:
                         break;
@@ -112,12 +112,12 @@ public class LocalhostCapabilities {
      In absence of this, the same device was getting picked by multiple threads running in parallel.
     http://tutorials.jenkov.com/java-concurrency/synchronized.html
     */
-    private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities, String testClassName) {
+    private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities) {
         setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_EMULATOR_DEFAULT_CAPABILITIES"), capabilities);
 
         // getAndroidEmulator method contains logic to decide if user wants a 'specific' device or a 'random' device.
         // or "unique devices per test" within one class OR "unique device per each test class".
-        EmulatorDevice emulatorDevice = getAndroidEmulator(testClassName);
+        EmulatorDevice emulatorDevice = getAndroidEmulator();
         capabilities.setCapability("avd", emulatorDevice.getDeviceName());
         capabilities.setCapability("udid", emulatorDevice.getUdid());
         capabilities.setCapability("deviceName", emulatorDevice.getUdid());
