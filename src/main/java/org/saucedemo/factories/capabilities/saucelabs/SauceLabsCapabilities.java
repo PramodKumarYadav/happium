@@ -3,6 +3,7 @@ package org.saucedemo.factories.capabilities.saucelabs;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.enums.Platform;
+import org.saucedemo.extensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 
 import java.util.Date;
@@ -11,7 +12,7 @@ import java.util.Date;
 public class SauceLabsCapabilities {
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
 
-    public static DesiredCapabilities get(Platform platform, String testClassName) {
+    public static DesiredCapabilities get(Platform platform) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Note that saucelabs user and key are fetched from system env variables. Rest all other properties are fetched from config.
@@ -25,7 +26,7 @@ public class SauceLabsCapabilities {
         // Test result capabilities (build and test class name)
         String buildNameSauce = EnvFactory.getConfig().getString("SAUCE_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
         capabilities.setCapability("build", buildNameSauce);
-        capabilities.setCapability("name", testClassName);
+        capabilities.setCapability("name", TestSetup.getTestThreadMap().get(Thread.currentThread().getName()));
 
         // todo: add random mode for saucelabs.
 //                BrowserStackDevice device = BrowserStackDevicePicker.getDevice();

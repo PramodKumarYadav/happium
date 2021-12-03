@@ -17,12 +17,13 @@ public class DriverFactory {
         throw new IllegalStateException("Static factory class");
     }
 
-    public static AppiumDriver getDriver(Platform platform , String testClassName) {
+    public static AppiumDriver getDriver(Platform platform) {
+        log.info("Getting driver for PLATFORM_NAME: {}", platform);
         switch (platform) {
             case android:
-                return new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform, testClassName));
+                return new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
             case ios:
-                return new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform, testClassName));
+                return new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
             default:
                 throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s." +
                         "Check the value of 'PLATFORM_NAME' property in application.conf; Or in CI, if running from continuous integration.", platform, java.util.Arrays.asList(Platform.values())));

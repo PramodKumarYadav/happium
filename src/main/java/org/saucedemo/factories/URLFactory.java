@@ -1,16 +1,19 @@
 package org.saucedemo.factories;
 
+import lombok.extern.slf4j.Slf4j;
 import org.saucedemo.enums.Host;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
+@Slf4j
 public class URLFactory {
     private URLFactory() {
         throw new IllegalStateException("Static factory class");
     }
 
     public static URL getHostURL(Host host) {
+        log.info("Getting hostURL for Host: {}", host);
         try {
             return new URL(getHostUri(host));
         } catch (MalformedURLException e) {

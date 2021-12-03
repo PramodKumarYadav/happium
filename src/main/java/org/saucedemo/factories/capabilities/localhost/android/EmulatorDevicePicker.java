@@ -5,6 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
+import org.saucedemo.extensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.factories.capabilities.localhost.ios.IosSimulators;
 import org.saucedemo.runmodes.ExecutionModes;
@@ -48,7 +49,7 @@ public class EmulatorDevicePicker {
     So change parallel property to false in junit-platform.properties file.
     junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
     */
-    public static synchronized EmulatorDevice getAndroidEmulator(String testClassName) {
+    public static synchronized EmulatorDevice getAndroidEmulator() {
         EmulatorDevice emulatorDevice = new EmulatorDevice();
         ExecutionModes mode = getExecutionMode();
         switch (mode) {
@@ -56,10 +57,10 @@ public class EmulatorDevicePicker {
                 emulatorDevice = getASpecificAndroidEmulator();
                 break;
             case CLASS_SERIES_TEST_PARALLEL:
-                emulatorDevice = getAUniqueAndroidEmulatorPerTestWithinAClass(testClassName);
+                emulatorDevice = getAUniqueAndroidEmulatorPerTestWithinAClass();
                 break;
             case CLASS_PARALLEL_TEST_SERIES:
-                emulatorDevice = getAUniqueAndroidEmulatorPerTestClass(testClassName);
+                emulatorDevice = getAUniqueAndroidEmulatorPerTestClass();
                 break;
             case CLASS_PARALLEL_TEST_PARALLEL:
                 emulatorDevice = getAUniqueAndroidEmulator();
@@ -90,7 +91,8 @@ public class EmulatorDevicePicker {
         return emulatorDevice;
     }
 
-    public static synchronized EmulatorDevice getAUniqueAndroidEmulatorPerTestWithinAClass(String testClassName) {
+    public static synchronized EmulatorDevice getAUniqueAndroidEmulatorPerTestWithinAClass() {
+        String testClassName = TestSetup.getTestThreadMap().get(Thread.currentThread().getName());
         // If this is a new test class than initialize variables so that you can pick devices from beginning.
         if (! testClassName.equalsIgnoreCase(currentTestClass)) {
             log.info("New testClass tests started for: {}", testClassName);
@@ -108,7 +110,8 @@ public class EmulatorDevicePicker {
         systemPort = Long.valueOf(8200);
     }
 
-    public static synchronized EmulatorDevice getAUniqueAndroidEmulatorPerTestClass(String testClassName) {
+    public static synchronized EmulatorDevice getAUniqueAndroidEmulatorPerTestClass() {
+        String testClassName = TestSetup.getTestThreadMap().get(Thread.currentThread().getName());
         if (testClassDevicesMap.containsKey(testClassName)) {
             log.info("device already available.");
             log.info("Device details: {}", testClassDevicesMap.get(testClassName));

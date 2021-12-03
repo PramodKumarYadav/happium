@@ -2,6 +2,7 @@ package org.saucedemo.factories.capabilities.browserstack;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.saucedemo.extensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.Date;
 public class BrowserStackCapabilities {
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
 
-    public static DesiredCapabilities get(String testClassName) {
+    public static DesiredCapabilities get() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
@@ -24,7 +25,7 @@ public class BrowserStackCapabilities {
         capabilities.setCapability("build", buildName);
         log.info("buildName: {}", buildName);
 
-        capabilities.setCapability("name", testClassName);
+        capabilities.setCapability("name", TestSetup.getTestThreadMap().get(Thread.currentThread().getName()));
         capabilities.setCapability("browserstack.networkLogs", true);
 
         BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
