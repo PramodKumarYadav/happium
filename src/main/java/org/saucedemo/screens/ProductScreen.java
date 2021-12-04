@@ -21,11 +21,11 @@ public class ProductScreen {
     }
 
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[1]")
-    @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[1]")
+    @iOSXCUITFindBy(accessibility = "Sauce Labs Backpack")
     private MobileElement productSummary;
 
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[2]")
-    @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[2]")
+    @iOSXCUITFindBy(accessibility = "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.")
     private MobileElement productDescription;
 
     public String getProductSummary() {

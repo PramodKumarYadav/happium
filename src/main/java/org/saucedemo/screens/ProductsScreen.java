@@ -23,13 +23,15 @@ public class ProductsScreen {
     }
 
     @AndroidFindBy(accessibility = "test-PRODUCTS")
-    @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]/android.widget.TextView")
+    @iOSXCUITFindBy(accessibility = "PRODUCTS")
     private MobileElement productsTitle;
 
     @AndroidFindBy(accessibility = "test-Item title")
+    @iOSXCUITFindBy(accessibility = "test-Item title")
     private List<MobileElement> productsSummary;
 
     @AndroidFindBy(accessibility = "test-Price")
+    @iOSXCUITFindBy(accessibility = "test-Price")
     private List<MobileElement> productsPrice;
 
     public Boolean isProductHeadingDisplayed() {
