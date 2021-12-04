@@ -30,11 +30,11 @@ public class LoginScreen {
     private MobileElement passwordField;
 
     @AndroidFindBy(accessibility = "test-LOGIN")
-    @iOSXCUITFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-LOGIN\"]/android.widget.TextView")
+    @iOSXCUITFindBy(accessibility = "test-LOGIN")
     private MobileElement loginButton;
 
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc='test-Error message']/android.widget.TextView")
-    @iOSXCUITFindBy(accessibility = "test-Error message")
+    @iOSXCUITFindBy(accessibility = "Sorry, this user has been locked out.")
     private MobileElement errorMessage;
 
     private void setUserName(String userName) {
