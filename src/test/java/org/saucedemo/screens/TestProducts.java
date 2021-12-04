@@ -1,4 +1,4 @@
-package org.saucedemo.login;
+package org.saucedemo.screens;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.deeplink.DeepLink;
 import org.saucedemo.extensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
-import org.saucedemo.screens.ProductsScreen;
 import org.saucedemo.extensions.TestExecutionLifecycle;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
