@@ -23,8 +23,8 @@ class TestProducts extends TestSetup {
         productsScreen = new ProductsScreen(driver);
 
         deepLink = new DeepLink(driver);
-        String url = setDeepLinkUrl(EnvFactory.getConfig().getString("SWAG_ITEMS_OVERVIEW"), "0,1");
-        deepLink.toScreen(url);
+        String deepLinkUrl = setDeepLinkUrl(EnvFactory.getConfig().getString("SWAG_ITEMS_OVERVIEW"), "0,1");
+        deepLink.toScreen(deepLinkUrl);
     }
 
     @ParameterizedTest(name = "Product summary for product - {1}")
