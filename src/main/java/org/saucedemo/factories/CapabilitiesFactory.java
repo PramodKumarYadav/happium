@@ -30,7 +30,7 @@ public class CapabilitiesFactory {
         log.info("Getting DesiredCapabilities for Host: {}", host);
         switch (host) {
             case browserstack:
-                return BrowserStackCapabilities.get();
+                return new BrowserStackCapabilities().get();
             case saucelabs:
                 return SauceLabsCapabilities.get(platform);
             case localhost:

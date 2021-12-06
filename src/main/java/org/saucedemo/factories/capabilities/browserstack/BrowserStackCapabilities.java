@@ -13,7 +13,10 @@ public class BrowserStackCapabilities {
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
     private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME"));
 
-    public static DesiredCapabilities get() {
+    public BrowserStackCapabilities () {
+    }
+
+    public DesiredCapabilities get() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
@@ -28,11 +31,11 @@ public class BrowserStackCapabilities {
         setProjectCapability(capabilities);
         setDeviceCapabilities(capabilities);
 
-        log.info("Capabilities: {}", capabilities);
+        log.debug("Capabilities: {}", capabilities);
         return capabilities;
     }
 
-    public static void setAppCapability(Platform platform, DesiredCapabilities capabilities) {
+    private static void setAppCapability(Platform platform, DesiredCapabilities capabilities) {
         log.info("Setting right app for platform: {}", platform);
         switch (platform) {
             case android:
@@ -51,7 +54,7 @@ public class BrowserStackCapabilities {
         log.info("buildName: {}", buildName);
     }
 
-    private static void setDeviceCapabilities(DesiredCapabilities capabilities) {
+    private void setDeviceCapabilities(DesiredCapabilities capabilities) {
         BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
         capabilities.setCapability("device", device.getDeviceName());
         capabilities.setCapability("os_version", device.getOsVersion());
