@@ -1,6 +1,7 @@
 package org.saucedemo.screens;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -13,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 
+@Tag("android")
+@Tag("ios")
 @ExtendWith(TestExecutionLifecycle.class)
 class TestProducts extends TestSetup {
     private ProductsScreen productsScreen;

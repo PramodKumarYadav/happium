@@ -2,6 +2,7 @@ package org.saucedemo.screens;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,6 +13,8 @@ import org.saucedemo.extensions.TestExecutionLifecycle;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Tag("android")
+@Tag("ios")
 @ExtendWith(TestExecutionLifecycle.class)
 class TestLogin extends TestSetup {
     private LoginScreen loginScreen;
