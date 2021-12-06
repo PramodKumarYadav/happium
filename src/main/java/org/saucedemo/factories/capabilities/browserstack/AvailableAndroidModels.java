@@ -2,6 +2,7 @@ package org.saucedemo.factories.capabilities.browserstack;
 
 import java.util.Random;
 
+// Available android devices: https://www.browserstack.com/list-of-browsers-and-platforms/live
 public enum AvailableAndroidModels {
     SAMSUNG("samsung"),
     GOOGLE("google"),
