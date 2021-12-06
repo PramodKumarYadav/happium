@@ -40,8 +40,10 @@ public class BrowserStackCapabilities {
         switch (platform) {
             case android:
                 capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + EnvFactory.getConfig().getString("CUSTOM_ID_ANDROID"));
+                break;
             case ios:
                 capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + EnvFactory.getConfig().getString("CUSTOM_ID_IOS_REAL_DEVICE"));
+                break;
             default:
                 break;
         }
