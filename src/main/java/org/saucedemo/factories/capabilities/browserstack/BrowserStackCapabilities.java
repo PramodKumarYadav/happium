@@ -51,7 +51,7 @@ public class BrowserStackCapabilities {
 
     private static void setProjectCapability(DesiredCapabilities capabilities) {
         capabilities.setCapability("project", EnvFactory.getConfig().getString("PROJECT"));
-        String buildName = EnvFactory.getConfig().getString("BROWSERSTACK_BUILD_NAME") + " - " + ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE;
+        String buildName = String.format("from %s - on %s - at %s",EnvFactory.getConfig().getString("BROWSERSTACK_BUILD_NAME"), PLATFORM, ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE);
         capabilities.setCapability("build", buildName);
         log.info("buildName: {}", buildName);
     }
