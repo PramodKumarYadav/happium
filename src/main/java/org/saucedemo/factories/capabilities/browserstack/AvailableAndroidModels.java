@@ -8,6 +8,10 @@ public enum AvailableAndroidModels {
     GOOGLE("google"),
     ONE_PLUS("one-plus"),
     XIAOMI("xiaomi"),
+    /**
+     * Note: Below commented models are unstable with the current version of app - thus commented. If for your app, they work
+     * fine, feel free to uncomment them.
+     */
 //    VIVO("vivo"),
 //    HUAWEI("huawei"),
 //    OPPO("oppo"),
