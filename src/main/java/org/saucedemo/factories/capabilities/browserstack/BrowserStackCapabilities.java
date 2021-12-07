@@ -28,7 +28,7 @@ public class BrowserStackCapabilities {
         capabilities.setCapability("browserstack.networkLogs", true);
 
         setAppCapability(PLATFORM, capabilities);
-        setProjectCapability(capabilities);
+        setReportingCapabilities(capabilities);
         setDeviceCapabilities(capabilities);
 
         log.debug("Capabilities: {}", capabilities);
@@ -49,7 +49,7 @@ public class BrowserStackCapabilities {
         }
     }
 
-    private static void setProjectCapability(DesiredCapabilities capabilities) {
+    private static void setReportingCapabilities(DesiredCapabilities capabilities) {
         capabilities.setCapability("project", EnvFactory.getConfig().getString("PROJECT"));
         String buildName = String.format("from %s - on %s - at %s",EnvFactory.getConfig().getString("BROWSERSTACK_BUILD_NAME"), PLATFORM, ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE);
         capabilities.setCapability("build", buildName);
@@ -57,7 +57,7 @@ public class BrowserStackCapabilities {
     }
 
     private void setDeviceCapabilities(DesiredCapabilities capabilities) {
-        BrowserStackDevice device = BrowserStackDevicePicker.getDevice();
+        BrowserStackDevice device = new BrowserStackDeviceFactory().getDevice();
         capabilities.setCapability("device", device.getDeviceName());
         capabilities.setCapability("os_version", device.getOsVersion());
         log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());
