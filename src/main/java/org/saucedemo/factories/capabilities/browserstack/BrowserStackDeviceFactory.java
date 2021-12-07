@@ -3,6 +3,7 @@ package org.saucedemo.factories.capabilities.browserstack;
 import com.opencsv.bean.CsvToBeanBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
+import org.saucedemo.enums.Platform;
 import org.saucedemo.factories.EnvFactory;
 
 import java.io.FileNotFoundException;
@@ -12,6 +13,8 @@ import java.util.Random;
 
 @Slf4j
 public class BrowserStackDevicePicker {
+    private static final String DEVICE = EnvFactory.getConfig().getString("DEVICE");
+
     private BrowserStackDevicePicker() {
         throw new IllegalStateException("Utility class");
     }
@@ -23,11 +26,10 @@ public class BrowserStackDevicePicker {
      * https://www.browserstack.com/list-of-browsers-and-platforms/app_automate
      */
     public static synchronized BrowserStackDevice getDevice() {
-        String device = EnvFactory.getConfig().getString("DEVICE");
-        if (device.equalsIgnoreCase("random")) {
+        if (DEVICE.equalsIgnoreCase("random")) {
             return getARandomBrowserStackDevice(getDeviceFilePath());
-        } else if (EnumUtils.isValidEnumIgnoreCase(AvailableAndroidModels.class, device) || EnumUtils.isValidEnumIgnoreCase(AvailableIOSModels.class, device)) {
-            return getARandomBrowserStackDevice(getDeviceFilePath(device));
+        } else if (EnumUtils.isValidEnumIgnoreCase(AvailableAndroidModels.class, DEVICE) || EnumUtils.isValidEnumIgnoreCase(AvailableIOSModels.class, DEVICE)) {
+            return getARandomBrowserStackDevice(getDeviceFilePath(DEVICE));
         } else {
             return getAFixedBrowserStackDevice();
         }
