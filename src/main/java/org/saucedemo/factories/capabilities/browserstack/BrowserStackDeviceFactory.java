@@ -20,7 +20,6 @@ public class BrowserStackDeviceFactory {
 
     private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME"));
 
-    private static final String DEVICE_FILE_PATH_FORMAT = "%s/%s.csv";
     private static final String BROWSERSTACK_ANDROID_DEVICES_PATH = EnvFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
     private static final String BROWSERSTACK_IOS_DEVICES_PATH = EnvFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
 
@@ -45,13 +44,17 @@ public class BrowserStackDeviceFactory {
     private String getDeviceFilePath() {
         switch (PLATFORM) {
             case android:
-                return String.format(DEVICE_FILE_PATH_FORMAT, BROWSERSTACK_ANDROID_DEVICES_PATH, AvailableAndroidModels.getRandomModel().getValue());
+                return getFilePath(BROWSERSTACK_ANDROID_DEVICES_PATH, AvailableAndroidModels.getRandomModel().getValue());
             case ios:
-                return String.format(DEVICE_FILE_PATH_FORMAT, BROWSERSTACK_IOS_DEVICES_PATH, AvailableIOSModels.getRandomModel().getValue());
+                return getFilePath(BROWSERSTACK_IOS_DEVICES_PATH, AvailableIOSModels.getRandomModel().getValue());
             default:
                 throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
                         "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
         }
+    }
+
+    private String getFilePath(String filePath, String fileName) {
+        return String.format("%s/%s.csv", filePath, fileName);
     }
 
     private String getDeviceFilePath(String modelType) {
@@ -59,13 +62,13 @@ public class BrowserStackDeviceFactory {
         switch (PLATFORM) {
             case android:
                 if (EnumUtils.isValidEnumIgnoreCase(AvailableAndroidModels.class, modelType)) {
-                    return String.format(DEVICE_FILE_PATH_FORMAT, BROWSERSTACK_ANDROID_DEVICES_PATH, modelType);
+                    return getFilePath(BROWSERSTACK_ANDROID_DEVICES_PATH, modelType);
                 } else {
                     throw new IllegalStateException(String.format("android does not have %s devices. Fix your platform or device choice", modelType));
                 }
             case ios:
                 if (EnumUtils.isValidEnumIgnoreCase(AvailableIOSModels.class, modelType)) {
-                    return String.format(DEVICE_FILE_PATH_FORMAT, BROWSERSTACK_IOS_DEVICES_PATH, modelType);
+                    return getFilePath(BROWSERSTACK_IOS_DEVICES_PATH, modelType);
                 } else {
                     throw new IllegalStateException(String.format("ios does not have %s devices. Fix your platform or device choice", modelType));
                 }
