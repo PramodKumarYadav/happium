@@ -22,7 +22,16 @@ Due to their support, we should be able to cover both these options in detail fo
 <img src="https://www.pngfind.com/pngs/m/287-2879851_cross-browser-testing-with-browserstack-browser-stack-logo.png" width="240" height="77">
 ![Testing Powered By SauceLabs](https://opensource.saucelabs.com/images/opensauce/powered-by-saucelabs-badge-red.png?sanitize=true "Testing Powered By SauceLabs")
 
-# Key features
+## High level design
+Below you find the simple yet powerful happium design.  
+Each area is neatly separated, handling only its own concerns, allowing for easy maintenance and scalability in the framework.
+
+Note: At the moment of writing this section, Factories and singleton patterns are used to achieve `separation of concerns` and to reuse common entities (such as env config).
+Expect more cleanup and design enhancements in coming days and weeks!
+
+![test](./images/HappiumTestFrameworkDesign.png)
+
+## Key features
 - **A clean design** with clear separation of concerns
 - **4 local parallel modes of execution**
     - [x] CLASS_SERIES_TEST_SERIES,
