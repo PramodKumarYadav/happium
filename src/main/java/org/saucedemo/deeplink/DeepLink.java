@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class DeepLink {
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final Platform PLATFORM = Platform.valueOf(config.getString("PLATFORM_NAME"));
+    private static final Platform PLATFORM = Platform.valueOfLabel(config.getString("PLATFORM_NAME"));
 
     AppiumDriver driver;
 
@@ -38,10 +38,10 @@ public class DeepLink {
     public void toScreen(String deepLinkURL) {
         log.info("deepLinkURL: {}", deepLinkURL);
         switch (PLATFORM) {
-            case android:
+            case ANDROID:
                 toAndroidScreen(deepLinkURL);
                 break;
-            case ios:
+            case IOS:
                 toIOSScreen(deepLinkURL);
                 break;
             default:

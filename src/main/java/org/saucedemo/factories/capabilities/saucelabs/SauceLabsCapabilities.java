@@ -37,14 +37,14 @@ public class SauceLabsCapabilities {
 
         capabilities.setCapability("platformName", platform);
         switch (platform) {
-            case android:
+            case ANDROID:
                 capabilities.setCapability("app", "storage:filename=" + config.getString("ANDROID_APP_NAME"));
 //                        OR
 //                        capabilities.setCapability("app", CONFIG.getString("ANDROID_APP_URL"));
                 capabilities.setCapability("platformVersion", "8.1");
                 capabilities.setCapability("deviceName", "Samsung Galaxy S9 Plus FHD GoogleAPI Emulator");
                 break;
-            case ios:
+            case IOS:
                 break;
             default:
                 break;
