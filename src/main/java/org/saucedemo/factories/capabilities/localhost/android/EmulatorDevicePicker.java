@@ -5,7 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
-import org.saucedemo.extensions.TestSetup;
+import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.factories.capabilities.localhost.ios.IosSimulators;
 import org.saucedemo.runmodes.ExecutionModes;

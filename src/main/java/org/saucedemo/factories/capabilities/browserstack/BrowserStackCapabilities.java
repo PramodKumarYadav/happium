@@ -4,7 +4,7 @@ import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.choices.Platform;
-import org.saucedemo.extensions.TestSetup;
+import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 
 import java.util.Date;

@@ -1,4 +1,4 @@
-package org.saucedemo.extensions;
+package org.saucedemo.testextensions;
 
 import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
