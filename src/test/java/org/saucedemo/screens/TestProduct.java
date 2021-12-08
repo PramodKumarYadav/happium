@@ -7,9 +7,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.deeplink.DeepLink;
-import org.saucedemo.extensions.TestSetup;
+import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
-import org.saucedemo.extensions.TestExecutionLifecycle;
+import org.saucedemo.testextensions.TestExecutionLifecycle;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;

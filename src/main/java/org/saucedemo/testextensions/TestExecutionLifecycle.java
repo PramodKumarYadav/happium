@@ -1,4 +1,4 @@
-package org.saucedemo.extensions;
+package org.saucedemo.testextensions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
