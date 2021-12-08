@@ -1,5 +1,7 @@
 package org.saucedemo.factories.capabilities.browserstack;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 // Available ios devices: https://www.browserstack.com/list-of-browsers-and-platforms/live
@@ -14,14 +16,26 @@ public enum AvailableIOSModels {
 //    , IPAD("iPad")
     ;
 
-    private final String value;
-
-    AvailableIOSModels(String value) {
-        this.value = value;
+    public final String label;
+    AvailableIOSModels(String label) {
+        this.label = label;
     }
 
-    public String getValue() {
-        return value;
+    private static final Map<String, AvailableIOSModels> BY_LABEL = new HashMap<>();
+    static {
+        for (AvailableIOSModels availableIOSModels: values()) {
+            BY_LABEL.put(availableIOSModels.label, availableIOSModels);
+        }
+    }
+
+    // To get enum name from a label
+    public static AvailableIOSModels valueOfLabel(String label) {
+        if(BY_LABEL.get(label) == null){
+            throw new IllegalStateException(String.format("%s is not a valid ios model. Pick your device from %s." +
+                    "Check the value of 'DEVICE' property in browserstack.conf file; Or in CI -> if running from continuous integration.", label, BY_LABEL.keySet()));
+        }else{
+            return BY_LABEL.get(label);
+        }
     }
 
     public static AvailableIOSModels getRandomModel() {
