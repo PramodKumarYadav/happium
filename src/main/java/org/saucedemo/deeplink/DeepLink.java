@@ -1,6 +1,7 @@
 package org.saucedemo.deeplink;
 
 import com.google.common.collect.ImmutableMap;
+import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,8 @@ import java.util.Map;
 
 @Slf4j
 public class DeepLink {
-    private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME"));
+    private static Config config = EnvFactory.getInstance().getConfig();
+    private static final Platform PLATFORM = Platform.valueOf(config.getString("PLATFORM_NAME"));
 
     AppiumDriver driver;
 
@@ -50,7 +52,7 @@ public class DeepLink {
     private void toAndroidScreen(String deepLinkURL) {
         Map<String, String> map = new HashMap<>();
         map.put("url", deepLinkURL);
-        map.put("package", EnvFactory.getConfig().getString("PACKAGE_NAME"));
+        map.put("package", config.getString("PACKAGE_NAME"));
 
         driver.executeScript("mobile:deepLink", map);
     }

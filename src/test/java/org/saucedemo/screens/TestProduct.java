@@ -1,5 +1,6 @@
 package org.saucedemo.screens;
 
+import com.typesafe.config.Config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,6 +18,7 @@ import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 @Tag("android")
 @ExtendWith(TestExecutionLifecycle.class)
 class TestProduct extends TestSetup {
+    private static Config config = EnvFactory.getInstance().getConfig();
     private ProductScreen productScreen;
     private DeepLink deepLink;
 
@@ -31,7 +33,7 @@ class TestProduct extends TestSetup {
             ,"1; Sauce Labs Bike Light;A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included."
     }, delimiter = ';')
     void assertThatProductDescriptionIsCorrectForAStandardUser(String productNumber, String productSummary, String productDescription) {
-        String url = setDeepLinkUrl(EnvFactory.getConfig().getString("SWAG_ITEM_DETAILS"), productNumber);
+        String url = setDeepLinkUrl(config.getString("SWAG_ITEM_DETAILS"), productNumber);
         deepLink.toScreen(url);
 
         assertAll("Product Details"

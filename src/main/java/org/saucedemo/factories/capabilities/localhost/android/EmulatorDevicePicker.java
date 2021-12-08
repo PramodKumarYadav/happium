@@ -38,8 +38,8 @@ public class EmulatorDevicePicker {
     private static List<EmulatorDevice> freedEmulatorDevices = new ArrayList<>();
     private static String currentTestClass = "";
 
-    private static final Config CONFIG = EnvFactory.getConfig();
-    private static final String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
+    private static Config config = EnvFactory.getInstance().getConfig();
+    private static final String DEVICE_NAME = config.getString("DEVICE_NAME");
 
     /*
     Pick a device (fixed or random) based on the choice provided in application.conf

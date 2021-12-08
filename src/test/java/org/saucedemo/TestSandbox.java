@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Slf4j
 public class TestSandbox {
     private static String className = MethodHandles.lookup().lookupClass().getSimpleName();
-    private static final Config CONFIG = EnvFactory.getConfig();
+    private static Config config = EnvFactory.getInstance().getConfig();
 
     @Disabled
     @Test
@@ -31,7 +31,7 @@ public class TestSandbox {
     @Test
     void getJunitProperties() throws IOException {
         Properties junitProperties = new Properties();
-        junitProperties.load(new FileInputStream(CONFIG.getString("PATH_JUNIT_PLATFORM_PROPERTIES")));
+        junitProperties.load(new FileInputStream(config.getString("PATH_JUNIT_PLATFORM_PROPERTIES")));
 
         String parallelMode = junitProperties.getProperty("junit.jupiter.execution.parallel.enabled");
         String testMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.default");

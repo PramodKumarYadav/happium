@@ -1,6 +1,7 @@
 package org.saucedemo.factories.capabilities.browserstack;
 
 import com.opencsv.bean.CsvToBeanBuilder;
+import com.typesafe.config.Config;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
@@ -15,13 +16,14 @@ import java.util.Random;
 @NoArgsConstructor
 @Slf4j
 public class BrowserStackDeviceFactory {
-    private static final String DEVICE = EnvFactory.getConfig().getString("DEVICE");
-    private static final String OS_VERSION = EnvFactory.getConfig().getString("OS_VERSION");
+    private static Config config = EnvFactory.getInstance().getConfig();
+    private static final String DEVICE = config.getString("DEVICE");
+    private static final String OS_VERSION = config.getString("OS_VERSION");
 
-    private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME"));
+    private static final Platform PLATFORM = Platform.valueOf(config.getString("PLATFORM_NAME"));
 
-    private static final String BROWSERSTACK_ANDROID_DEVICES_PATH = EnvFactory.getConfig().getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
-    private static final String BROWSERSTACK_IOS_DEVICES_PATH = EnvFactory.getConfig().getString("BROWSERSTACK_IOS_DEVICES_PATH");
+    private static final String BROWSERSTACK_ANDROID_DEVICES_PATH = config.getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
+    private static final String BROWSERSTACK_IOS_DEVICES_PATH = config.getString("BROWSERSTACK_IOS_DEVICES_PATH");
 
     /**
      * All devices (fixed or random, are to be picked from this list):
