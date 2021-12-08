@@ -2,7 +2,7 @@ package org.saucedemo.factories;
 
 import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
-import org.saucedemo.enums.Host;
+import org.saucedemo.choices.Host;
 
 import java.net.MalformedURLException;
 import java.net.URL;

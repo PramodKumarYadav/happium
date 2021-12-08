@@ -6,7 +6,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
-import org.saucedemo.enums.Platform;
+import org.saucedemo.choices.Platform;
 import org.saucedemo.factories.EnvFactory;
 
 import java.util.ArrayList;

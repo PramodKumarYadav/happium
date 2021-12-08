@@ -3,7 +3,7 @@ package org.saucedemo.factories;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import org.apache.commons.lang3.EnumUtils;
-import org.saucedemo.enums.Host;
+import org.saucedemo.choices.Host;
 
 /**
  * Env configuration once loaded, is to remain constant for all classes using it. Thus we will follow Singleton design pattern here.
