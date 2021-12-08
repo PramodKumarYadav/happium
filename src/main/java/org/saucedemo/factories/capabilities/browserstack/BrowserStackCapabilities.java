@@ -3,7 +3,7 @@ package org.saucedemo.factories.capabilities.browserstack;
 import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.enums.Platform;
+import org.saucedemo.choices.Platform;
 import org.saucedemo.extensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 

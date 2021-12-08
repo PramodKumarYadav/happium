@@ -5,7 +5,7 @@ import com.typesafe.config.Config;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.EnumUtils;
-import org.saucedemo.enums.Platform;
+import org.saucedemo.choices.Platform;
 import org.saucedemo.factories.EnvFactory;
 
 import java.io.FileNotFoundException;

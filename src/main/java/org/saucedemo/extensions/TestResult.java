@@ -3,7 +3,7 @@ package org.saucedemo.extensions;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
-import org.saucedemo.enums.Host;
+import org.saucedemo.choices.Host;
 
 import static org.saucedemo.factories.capabilities.localhost.android.EmulatorDevicePicker.freeDevice;
 

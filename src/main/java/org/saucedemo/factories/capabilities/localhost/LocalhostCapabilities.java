@@ -4,7 +4,7 @@ import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.enums.Platform;
+import org.saucedemo.choices.Platform;
 import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.factories.capabilities.localhost.android.EmulatorDevice;
 

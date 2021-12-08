@@ -5,8 +5,8 @@ import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.saucedemo.enums.Host;
-import org.saucedemo.enums.Platform;
+import org.saucedemo.choices.Host;
+import org.saucedemo.choices.Platform;
 import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.factories.EnvFactory;
 

@@ -5,8 +5,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.saucedemo.enums.Host;
-import org.saucedemo.enums.Platform;
+import org.saucedemo.choices.Host;
+import org.saucedemo.choices.Platform;
 
 import org.saucedemo.factories.capabilities.browserstack.BrowserStackCapabilities;
 import org.saucedemo.factories.capabilities.localhost.LocalhostCapabilities;

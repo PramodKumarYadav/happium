@@ -5,8 +5,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import lombok.extern.slf4j.Slf4j;
-import org.saucedemo.enums.Host;
-import org.saucedemo.enums.Platform;
+import org.saucedemo.choices.Host;
+import org.saucedemo.choices.Platform;
 
 import java.util.concurrent.TimeUnit;
 
