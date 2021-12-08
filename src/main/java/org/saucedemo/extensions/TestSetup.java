@@ -1,5 +1,6 @@
 package org.saucedemo.extensions;
 
+import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -14,8 +15,9 @@ import java.util.Map;
 
 @Slf4j
 public class TestSetup {
-    private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME"));
-    private static final Host HOST = Host.valueOf(EnvFactory.getConfig().getString("HOST"));
+    private static Config config = EnvFactory.getInstance().getConfig();
+    private static final Platform PLATFORM = Platform.valueOf(config.getString("PLATFORM_NAME"));
+    private static final Host HOST = Host.valueOf(config.getString("HOST"));
 
     public AppiumDriver driver;
     private static Map<String, String> testThreadMap = new HashMap<>();

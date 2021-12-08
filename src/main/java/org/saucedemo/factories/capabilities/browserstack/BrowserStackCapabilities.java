@@ -1,5 +1,6 @@
 package org.saucedemo.factories.capabilities.browserstack;
 
+import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.enums.Platform;
@@ -10,8 +11,9 @@ import java.util.Date;
 
 @Slf4j
 public class BrowserStackCapabilities {
+    private static Config config = EnvFactory.getInstance().getConfig();
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
-    private static final Platform PLATFORM = Platform.valueOf(EnvFactory.getConfig().getString("PLATFORM_NAME"));
+    private static final Platform PLATFORM = Platform.valueOf(config.getString("PLATFORM_NAME"));
 
     public BrowserStackCapabilities () {
     }
@@ -39,10 +41,10 @@ public class BrowserStackCapabilities {
         log.info("Setting right app for platform: {}", platform);
         switch (platform) {
             case android:
-                capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + EnvFactory.getConfig().getString("CUSTOM_ID_ANDROID"));
+                capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + config.getString("CUSTOM_ID_ANDROID"));
                 break;
             case ios:
-                capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + EnvFactory.getConfig().getString("CUSTOM_ID_IOS_REAL_DEVICE"));
+                capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + config.getString("CUSTOM_ID_IOS_REAL_DEVICE"));
                 break;
             default:
                 break;
@@ -50,8 +52,8 @@ public class BrowserStackCapabilities {
     }
 
     private static void setReportingCapabilities(DesiredCapabilities capabilities) {
-        capabilities.setCapability("project", EnvFactory.getConfig().getString("PROJECT"));
-        String buildName = String.format("from %s - on %s - at %s",EnvFactory.getConfig().getString("BROWSERSTACK_BUILD_NAME"), PLATFORM, ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE);
+        capabilities.setCapability("project", config.getString("PROJECT"));
+        String buildName = String.format("from %s - on %s - at %s",config.getString("BROWSERSTACK_BUILD_NAME"), PLATFORM, ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE);
         capabilities.setCapability("build", buildName);
         log.info("buildName: {}", buildName);
     }

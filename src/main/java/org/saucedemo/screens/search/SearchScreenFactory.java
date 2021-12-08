@@ -3,13 +3,12 @@ package org.saucedemo.screens.search;
 import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
-
-import static org.saucedemo.factories.EnvFactory.getConfig;
+import org.saucedemo.factories.EnvFactory;
 
 @Slf4j
 public class SearchScreenFactory {
-    private static final Config CONFIG = getConfig();
-    private static final String PLATFORM_NAME = CONFIG.getString("PLATFORM_NAME");
+    private static Config config = EnvFactory.getInstance().getConfig();
+    private static final String PLATFORM_NAME = config.getString("PLATFORM_NAME");
 
     private SearchScreenFactory() {
         // Do not want people to create an instance of Factory but use its static getContractSearchPage method to get

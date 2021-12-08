@@ -1,5 +1,6 @@
 package org.saucedemo.screens;
 
+import com.typesafe.config.Config;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,15 +19,17 @@ import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 @Tag("ios")
 @ExtendWith(TestExecutionLifecycle.class)
 class TestProducts extends TestSetup {
+    private static Config config = EnvFactory.getInstance().getConfig();
     private ProductsScreen productsScreen;
     private DeepLink deepLink;
+
 
     @BeforeEach
     public void initialize() {
         productsScreen = new ProductsScreen(driver);
 
         deepLink = new DeepLink(driver);
-        String deepLinkUrl = setDeepLinkUrl(EnvFactory.getConfig().getString("SWAG_ITEMS_OVERVIEW"), "0,1");
+        String deepLinkUrl = setDeepLinkUrl(config.getString("SWAG_ITEMS_OVERVIEW"), "0,1");
         deepLink.toScreen(deepLinkUrl);
     }
 

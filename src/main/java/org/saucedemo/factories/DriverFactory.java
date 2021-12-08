@@ -1,5 +1,6 @@
 package org.saucedemo.factories;
 
+import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -11,7 +12,8 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class DriverFactory {
-    private static final Host HOST = Host.valueOf(EnvFactory.getConfig().getString("HOST"));
+    private static Config config = EnvFactory.getInstance().getConfig();
+    private static final Host HOST = Host.valueOf(config.getString("HOST"));
 
     private DriverFactory() {
         throw new IllegalStateException("Static factory class");

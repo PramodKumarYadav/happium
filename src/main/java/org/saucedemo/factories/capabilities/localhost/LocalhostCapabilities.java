@@ -16,13 +16,13 @@ import static org.saucedemo.utils.FileUtils.getFileAsString;
 
 @Slf4j
 public class LocalhostCapabilities {
-    private static final Config CONFIG = EnvFactory.getConfig();
+    private static Config config = EnvFactory.getInstance().getConfig();
 
     public static DesiredCapabilities get(Platform platform) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        String DEVICE_TYPE = CONFIG.getString("DEVICE_TYPE");
-        String DEVICE_NAME = CONFIG.getString("DEVICE_NAME");
+        String DEVICE_TYPE = config.getString("DEVICE_TYPE");
+        String DEVICE_NAME = config.getString("DEVICE_NAME");
 
         // On localhost you are either on android or on IOS (not both).
         log.info("Running tests on DEVICE_TYPE: {}", DEVICE_TYPE);
@@ -31,7 +31,7 @@ public class LocalhostCapabilities {
         switch (platform) {
             case android:
                 // Get local app location stored in the project here (via absolute path)
-                capabilities.setCapability("app", getCanonicalPath(CONFIG.getString("PATH_ANDROID_APP")));
+                capabilities.setCapability("app", getCanonicalPath(config.getString("PATH_ANDROID_APP")));
 
                 // Set common android capabilities here from the config file
                 capabilities = setAndroidCommonCapabilities(capabilities);
@@ -50,7 +50,7 @@ public class LocalhostCapabilities {
                 break;
             case ios:
                 // Get local app location stored in the project here (via absolute path)
-                capabilities.setCapability("app", getCanonicalPath(CONFIG.getString("PATH_IOS_APP")));
+                capabilities.setCapability("app", getCanonicalPath(config.getString("PATH_IOS_APP")));
 
                 // Set common android capabilities here from the config file
                 capabilities = setIosCommonCapabilities(capabilities);
@@ -76,26 +76,26 @@ public class LocalhostCapabilities {
     }
 
     private static DesiredCapabilities setAndroidCommonCapabilities(DesiredCapabilities capabilities) {
-        setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_COMMON_CAPABILITIES"), capabilities);
+        setCapabilitiesFromFile(config.getString("PATH_ANDROID_COMMON_CAPABILITIES"), capabilities);
         return capabilities;
     }
 
     private static DesiredCapabilities setIosCommonCapabilities(DesiredCapabilities capabilities) {
-        setCapabilitiesFromFile(CONFIG.getString("PATH_IOS_COMMON_CAPABILITIES"), capabilities);
+        setCapabilitiesFromFile(config.getString("PATH_IOS_COMMON_CAPABILITIES"), capabilities);
         return capabilities;
     }
 
     // This is when you want to run tests on a Single real android device connected to your computer.
     // So no synchronized required (since tests will run in sequence). Remember to put the parallel run property to false in junit-platform.properties
     private static DesiredCapabilities setAndroidRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities) {
-        String pathDeviceNameConfig = String.format("%s/%s.json", CONFIG.getString("PATH_ANDROID_CAPABILITIES"), deviceName);
+        String pathDeviceNameConfig = String.format("%s/%s.json", config.getString("PATH_ANDROID_CAPABILITIES"), deviceName);
 
         setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
         return capabilities;
     }
 
     private static DesiredCapabilities setIosRealDeviceCapabilities(String deviceName, DesiredCapabilities capabilities) {
-        String pathDeviceNameConfig = String.format("%s/%s.json", CONFIG.getString("PATH_IOS_CAPABILITIES"), deviceName);
+        String pathDeviceNameConfig = String.format("%s/%s.json", config.getString("PATH_IOS_CAPABILITIES"), deviceName);
 
         setCapabilitiesFromFile(pathDeviceNameConfig, capabilities);
         return capabilities;
@@ -113,7 +113,7 @@ public class LocalhostCapabilities {
     http://tutorials.jenkov.com/java-concurrency/synchronized.html
     */
     private static synchronized DesiredCapabilities setAndroidEmulatorCapabilities(DesiredCapabilities capabilities) {
-        setCapabilitiesFromFile(CONFIG.getString("PATH_ANDROID_EMULATOR_DEFAULT_CAPABILITIES"), capabilities);
+        setCapabilitiesFromFile(config.getString("PATH_ANDROID_EMULATOR_DEFAULT_CAPABILITIES"), capabilities);
 
         // getAndroidEmulator method contains logic to decide if user wants a 'specific' device or a 'random' device.
         // or "unique devices per test" within one class OR "unique device per each test class".
