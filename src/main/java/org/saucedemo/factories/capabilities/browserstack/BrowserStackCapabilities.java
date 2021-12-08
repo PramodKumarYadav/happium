@@ -13,12 +13,11 @@ import java.util.Date;
 public class BrowserStackCapabilities {
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final Date ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE = new Date();
-    private static final Platform PLATFORM = Platform.valueOf(config.getString("PLATFORM_NAME"));
 
     public BrowserStackCapabilities () {
     }
 
-    public DesiredCapabilities get() {
+    public DesiredCapabilities get(Platform platform) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Note that browserstack user and key are fetched from system env variables. Rest all other properties are fetched from config.
@@ -29,9 +28,9 @@ public class BrowserStackCapabilities {
         capabilities.setCapability("name", TestSetup.getTestThreadMap().get(Thread.currentThread().getName()));
         capabilities.setCapability("browserstack.networkLogs", true);
 
-        setAppCapability(PLATFORM, capabilities);
-        setReportingCapabilities(capabilities);
-        setDeviceCapabilities(capabilities);
+        setAppCapability(platform, capabilities);
+        setReportingCapabilities(platform, capabilities);
+        setDeviceCapabilities(platform, capabilities);
 
         log.debug("Capabilities: {}", capabilities);
         return capabilities;
@@ -40,10 +39,10 @@ public class BrowserStackCapabilities {
     private static void setAppCapability(Platform platform, DesiredCapabilities capabilities) {
         log.info("Setting right app for platform: {}", platform);
         switch (platform) {
-            case android:
+            case ANDROID:
                 capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + config.getString("CUSTOM_ID_ANDROID"));
                 break;
-            case ios:
+            case IOS:
                 capabilities.setCapability("app", System.getenv("BROWSERSTACK_USER") + "/" + config.getString("CUSTOM_ID_IOS_REAL_DEVICE"));
                 break;
             default:
@@ -51,15 +50,15 @@ public class BrowserStackCapabilities {
         }
     }
 
-    private static void setReportingCapabilities(DesiredCapabilities capabilities) {
+    private static void setReportingCapabilities(Platform platform, DesiredCapabilities capabilities) {
         capabilities.setCapability("project", config.getString("PROJECT"));
-        String buildName = String.format("from %s - on %s - at %s",config.getString("BROWSERSTACK_BUILD_NAME"), PLATFORM, ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE);
+        String buildName = String.format("from %s - on %s - at %s",config.getString("BROWSERSTACK_BUILD_NAME"), platform, ADD_DATE_TIME_TO_MAKE_BUILDS_UNIQUE);
         capabilities.setCapability("build", buildName);
         log.info("buildName: {}", buildName);
     }
 
-    private void setDeviceCapabilities(DesiredCapabilities capabilities) {
-        BrowserStackDevice device = new BrowserStackDeviceFactory().getDevice();
+    private void setDeviceCapabilities(Platform platform, DesiredCapabilities capabilities) {
+        BrowserStackDevice device = new BrowserStackDeviceFactory().getDevice(platform);
         capabilities.setCapability("device", device.getDeviceName());
         capabilities.setCapability("os_version", device.getOsVersion());
         log.info("browserstack device: {} ; {}", device.getDeviceName(), device.getOsVersion());

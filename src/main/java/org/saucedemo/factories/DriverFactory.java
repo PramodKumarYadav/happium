@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class DriverFactory {
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final Host HOST = Host.valueOf(config.getString("HOST"));
+    private static final Host HOST = Host.valueOfLabel(config.getString("HOST"));
 
     private DriverFactory() {
         throw new IllegalStateException("Static factory class");
@@ -22,9 +22,9 @@ public class DriverFactory {
     public static AppiumDriver getDriver(Platform platform) {
         log.info("Getting driver for PLATFORM_NAME: {}", platform);
         switch (platform) {
-            case android:
+            case ANDROID:
                 return new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
-            case ios:
+            case IOS:
                 return new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
             default:
                 throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s." +

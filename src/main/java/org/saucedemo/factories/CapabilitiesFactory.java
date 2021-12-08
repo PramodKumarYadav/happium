@@ -29,11 +29,11 @@ public class CapabilitiesFactory {
     public static DesiredCapabilities getDesiredCapabilities(Host host, Platform platform) {
         log.info("Getting DesiredCapabilities for Host: {}", host);
         switch (host) {
-            case browserstack:
-                return new BrowserStackCapabilities().get();
-            case saucelabs:
+            case BROWSERSTACK:
+                return new BrowserStackCapabilities().get(platform);
+            case SAUCELABS:
                 return SauceLabsCapabilities.get(platform);
-            case localhost:
+            case LOCALHOST:
                 return LocalhostCapabilities.get(platform);
             default:
                 throw new IllegalStateException(String.format("HOST not defined in config file for host: %s", host));

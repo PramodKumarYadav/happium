@@ -29,7 +29,7 @@ public class LocalhostCapabilities {
         log.info("Running tests on DEVICE_NAME: {}", DEVICE_NAME);
 
         switch (platform) {
-            case android:
+            case ANDROID:
                 // Get local app location stored in the project here (via absolute path)
                 capabilities.setCapability("app", getCanonicalPath(config.getString("PATH_ANDROID_APP")));
 
@@ -48,7 +48,7 @@ public class LocalhostCapabilities {
                         break;
                 }
                 break;
-            case ios:
+            case IOS:
                 // Get local app location stored in the project here (via absolute path)
                 capabilities.setCapability("app", getCanonicalPath(config.getString("PATH_IOS_APP")));
 

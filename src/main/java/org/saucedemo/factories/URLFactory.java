@@ -26,12 +26,12 @@ public class URLFactory {
 
     private static String getHostUri(Host host) {
         switch (host) {
-            case saucelabs:
+            case SAUCELABS:
                 String sauceUri = config.getString("SAUCE_URI");
                 return "https://" + System.getenv("SAUCE_USERNAME") + ":" + System.getenv("SAUCE_ACCESS_KEY") + sauceUri + "/wd/hub";
-            case browserstack:
+            case BROWSERSTACK:
                 // fall through - use setting as defined in the config file.
-            case localhost:
+            case LOCALHOST:
                 return config.getString("HOST_URI");
             default:
                 throw new IllegalStateException(String.format("HOST_URI not defined in config file for host: %s", host));

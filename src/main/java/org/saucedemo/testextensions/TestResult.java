@@ -15,13 +15,13 @@ public class TestResult {
 
     public static void setTestStatus(AppiumDriver driver, Host host){
         switch (host) {
-            case browserstack:
+            case BROWSERSTACK:
                 setTestStatusBrowserStack(driver);
                 break;
-            case saucelabs:
+            case SAUCELABS:
                 setTestStatusSauceLabs(driver);
                 break;
-            case localhost:
+            case LOCALHOST:
                 freeDevice(driver);
                 break;
             default:

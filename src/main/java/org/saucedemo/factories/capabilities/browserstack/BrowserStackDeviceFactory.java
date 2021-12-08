@@ -20,8 +20,6 @@ public class BrowserStackDeviceFactory {
     private static final String DEVICE = config.getString("DEVICE");
     private static final String OS_VERSION = config.getString("OS_VERSION");
 
-    private static final Platform PLATFORM = Platform.valueOf(config.getString("PLATFORM_NAME"));
-
     private static final String BROWSERSTACK_ANDROID_DEVICES_PATH = config.getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
     private static final String BROWSERSTACK_IOS_DEVICES_PATH = config.getString("BROWSERSTACK_IOS_DEVICES_PATH");
 
@@ -29,11 +27,11 @@ public class BrowserStackDeviceFactory {
      * All devices (fixed or random, are to be picked from this list):
      * https://www.browserstack.com/list-of-browsers-and-platforms/app_automate
      */
-    public BrowserStackDevice getDevice() {
+    public BrowserStackDevice getDevice(Platform platform) {
         if (DEVICE.equalsIgnoreCase("random")) {
-            return getARandomBrowserStackDevice(getDeviceFilePath());
-        } else if (EnumUtils.isValidEnumIgnoreCase(AvailableAndroidModels.class, DEVICE) || EnumUtils.isValidEnumIgnoreCase(AvailableIOSModels.class, DEVICE)) {
-            return getARandomBrowserStackDevice(getDeviceFilePath(DEVICE));
+            return getARandomBrowserStackDevice(getDeviceFilePath(platform));
+        } else if (EnumUtils.isValidEnumIgnoreCase(AndroidModel.class, DEVICE) || EnumUtils.isValidEnumIgnoreCase(IOSModel.class, DEVICE)) {
+            return getARandomBrowserStackDevice(getDeviceFilePath(platform, DEVICE));
         } else {
             return getAFixedBrowserStackDevice();
         }
@@ -43,12 +41,12 @@ public class BrowserStackDeviceFactory {
         return new BrowserStackDevice(DEVICE, OS_VERSION);
     }
 
-    private String getDeviceFilePath() {
-        switch (PLATFORM) {
-            case android:
-                return getFilePath(BROWSERSTACK_ANDROID_DEVICES_PATH, AvailableAndroidModels.getRandomModel().getValue());
-            case ios:
-                return getFilePath(BROWSERSTACK_IOS_DEVICES_PATH, AvailableIOSModels.getRandomModel().getValue());
+    private String getDeviceFilePath(Platform platform) {
+        switch (platform) {
+            case ANDROID:
+                return getFilePath(BROWSERSTACK_ANDROID_DEVICES_PATH, AndroidModel.getRandomModel().label);
+            case IOS:
+                return getFilePath(BROWSERSTACK_IOS_DEVICES_PATH, IOSModel.getRandomModel().label);
             default:
                 throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
                         "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
@@ -59,17 +57,17 @@ public class BrowserStackDeviceFactory {
         return String.format("%s/%s.csv", filePath, fileName);
     }
 
-    private String getDeviceFilePath(String modelType) {
+    private String getDeviceFilePath(Platform platform, String modelType) {
         log.info("Model type: {}", modelType);
-        switch (PLATFORM) {
-            case android:
-                if (EnumUtils.isValidEnumIgnoreCase(AvailableAndroidModels.class, modelType)) {
+        switch (platform) {
+            case ANDROID:
+                if (EnumUtils.isValidEnumIgnoreCase(AndroidModel.class, modelType)) {
                     return getFilePath(BROWSERSTACK_ANDROID_DEVICES_PATH, modelType);
                 } else {
                     throw new IllegalStateException(String.format("android does not have %s devices. Fix your platform or device choice", modelType));
                 }
-            case ios:
-                if (EnumUtils.isValidEnumIgnoreCase(AvailableIOSModels.class, modelType)) {
+            case IOS:
+                if (EnumUtils.isValidEnumIgnoreCase(IOSModel.class, modelType)) {
                     return getFilePath(BROWSERSTACK_IOS_DEVICES_PATH, modelType);
                 } else {
                     throw new IllegalStateException(String.format("ios does not have %s devices. Fix your platform or device choice", modelType));

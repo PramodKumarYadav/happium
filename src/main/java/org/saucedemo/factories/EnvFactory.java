@@ -2,7 +2,6 @@ package org.saucedemo.factories;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
-import org.apache.commons.lang3.EnumUtils;
 import org.saucedemo.choices.Host;
 
 /**
@@ -29,12 +28,11 @@ public class EnvFactory {
         Config baseConfig = ConfigFactory.load();
         String host = baseConfig.getString("HOST");
 
-        // Override/load values from host if this is a valid host, else, throw error.
-        if (EnumUtils.isValidEnum(Host.class, host)) {
-            Config hostConfig = ConfigFactory.load(host);
-            return hostConfig.withFallback(baseConfig);
-        } else {
-            throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from %s", host, java.util.Arrays.asList(Host.values())));
-        }
+        // assert that the host value that we fetched from application.conf is a actual host.
+        Host.valueOfLabel(host);
+
+        // If there were no errors above, we can load config from this host.
+        Config hostConfig = ConfigFactory.load(host);
+        return hostConfig.withFallback(baseConfig);
     }
 }
