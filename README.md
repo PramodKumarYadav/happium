@@ -13,6 +13,14 @@ Framework uses **Junit5** and provides **4 different modes of running your tests
 
 `If you see an issue or want to get a feature added; feel free to open an issue in the framework. If you have a cool idea that can make the framework better, do send me a request and I will add you as a contributor :).`
 
+## Getting started
+- Clone this project in one of your drives.
+  - `git clone https://github.com/PramodKumarYadav/happium.git`
+- Specify `host`, `platform`, `app` env and `device` choices from application.conf and selected environments conf file.
+- If running in localhost; you would first need to start appium server: `appium --base-path /wd/hub`
+- If running in browserstack or saucelabs, you can skip running of server step.
+- Run tests
+
 ## Open source sponsor's
 I would like to say a big thank you to our open source sponsors `browserstack` and `saucelabs`.
 They both provide sponsorship to run project Happium on cloud with a free open source license - with 5 parallel licences and unlimited testing time! 
@@ -104,7 +112,7 @@ For example to only install appium-doctor, run on terminal.
 -[X] Clone the sample apps repository and get some apps for testing.
     - Run git clone https://github.com/appium/sample-apps.git (to get 3 apk apps). Use "ContactManager.apk" from this list. Put it in apps folder.
     - npm install sample-apps (to install all the apps)
--[] Now we have the app. Let's create a driver factory that will give us a emulator for any avd that we ask for. 
+-[ ] Now we have the app. Let's create a driver factory that will give us a emulator for any avd that we ask for.
 
 ## Reference
 - [Sample apps to use for testing](https://github.com/appium/sample-apps)
@@ -113,7 +121,7 @@ For example to only install appium-doctor, run on terminal.
 ## Troubleshooting tips
 - 1) It seems when I start appium server from *appium-desktop*, there are lesser issues with running avds from tests in parallel/or stand alone. 
      
-    - [ ] So to avoid issues, always launch *appium-desktop* unless you find a stable fix for launching from appium terminal. 
+    So to avoid issues, always launch *appium-desktop* unless you find a stable fix for launching from appium terminal.
       
     Launching appium server from terminal, works sometimes and not on other times. The error I see most often when running tests from appium terminal is while 
     making a call to pixelratio endpoint: GET http://127.0.0.1:8201/wd/hub/session/16cc5cc1-9507-4d03-9282-1e8bded63c3c/appium/device/pixel_ratio
