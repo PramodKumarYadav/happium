@@ -19,11 +19,11 @@ public enum Platform {
         }
     }
 
-    // To get enum name from a label
+    // To get enum name from a label (choice specified in application.conf)
     public static Platform valueOfLabel(String label) {
         if(BY_LABEL.get(label) == null){
             throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s." +
-                    "Check the value of 'PLATFORM_NAME' property in application.conf; Or in CI, if running from continuous integration.", label, BY_LABEL.keySet()));
+                    "Check the value of 'PLATFORM' property in application.conf; Or in CI, if running from continuous integration.", label, BY_LABEL.keySet()));
         }else{
             return BY_LABEL.get(label);
         }

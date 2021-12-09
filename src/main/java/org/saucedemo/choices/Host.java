@@ -20,10 +20,11 @@ public enum Host {
         }
     }
 
-    // To get enum name from a label
+    // To get enum name from a label (choice specified in application.conf)
     public static Host valueOfLabel(String label) {
         if(BY_LABEL.get(label) == null){
-            throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from %s", label, BY_LABEL.keySet()));
+            throw new IllegalStateException(String.format("%s is not a valid host choice. Pick your host from %s." +
+                    "Check the value of 'HOST' property in application.conf; Or in CI, if running from continuous integration.", label, BY_LABEL.keySet()));
         }else{
             return BY_LABEL.get(label);
         }

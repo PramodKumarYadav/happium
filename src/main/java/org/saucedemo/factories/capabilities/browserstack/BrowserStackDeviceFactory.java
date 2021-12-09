@@ -49,7 +49,7 @@ public class BrowserStackDeviceFactory {
                 return getFilePath(BROWSERSTACK_IOS_DEVICES_PATH, IOSModel.getRandomModel().label);
             default:
                 throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
-                        "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
+                        "Check the value of 'PLATFORM' property set in application.conf; Or in CI, if run from continuous integration.");
         }
     }
 
@@ -74,7 +74,7 @@ public class BrowserStackDeviceFactory {
                 }
             default:
                 throw new IllegalStateException("Platform choice is incorrect. You can either choose 'android' or 'ios'." +
-                        "Check the value of 'PLATFORM_NAME' property set in application.conf; Or in CI, if run from continuous integration.");
+                        "Check the value of 'PLATFORM' property set in application.conf; Or in CI, if run from continuous integration.");
         }
     }
 
