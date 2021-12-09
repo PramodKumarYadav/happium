@@ -8,7 +8,7 @@ import org.saucedemo.factories.EnvFactory;
 @Slf4j
 public class SearchScreenFactory {
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final String PLATFORM_NAME = config.getString("PLATFORM_NAME");
+    private static final String PLATFORM = config.getString("PLATFORM");
 
     private SearchScreenFactory() {
         // Do not want people to create an instance of Factory but use its static getContractSearchPage method to get
@@ -16,8 +16,8 @@ public class SearchScreenFactory {
     }
 
     public static SearchScreen getSearchScreen(AppiumDriver driver){
-        log.info("Platform to run the application: {}", PLATFORM_NAME);
-        switch (PLATFORM_NAME) {
+        log.info("Platform to run the application: {}", PLATFORM);
+        switch (PLATFORM) {
             case "ios":
                 return new SearchScreenIOS(driver);
             case "android":

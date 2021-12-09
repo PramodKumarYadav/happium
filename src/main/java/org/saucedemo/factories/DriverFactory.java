@@ -20,7 +20,7 @@ public class DriverFactory {
     }
 
     public static AppiumDriver getDriver(Platform platform) {
-        log.info("Getting driver for PLATFORM_NAME: {}", platform);
+        log.info("Getting driver for PLATFORM: {}", platform);
         switch (platform) {
             case ANDROID:
                 return new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
@@ -28,7 +28,7 @@ public class DriverFactory {
                 return new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
             default:
                 throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s." +
-                        "Check the value of 'PLATFORM_NAME' property in application.conf; Or in CI, if running from continuous integration.", platform, java.util.Arrays.asList(Platform.values())));
+                        "Check the value of 'PLATFORM' property in application.conf; Or in CI, if running from continuous integration.", platform, java.util.Arrays.asList(Platform.values())));
         }
     }
 
