@@ -8,23 +8,25 @@ public enum Platform {
     IOS("ios");
 
     public final String label;
+
     Platform(String label) {
         this.label = label;
     }
 
     private static final Map<String, Platform> BY_LABEL = new HashMap<>();
+
     static {
-        for (Platform platform: values()) {
+        for (Platform platform : values()) {
             BY_LABEL.put(platform.label, platform);
         }
     }
 
     // To get enum name from a label (choice specified in application.conf)
     public static Platform valueOfLabel(String label) {
-        if(BY_LABEL.get(label) == null){
+        if (BY_LABEL.get(label) == null) {
             throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s." +
                     "Check the value of 'PLATFORM' property in application.conf; Or in CI, if running from continuous integration.", label, BY_LABEL.keySet()));
-        }else{
+        } else {
             return BY_LABEL.get(label);
         }
     }
