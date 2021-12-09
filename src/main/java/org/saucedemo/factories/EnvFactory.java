@@ -24,14 +24,16 @@ public class EnvFactory {
     }
 
     public Config getConfig() {
-        // Load default properties (first from System properties and then from application.conf)
+        // Load default properties (first from System properties and then from application.conf file under main -> resources folder)
         Config baseConfig = ConfigFactory.load();
         String host = baseConfig.getString("HOST");
 
-        // assert that the host value that we fetched from application.conf is a actual host.
+        // assert that the host value we fetched from application.conf is actually a valid Host choice specified in Host enum class.
         Host.valueOfLabel(host);
 
-        // If there were no errors above, we can load config from this host.
+        /* Assumption is, if you specified this value in host, you have also created a valid hostname.conf file under main -> resources folder.
+            for inspiration; refer say file localhost.conf or browserstack.conf
+         */
         Config hostConfig = ConfigFactory.load(host);
         return hostConfig.withFallback(baseConfig);
     }
