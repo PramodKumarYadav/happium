@@ -18,6 +18,7 @@ public class SauceLabsCapabilities {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Note that saucelabs user and key are fetched from system env variables. Rest all other properties are fetched from config.
+        capabilities.setCapability("appiumVersion", System.getenv("1.20.2"));
         capabilities.setCapability("username", System.getenv("SAUCE_USERNAME"));
         capabilities.setCapability("accessKey", System.getenv("SAUCE_ACCESS_KEY"));
         capabilities.setCapability("appWaitActivity", "com.swaglabsmobileapp.MainActivity");
