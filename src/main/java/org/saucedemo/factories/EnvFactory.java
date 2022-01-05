@@ -31,8 +31,8 @@ public class EnvFactory {
         String app = baseConfig.getString("APP");
 
         // assert that the host and app choice we fetched from application.conf are actually valid Host and App as specified in Host and App enum classes.
-        Host.valueOfLabel(host);
-        App.valueOfLabel(app);
+        Host.parse(host);
+        App.parse(app);
 
         /* Assumption is, if you specified this value in host/app, you have also created a valid file with its hostname.conf/app.name file under main -> resources folder.
             for inspiration; refer say file browserstack.conf (for host) and staging.conf (for app env)
