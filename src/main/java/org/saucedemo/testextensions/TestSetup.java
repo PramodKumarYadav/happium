@@ -16,8 +16,8 @@ import java.util.Map;
 @Slf4j
 public class TestSetup {
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final Platform PLATFORM = Platform.valueOfLabel(config.getString("PLATFORM"));
-    private static final Host HOST = Host.valueOfLabel(config.getString("HOST"));
+    private static final Platform PLATFORM = Platform.parse(config.getString("PLATFORM"));
+    private static final Host HOST = Host.parse(config.getString("HOST"));
 
     public AppiumDriver driver;
     private static Map<String, String> testThreadMap = new HashMap<>();

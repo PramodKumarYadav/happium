@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class DriverFactory {
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final Host HOST = Host.valueOfLabel(config.getString("HOST"));
+    private static final Host HOST = Host.parse(config.getString("HOST"));
 
     private DriverFactory() {
         throw new IllegalStateException("Static factory class");

@@ -21,7 +21,7 @@ import java.util.Map;
 @Slf4j
 public class DeepLink {
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final Platform PLATFORM = Platform.valueOfLabel(config.getString("PLATFORM"));
+    private static final Platform PLATFORM = Platform.parse(config.getString("PLATFORM"));
 
     AppiumDriver driver;
 
