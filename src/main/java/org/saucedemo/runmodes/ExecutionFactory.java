@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Slf4j
-public class ExecutionMode {
+public class ExecutionFactory {
     private static Config config = EnvFactory.getInstance().getConfig();
 
     // Since junit execution properties are not going to change mid execution, this method can be final.

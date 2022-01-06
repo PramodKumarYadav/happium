@@ -1,6 +1,6 @@
 package org.saucedemo.runmodes;
 
-public enum ExecutionModes {
+public enum RunMode {
     CLASS_SERIES_TEST_SERIES,
     CLASS_SERIES_TEST_PARALLEL,
     CLASS_PARALLEL_TEST_SERIES,
