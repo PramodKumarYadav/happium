@@ -5,18 +5,15 @@ import io.appium.java_client.AppiumDriver;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
+import org.saucedemo.runmodes.ExecutionFactory;
 import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.factories.capabilities.localhost.ios.IosSimulators;
-import org.saucedemo.runmodes.ExecutionModes;
+import org.saucedemo.runmodes.RunMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static org.saucedemo.runmodes.ExecutionMode.getConfigStrategy;
-import static org.saucedemo.runmodes.ExecutionMode.getExecutionMode;
-import static org.saucedemo.runmodes.ExecutionMode.getFixedThreadCount;
 
 /*
 We had a unique problem statement here. Since for parallel execution in appium, you can only run a test on a single device,
@@ -51,7 +48,7 @@ public class EmulatorDevicePicker {
     */
     public static synchronized EmulatorDevice getAndroidEmulator() {
         EmulatorDevice emulatorDevice = new EmulatorDevice();
-        ExecutionModes mode = getExecutionMode();
+        RunMode mode = ExecutionFactory.getExecutionMode();
         switch (mode) {
             case CLASS_SERIES_TEST_SERIES:
                 emulatorDevice = getASpecificAndroidEmulator();
@@ -129,7 +126,7 @@ public class EmulatorDevicePicker {
         // If config.strategy = fixed; and you already have fetched devices as many as fixed thread count
         // then you have to initialize variables to pick up existing devices again and not pick up new devices (real or virtual)
         log.info("deviceNumber: {}", deviceNumber);
-        if (getConfigStrategy().equalsIgnoreCase("fixed") && deviceNumber == getFixedThreadCount()) {
+        if (ExecutionFactory.getConfigStrategy().equalsIgnoreCase("fixed") && deviceNumber == ExecutionFactory.getFixedThreadCount()) {
             log.info("Thread count reached equal to fixed thread count specified in junit properties file.");
             log.info("Pick the first free device from list of freedDevices.");
             EmulatorDevice firstFreeEmulatorDevice = freedEmulatorDevices.get(0);
