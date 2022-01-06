@@ -27,8 +27,9 @@ public class DriverFactory {
             case IOS:
                 return new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
             default:
-                throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s." +
-                        "Check the value of 'PLATFORM' property in application.conf; Or in CI, if running from continuous integration.", platform, java.util.Arrays.asList(Platform.values())));
+                throw new IllegalStateException(String.format("%s is not a valid platform choice. " +
+                        "Valid platform check exists in Platform class parse method; so this is actually a redundant " +
+                        "check which is there to catch any unexpected exception - just in case", platform, java.util.Arrays.asList(Platform.values())));
         }
     }
 

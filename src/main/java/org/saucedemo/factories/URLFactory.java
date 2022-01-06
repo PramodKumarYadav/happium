@@ -18,13 +18,13 @@ public class URLFactory {
     public static URL getHostURL(Host host) {
         log.info("Getting hostURL for Host: {}", host);
         try {
-            return new URL(getHostUri(host));
+            return new URL(buildHostURI(host));
         } catch (MalformedURLException e) {
-            throw new IllegalStateException(String.format("%s is Malformed host URL.", getHostUri(host)), e);
+            throw new IllegalStateException(String.format("%s is Malformed host URL.", buildHostURI(host)), e);
         }
     }
 
-    private static String getHostUri(Host host) {
+    private static String buildHostURI(Host host) {
         switch (host) {
             case SAUCELABS:
                 String sauceUri = config.getString("SAUCE_URI");
