@@ -13,8 +13,8 @@ import java.util.Properties;
  */
 @Slf4j
 public class ExecutionFactory {
-    public static final String SAME_THREAD = "same_thread";
-    public static final String CONCURRENT = "concurrent";
+    private static final String SAME_THREAD = "same_thread";
+    private static final String CONCURRENT = "concurrent";
     /**
      * With this approach, we are relying on JVM to create the unique instance of ExecutionFactory when the class is loaded.
      * The JVM guarantees that the instance will be created before any thread accesses the static uniqueInstance variable.
