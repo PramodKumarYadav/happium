@@ -26,7 +26,10 @@ public class EnvFactory {
 
     public Config getConfig() {
         // Load default properties (first from System properties and then from application.conf file under main -> resources folder)
-        Config baseConfig = ConfigFactory.load();
+        Config applicationConfig = ConfigFactory.load();
+        Config choicesConfig = ConfigFactory.load("choices");
+        Config baseConfig = choicesConfig.withFallback(applicationConfig);
+
         String host = baseConfig.getString("HOST");
         String appEnv = baseConfig.getString("APP_ENV");
 
