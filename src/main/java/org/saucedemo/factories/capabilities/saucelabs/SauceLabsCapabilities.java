@@ -46,6 +46,7 @@ public class SauceLabsCapabilities {
                 capabilities.setCapability("deviceName", "Samsung Galaxy S9 FHD GoogleAPI Emulator");
                 break;
             case IOS:
+                // Todo:
                 break;
             default:
                 break;
