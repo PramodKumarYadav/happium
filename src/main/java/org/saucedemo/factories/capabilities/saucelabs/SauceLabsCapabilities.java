@@ -18,7 +18,7 @@ public class SauceLabsCapabilities {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
         // Note that saucelabs user and key are fetched from system env variables. Rest all other properties are fetched from config.
-        capabilities.setCapability("appiumVersion", System.getenv("1.20.2"));
+        capabilities.setCapability("appiumVersion", "1.20.2");
         capabilities.setCapability("username", System.getenv("SAUCE_USERNAME"));
         capabilities.setCapability("accessKey", System.getenv("SAUCE_ACCESS_KEY"));
         capabilities.setCapability("appWaitActivity", "com.swaglabsmobileapp.MainActivity");
@@ -42,8 +42,8 @@ public class SauceLabsCapabilities {
                 capabilities.setCapability("app", "storage:filename=" + config.getString("ANDROID_APP_NAME"));
 //                        OR
 //                        capabilities.setCapability("app", CONFIG.getString("ANDROID_APP_URL"));
-                capabilities.setCapability("platformVersion", "8.1");
-                capabilities.setCapability("deviceName", "Samsung Galaxy S9 Plus FHD GoogleAPI Emulator");
+                capabilities.setCapability("platformVersion", "9.0");
+                capabilities.setCapability("deviceName", "Samsung Galaxy S9 FHD GoogleAPI Emulator");
                 break;
             case IOS:
                 break;
