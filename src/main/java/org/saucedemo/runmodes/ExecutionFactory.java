@@ -1,6 +1,5 @@
 package org.saucedemo.runmodes;
 
-import com.typesafe.config.Config;
 import lombok.extern.slf4j.Slf4j;
 import org.saucedemo.factories.EnvFactory;
 
@@ -8,12 +7,31 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * For any particular run, the values in junit-platform.properties file will remain constant for all classes using it.
+ * Thus we will follow Singleton design pattern here.
+ */
 @Slf4j
 public class ExecutionFactory {
-    private static Config config = EnvFactory.getInstance().getConfig();
+    /**
+     * With this approach, we are relying on JVM to create the unique instance of ExecutionFactory when the class is loaded.
+     * The JVM guarantees that the instance will be created before any thread accesses the static uniqueInstance variable.
+     * This code is thus guaranteed to be thread safe.
+     */
+    private static ExecutionFactory uniqueInstance = new ExecutionFactory();
+
+    private ExecutionFactory() {
+        /** Once we have created an instance here, we do not allow other calling classes to make another instance.
+         * So all tests can make use of the uniqueInstance available above and call below methods on it.
+        */
+    }
+
+    public static ExecutionFactory getInstance() {
+        return uniqueInstance;
+    }
 
     // Since junit execution properties are not going to change mid execution, this method can be final.
-    public static final RunMode getExecutionMode() {
+    public RunMode getExecutionMode() {
         Properties junitProperties = getProperties();
         String parallelMode = junitProperties.getProperty("junit.jupiter.execution.parallel.enabled");
         String testMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.default");
@@ -42,15 +60,12 @@ public class ExecutionFactory {
                 log.info("All classes run in Parallel. Within each class, all tests run in Parallel.");
                 return RunMode.CLASS_PARALLEL_TEST_PARALLEL;
             } else {
-                log.error("Invalid mode of execution provided in junit-platform.properties file. Check and correct!");
+                throw new IllegalStateException("Invalid mode of execution provided in junit-platform.properties file. Check and correct!");
             }
         }
-
-        log.info("Since no valid choices were not provided; no valid mode can be returned!");
-        return null;
     }
 
-    public static final String getConfigStrategy() {
+    public String getConfigStrategy() {
         Properties junitProperties = getProperties();
         String configStrategy = junitProperties.getProperty("junit.jupiter.execution.parallel.config.strategy");
         log.info("configStrategy: {}", configStrategy);
@@ -58,7 +73,7 @@ public class ExecutionFactory {
         return configStrategy;
     }
 
-    public static final Integer getFixedThreadCount() {
+    public Integer getFixedThreadCount() {
         Properties junitProperties = getProperties();
         String fixedThreadCount = junitProperties.getProperty("junit.jupiter.execution.parallel.config.fixed.parallelism");
         log.info("fixedThreadCount: {}", fixedThreadCount);
@@ -66,10 +81,10 @@ public class ExecutionFactory {
         return Integer.parseInt(fixedThreadCount);
     }
 
-    private static Properties getProperties() {
+    private Properties getProperties() {
         Properties junitProperties = new Properties();
         try {
-            junitProperties.load(new FileInputStream(config.getString("PATH_JUNIT_PLATFORM_PROPERTIES")));
+            junitProperties.load(new FileInputStream(EnvFactory.getInstance().getConfig().getString("PATH_JUNIT_PLATFORM_PROPERTIES")));
         } catch (IOException e) {
             e.printStackTrace();
         }

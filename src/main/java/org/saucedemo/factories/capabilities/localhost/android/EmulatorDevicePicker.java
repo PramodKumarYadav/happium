@@ -48,7 +48,7 @@ public class EmulatorDevicePicker {
     */
     public static synchronized EmulatorDevice getAndroidEmulator() {
         EmulatorDevice emulatorDevice = new EmulatorDevice();
-        RunMode mode = ExecutionFactory.getExecutionMode();
+        RunMode mode = ExecutionFactory.getInstance().getExecutionMode();
         switch (mode) {
             case CLASS_SERIES_TEST_SERIES:
                 emulatorDevice = getASpecificAndroidEmulator();
@@ -126,7 +126,7 @@ public class EmulatorDevicePicker {
         // If config.strategy = fixed; and you already have fetched devices as many as fixed thread count
         // then you have to initialize variables to pick up existing devices again and not pick up new devices (real or virtual)
         log.info("deviceNumber: {}", deviceNumber);
-        if (ExecutionFactory.getConfigStrategy().equalsIgnoreCase("fixed") && deviceNumber == ExecutionFactory.getFixedThreadCount()) {
+        if (ExecutionFactory.getInstance().getConfigStrategy().equalsIgnoreCase("fixed") && deviceNumber == ExecutionFactory.getInstance().getFixedThreadCount()) {
             log.info("Thread count reached equal to fixed thread count specified in junit properties file.");
             log.info("Pick the first free device from list of freedDevices.");
             EmulatorDevice firstFreeEmulatorDevice = freedEmulatorDevices.get(0);

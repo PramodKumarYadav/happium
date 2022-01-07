@@ -93,6 +93,23 @@ There are two key principles you will see throughout being followed in the proje
 ## Working approach
 When I learn a new tool or technology, my working approach is to `first make it work` and `then make it better`. Thus refactoring is a `way of life` in all my projects. Following the scout and guides principle that if you touch a class, you have to `leave code cleaner than you found it`. Eventually this approach would result in the code that looks like what I mentioned before in the working principles.   
 
+## Upload app on browserstack 
+To do: (manually every month when you get an error - automate this step when you can)
+[Instructions to upload app on browserstack](https://www.browserstack.com/docs/app-automate/appium/upload-app-define-custom-id)
+Sample here (with ID/PWD changed:
+```Pramod Yadav@DESKTOP-GPU5LFR MINGW64 /
+$ curl -u "pramodyadav_ABCsHy:XyWBbdd3JkLKHCGVa6Fg" \
+> -X POST "https://api-cloud.browserstack.com/app-automate/upload" \
+> -F "file=@D:\happium\app\develop\Android.SauceLabs.Mobile.Sample.app.2.7.1.apk" \
+> -F "custom_id=SauceLabsSampleAndroidApp"
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 24.5M  100   161  100 24.5M     39  6196k  0:00:04  0:00:04 --:--:-- 6199k{"app_url":"bs://3452d7248eb4b318446c779ac9fa760f16a535d6","custom_id":"SauceLabsSampleAndroidApp","shareable_id":"pramodyadav_GBQsYy/SauceLabsSampleAndroidApp"}
+
+Pramod Yadav@DESKTOP-GPU5LFR MINGW64 /
+```
+
+
 ## Installation (dependencies and appium)
 - For windows setup: Go to install folder in root directory. Now refer powershell script named `Install-AppiumOnWindows.psm1`
 - To do a full setup on Windows; execute below commands.
