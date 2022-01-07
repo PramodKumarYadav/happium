@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Builder
+@Builder(setterPrefix = "set")
 public class EmulatorDevice {
     private String udid;
     private String deviceName;

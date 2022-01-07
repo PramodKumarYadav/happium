@@ -77,12 +77,12 @@ public class EmulatorDevicePicker {
 
     // If in future, we need to pass on the deviceName, then we will get rid of convenience method and can use this.
     public static synchronized EmulatorDevice getASpecificAndroidEmulator(String deviceName) {
-        EmulatorDevice emulatorDevice = new EmulatorDevice();
-
         // Set all the unique properties for this emulator device (necessary for execution in parallel)
-        emulatorDevice.setDeviceName(deviceName);
-        emulatorDevice.setUdid("emulator-" + emulatorNumber);
-        emulatorDevice.setSystemPort(systemPort);
+        EmulatorDevice emulatorDevice = EmulatorDevice.builder()
+                .setDeviceName(deviceName)
+                .setUdid("emulator-" + emulatorNumber)
+                .setSystemPort(systemPort)
+                .build();
 
         log.info("Device details: {}", emulatorDevice);
         return emulatorDevice;
@@ -137,15 +137,15 @@ public class EmulatorDevicePicker {
 
             return firstFreeEmulatorDevice;
         } else {
-            EmulatorDevice emulatorDevice = new EmulatorDevice();
-
             log.info("fetching device number: {}", deviceNumber);
             String deviceName = AvailableEmulators.values()[deviceNumber].toString();
 
             // Set all the unique properties for this emulator device (necessary for execution in parallel)
-            emulatorDevice.setDeviceName(deviceName);
-            emulatorDevice.setUdid("emulator-" + emulatorNumber);
-            emulatorDevice.setSystemPort(systemPort);
+            EmulatorDevice emulatorDevice = EmulatorDevice.builder()
+                    .setDeviceName(deviceName)
+                    .setUdid("emulator-" + emulatorNumber)
+                    .setSystemPort(systemPort)
+                    .build();
 
             // Increment so that next device fetched has unique properties.
             deviceNumber++;
