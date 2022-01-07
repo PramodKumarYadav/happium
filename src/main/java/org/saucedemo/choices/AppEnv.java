@@ -3,28 +3,27 @@ package org.saucedemo.choices;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum App {
-    LOCAL("local"),
+public enum AppEnv {
     DEVELOP("develop"),
     STAGING("staging"),
     PRODUCTION("production");
 
     public final String label;
 
-    App(String label) {
+    AppEnv(String label) {
         this.label = label;
     }
 
-    private static final Map<String, App> BY_LABEL = new HashMap<>();
+    private static final Map<String, AppEnv> BY_LABEL = new HashMap<>();
 
     static {
-        for (App app : values()) {
-            BY_LABEL.put(app.label, app);
+        for (AppEnv appEnv : values()) {
+            BY_LABEL.put(appEnv.label, appEnv);
         }
     }
 
     // To get enum name from a label (choice specified in application.conf)
-    public static App parse(String label) {
+    public static AppEnv parse(String label) {
         if (BY_LABEL.get(label) == null) {
             throw new IllegalStateException(String.format("%s is not a valid app env choice. Pick your app env from %s." +
                     "Check the value of 'APP' property in application.conf; Or in CI, if running from continuous integration.", label, BY_LABEL.keySet()));
