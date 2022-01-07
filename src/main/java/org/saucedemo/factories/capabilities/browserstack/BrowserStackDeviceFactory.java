@@ -17,8 +17,8 @@ import java.util.Random;
 @Slf4j
 public class BrowserStackDeviceFactory {
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final String DEVICE = config.getString("DEVICE");
-    private static final String OS_VERSION = config.getString("OS_VERSION");
+    private static final String DEVICE = config.getString("BROWSERSTACK.DEVICE");
+    private static final String OS_VERSION = config.getString("BROWSERSTACK.OS_VERSION");
 
     private static final String BROWSERSTACK_ANDROID_DEVICES_PATH = config.getString("BROWSERSTACK_ANDROID_DEVICES_PATH");
     private static final String BROWSERSTACK_IOS_DEVICES_PATH = config.getString("BROWSERSTACK_IOS_DEVICES_PATH");
