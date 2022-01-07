@@ -38,39 +38,34 @@ public class EmulatorDevicePicker {
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final String DEVICE_NAME = config.getString("DEVICE_NAME");
 
-    /*
-    Pick a device (fixed or random) based on the choice provided in application.conf
-    If user wants to pick any random device. Then get a random device.
-    Else, keep the deviceName provided by user in application.conf file. In case if user wants to test with a specific device.
-    Note: that if you do provide a fixed deviceName, then you cannot run tests in parallel.
-    So change parallel property to false in junit-platform.properties file.
-    junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
-    */
+    /**
+     * Pick a device (fixed or random) based on the choice provided in application.conf
+     * If user wants to pick any random device. Then get a random device.
+     * Else, keep the deviceName provided by user in application.conf file. In case if user wants to test with a specific device.
+     * Note: that if you do provide a fixed deviceName, then you cannot run tests in parallel.
+     * So change parallel property to false in junit-platform.properties file.
+     * junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
+     */
     public static synchronized EmulatorDevice getAndroidEmulator() {
-        EmulatorDevice emulatorDevice = new EmulatorDevice();
         RunMode mode = ExecutionFactory.getInstance().getExecutionMode();
         switch (mode) {
             case CLASS_SERIES_TEST_SERIES:
-                emulatorDevice = getASpecificAndroidEmulator();
-                break;
+                return getASpecificAndroidEmulator();
             case CLASS_SERIES_TEST_PARALLEL:
-                emulatorDevice = getAUniqueAndroidEmulatorPerTestWithinAClass();
-                break;
+                return getAUniqueAndroidEmulatorPerTestWithinAClass();
             case CLASS_PARALLEL_TEST_SERIES:
-                emulatorDevice = getAUniqueAndroidEmulatorPerTestClass();
-                break;
+                return getAUniqueAndroidEmulatorPerTestClass();
             case CLASS_PARALLEL_TEST_PARALLEL:
-                emulatorDevice = getAUniqueAndroidEmulator();
-                break;
+                return getAUniqueAndroidEmulator();
             default:
-                break;
+                throw new IllegalStateException("Invalid mode of execution provided in junit-platform.properties file. Check and correct!");
         }
-
-        return emulatorDevice;
     }
 
-    // A convenience method to get the device name from application.conf file.
-    // Say when running tests in series in a particular class.
+    /**
+     * A convenience method to get the device name from application.conf file.
+     * Say when running tests in series in a particular class.
+     */
     public static synchronized EmulatorDevice getASpecificAndroidEmulator() {
         return getASpecificAndroidEmulator(DEVICE_NAME);
     }
@@ -166,9 +161,10 @@ public class EmulatorDevicePicker {
         return deviceName;
     }
 
-    /** todo: In future, this method name will be reserved to free both android and ios devices.
-        for now, this method is only setup for android virtual devices. But that will be changed soon once we start
-        working with ios devices.
+    /**
+     * todo: In future, this method name will be reserved to free both android and ios devices.
+     * for now, this method is only setup for android virtual devices. But that will be changed soon once we start
+     * working with ios devices.
      */
     public static synchronized void freeDevice(AppiumDriver driver) {
         Capabilities capabilities = driver.getCapabilities();
