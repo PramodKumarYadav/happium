@@ -36,7 +36,7 @@ public class EmulatorDevicePicker {
     private static String currentTestClass = "";
 
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final String DEVICE_NAME = config.getString("DEVICE_NAME");
+    private static final String DEVICE_NAME = config.getString("LOCALHOST.DEVICE_NAME");
 
     /**
      * Pick a device (fixed or random) based on the choice provided in application.conf

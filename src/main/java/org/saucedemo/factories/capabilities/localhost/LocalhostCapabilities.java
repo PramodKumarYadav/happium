@@ -21,8 +21,8 @@ public class LocalhostCapabilities {
     public static DesiredCapabilities get(Platform platform) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
 
-        String DEVICE_TYPE = config.getString("DEVICE_TYPE");
-        String DEVICE_NAME = config.getString("DEVICE_NAME");
+        String DEVICE_TYPE = config.getString("LOCALHOST.DEVICE_TYPE");
+        String DEVICE_NAME = config.getString("LOCALHOST.DEVICE_NAME");
 
         // On localhost you are either on android or on IOS (not both).
         log.info("Running tests on DEVICE_TYPE: {}", DEVICE_TYPE);
