@@ -33,34 +33,31 @@ public class ExecutionFactory {
     }
 
     // Since junit execution properties are not going to change mid execution, this method can be final.
-    public RunMode getExecutionMode() {
+    public ExecutionMode getExecutionMode() {
         Properties junitProperties = getProperties();
-        String parallelMode = junitProperties.getProperty("junit.jupiter.execution.parallel.enabled");
-        String testMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.default");
-        String classMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.classes.default");
 
+        String parallelMode = junitProperties.getProperty("junit.jupiter.execution.parallel.enabled");
         log.info("parallelMode: {}", parallelMode);
+
+        String classMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.classes.default");
         log.info("classMode: {}", classMode);
+
+        String testMode = junitProperties.getProperty("junit.jupiter.execution.parallel.mode.default");
         log.info("testMode: {}", testMode);
 
         // Run all tests and classes in series
         if (parallelMode.equalsIgnoreCase("false")) {
-            log.info("All classes run in series. Within each class, all tests run in series.");
-            return RunMode.CLASS_SERIES_TEST_SERIES;
+            return ExecutionMode.CLASS_SERIES_TEST_SERIES;
         } else {
             // Run all tests and classes in different parallel modes - except the first option below (which is same as running in series)
             if (classMode.equalsIgnoreCase(SAME_THREAD) && testMode.equalsIgnoreCase(SAME_THREAD)) {
-                log.info("All classes run in series. Within each class, all tests run in series.");
-                return RunMode.CLASS_SERIES_TEST_SERIES;
+                return ExecutionMode.CLASS_SERIES_TEST_SERIES;
             } else if (classMode.equalsIgnoreCase(SAME_THREAD) && testMode.equalsIgnoreCase(CONCURRENT)) {
-                log.info("All classes run in Series. Within each class, all tests run in Parallel.");
-                return RunMode.CLASS_SERIES_TEST_PARALLEL;
+                return ExecutionMode.CLASS_SERIES_TEST_PARALLEL;
             } else if (classMode.equalsIgnoreCase(CONCURRENT) && testMode.equalsIgnoreCase(SAME_THREAD)) {
-                log.info("All classes run in Parallel. Within each class, all tests run in series.");
-                return RunMode.CLASS_PARALLEL_TEST_SERIES;
+                return ExecutionMode.CLASS_PARALLEL_TEST_SERIES;
             } else if (classMode.equalsIgnoreCase(CONCURRENT) && testMode.equalsIgnoreCase(CONCURRENT)) {
-                log.info("All classes run in Parallel. Within each class, all tests run in Parallel.");
-                return RunMode.CLASS_PARALLEL_TEST_PARALLEL;
+                return ExecutionMode.CLASS_PARALLEL_TEST_PARALLEL;
             } else {
                 throw new IllegalStateException("Invalid mode of execution provided in junit-platform.properties file. Check and correct!");
             }
