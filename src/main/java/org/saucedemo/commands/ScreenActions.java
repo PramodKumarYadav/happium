@@ -1,4 +1,4 @@
-package org.saucedemo.actions;
+package org.saucedemo.commands;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
@@ -9,8 +9,10 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-// All interactions in pages should happen via screen actions and not directly in the pages.
-// this class provides robustness and readability and reduces flakiness. 
+/**
+ * All interactions in pages should happen via screen actions and not directly in the pages.
+ * this class provides robustness and readability and reduces flakiness.
+ */
 public class ScreenActions {
     AppiumDriver driver;
     private WebDriverWait shortWait;
@@ -50,6 +52,6 @@ public class ScreenActions {
     // todo: This is android specific method used only for demo purpose. Eventually replace this with a method that works
     //  on both android and ios.
     public WebElement scrollAndGetElementContainingText(String partialText) {
-        return driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().textContains(\""+partialText+"\").instance(0))"));
+        return driver.findElement(MobileBy.AndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().textContains(\"" + partialText + "\").instance(0))"));
     }
 }

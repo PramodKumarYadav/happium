@@ -8,7 +8,7 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
-import org.saucedemo.screens.actions.ScreenActions;
+import org.saucedemo.commands.ScreenActions;
 
 import java.util.List;
 
