@@ -13,7 +13,6 @@ import org.saucedemo.testextensions.TestExecutionLifecycle;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 
 @Tag("android")
 @ExtendWith(TestExecutionLifecycle.class)
@@ -33,8 +32,8 @@ class TestProduct extends TestSetup {
             ,"1; Sauce Labs Bike Light;A red light isn't the desired state in testing but it sure helps when riding your bike at night. Water-resistant with 3 lighting modes, 1 AAA battery included."
     }, delimiter = ';')
     void assertThatProductDescriptionIsCorrectForAStandardUser(String productNumber, String productSummary, String productDescription) {
-        String url = setDeepLinkUrl(config.getString("SWAG_ITEM_DETAILS"), productNumber);
-        deepLink.toScreen(url);
+        String deepLinkUrl = DeepLink.getDeepLinkUrl(config.getString("SWAG_ITEM_DETAILS"), productNumber);
+        deepLink.toScreen(deepLinkUrl);
 
         assertAll("Product Details"
                 , () -> assertEquals(productSummary, productScreen.getProductSummary())

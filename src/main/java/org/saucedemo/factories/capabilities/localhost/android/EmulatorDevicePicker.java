@@ -5,11 +5,11 @@ import io.appium.java_client.AppiumDriver;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
-import org.saucedemo.runmodes.ExecutionFactory;
+import org.saucedemo.executionmodes.ExecutionFactory;
 import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.factories.capabilities.localhost.ios.IosSimulators;
-import org.saucedemo.runmodes.RunMode;
+import org.saucedemo.executionmodes.ExecutionMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,8 +47,9 @@ public class EmulatorDevicePicker {
      * junit.jupiter.execution.parallel.enabled=false (for parallel mode keep this true and deviceName = randomDevice
      */
     public static synchronized EmulatorDevice getAndroidEmulator() {
-        RunMode mode = ExecutionFactory.getInstance().getExecutionMode();
-        switch (mode) {
+        ExecutionMode executionMode = ExecutionFactory.getInstance().getExecutionMode();
+        log.info("executionMode: {}", executionMode.label);
+        switch (executionMode) {
             case CLASS_SERIES_TEST_SERIES:
                 return getASpecificAndroidEmulator();
             case CLASS_SERIES_TEST_PARALLEL:

@@ -13,7 +13,6 @@ import org.saucedemo.testextensions.TestExecutionLifecycle;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.saucedemo.deeplink.DeepLink.setDeepLinkUrl;
 
 @Tag("android")
 @Tag("ios")
@@ -29,7 +28,7 @@ class TestProducts extends TestSetup {
         productsScreen = new ProductsScreen(driver);
 
         deepLink = new DeepLink(driver);
-        String deepLinkUrl = setDeepLinkUrl(config.getString("SWAG_ITEMS_OVERVIEW"), "0,1");
+        String deepLinkUrl = DeepLink.getDeepLinkUrl(config.getString("SWAG_ITEMS_OVERVIEW"), "0,1");
         deepLink.toScreen(deepLinkUrl);
     }
 
