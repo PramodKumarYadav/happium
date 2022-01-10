@@ -3,9 +3,7 @@ package org.saucedemo.deeplink;
 import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.support.PageFactory;
 import org.saucedemo.choices.Platform;
 import org.saucedemo.factories.EnvFactory;
 
@@ -26,13 +24,11 @@ public class DeepLink {
     AppiumDriver driver;
 
     public DeepLink(AppiumDriver driver) {
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
         this.driver = driver;
     }
 
-    public static String setDeepLinkUrl(String endpoint, String parameters) {
-        String url = String.format("%s/%s", endpoint, parameters);
-        return url;
+    public static String getDeepLinkUrl(String endpoint, String parameters) {
+        return String.format("%s/%s", endpoint, parameters);
     }
 
     public void toScreen(String deepLinkURL) {
@@ -45,7 +41,7 @@ public class DeepLink {
                 toIOSScreen(deepLinkURL);
                 break;
             default:
-                break;
+                throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s.", PLATFORM, java.util.Arrays.asList(Platform.values())));
         }
     }
 
