@@ -1,4 +1,4 @@
-package org.saucedemo.runmodes;
+package org.saucedemo.executionmodes;
 
 import java.util.HashMap;
 import java.util.Map;
