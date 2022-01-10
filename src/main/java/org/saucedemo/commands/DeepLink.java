@@ -1,4 +1,4 @@
-package org.saucedemo.deeplink;
+package org.saucedemo.commands;
 
 import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
