@@ -1,4 +1,4 @@
-package org.saucedemo.commands;
+package org.saucedemo.actions;
 
 import com.google.common.collect.ImmutableMap;
 import com.typesafe.config.Config;
