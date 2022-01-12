@@ -1,4 +1,4 @@
-package org.saucedemo.commands;
+package org.saucedemo.actions;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
