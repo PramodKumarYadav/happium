@@ -15,10 +15,14 @@ Framework uses **Junit5** and provides **4 different modes of running your tests
 
 ## Getting started
 - Clone this project in one of your drives.
-  - `git clone https://github.com/PramodKumarYadav/happium.git`
-- Specify `host`, `platform`, `app` env and `device` choices from application.conf and selected environments conf file.
-- If running in localhost; you would first need to start appium server: `appium --base-path /wd/hub`
-- If running in browserstack or saucelabs, you can skip running of server step.
+    - `git clone https://github.com/PramodKumarYadav/happium.git`
+- Specify `host`, `platform`, `app` env and `device` choices from choices.conf and selected environments' conf file.
+- If `running` in localhost;
+    - You would need to start appium server as: `appium --base-path /wd/hub`
+- If `debugging` in localhost (to identify element ids);
+    - You would need to start appium server as: `appium --base-path /wd/hub  --allow-cors`
+- If running in `browserstack`,
+    - You can skip running the appium server step.
 - Run tests
 
 ## Open source sponsor's
