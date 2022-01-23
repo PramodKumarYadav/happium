@@ -36,7 +36,6 @@ public class EmulatorDevicePicker {
     private static String currentTestClass = "";
 
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final String DEVICE_NAME = config.getString("LOCALHOST.DEVICE_NAME");
     private static final List<String> availableEmulators = AvailableEmulators.getInstance().getAll();
 
     /**
@@ -69,6 +68,14 @@ public class EmulatorDevicePicker {
      * Say when running tests in series in a particular class.
      */
     public static synchronized EmulatorDevice getASpecificAndroidEmulator() {
+        String DEVICE_NAME = config.getString("LOCALHOST.DEVICE_NAME");
+        if(availableEmulators.contains(DEVICE_NAME)){
+            log.info("Picking device specified in the choices.conf sheet: {}", DEVICE_NAME);
+        }else{
+            log.info("Device specified in the choices.conf sheet does not exist in the list of available emulators: {}. Thus picking the first one.", availableEmulators);
+            DEVICE_NAME = availableEmulators.get(0);
+        }
+
         return getASpecificAndroidEmulator(DEVICE_NAME);
     }
 
