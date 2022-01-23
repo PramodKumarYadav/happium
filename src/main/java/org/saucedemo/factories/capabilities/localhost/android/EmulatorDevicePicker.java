@@ -37,6 +37,7 @@ public class EmulatorDevicePicker {
 
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final String DEVICE_NAME = config.getString("LOCALHOST.DEVICE_NAME");
+    private static final List<String> availableEmulators = AvailableEmulators.getInstance().getAll();
 
     /**
      * Pick a device (fixed or random) based on the choice provided in application.conf
@@ -134,7 +135,7 @@ public class EmulatorDevicePicker {
             return firstFreeEmulatorDevice;
         } else {
             log.info("fetching device number: {}", deviceNumber);
-            String deviceName = AvailableEmulators.values()[deviceNumber].toString();
+            String deviceName = availableEmulators.get(deviceNumber);
 
             // Set all the unique properties for this emulator device (necessary for execution in parallel)
             EmulatorDevice emulatorDevice = EmulatorDevice.builder()

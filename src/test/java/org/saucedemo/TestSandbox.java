@@ -5,11 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.saucedemo.factories.EnvFactory;
-import org.saucedemo.factories.capabilities.localhost.android.AvailableEmulators;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
 import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -17,15 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Slf4j
 public class TestSandbox {
-    private static String className = MethodHandles.lookup().lookupClass().getSimpleName();
     private static Config config = EnvFactory.getInstance().getConfig();
-
-    @Disabled
-    @Test
-    void getDeviceBasedOnLocation() {
-        log.info("deviceName @ position 0: {}", AvailableEmulators.values()[0]);
-        log.info("deviceName @ position 1: {}", AvailableEmulators.values()[1]);
-    }
 
     @Disabled
     @Test
