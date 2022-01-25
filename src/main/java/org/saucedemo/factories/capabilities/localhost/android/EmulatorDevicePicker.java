@@ -8,7 +8,6 @@ import org.openqa.selenium.Capabilities;
 import org.saucedemo.executionmodes.ExecutionFactory;
 import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
-import org.saucedemo.factories.capabilities.localhost.ios.IosSimulators;
 import org.saucedemo.executionmodes.ExecutionMode;
 
 import java.util.ArrayList;
@@ -79,7 +78,6 @@ public class EmulatorDevicePicker {
         return getASpecificAndroidEmulator(DEVICE_NAME);
     }
 
-    // If in future, we need to pass on the deviceName, then we will get rid of convenience method and can use this.
     public static synchronized EmulatorDevice getASpecificAndroidEmulator(String deviceName) {
         // Set all the unique properties for this emulator device (necessary for execution in parallel)
         EmulatorDevice emulatorDevice = EmulatorDevice.builder()
@@ -159,15 +157,6 @@ public class EmulatorDevicePicker {
             log.info("Device details: {}", emulatorDevice);
             return emulatorDevice;
         }
-    }
-
-    public static synchronized String getIosSimulator() {
-        log.info("fetching device number: {}", deviceNumber);
-        String deviceName = IosSimulators.values()[deviceNumber].toString();
-        log.info("device fetched: {}", deviceName);
-
-        deviceNumber++;
-        return deviceName;
     }
 
     /**

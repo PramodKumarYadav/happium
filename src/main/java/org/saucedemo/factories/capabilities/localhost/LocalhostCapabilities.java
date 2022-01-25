@@ -5,10 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.saucedemo.choices.Platform;
+import org.saucedemo.executionmodes.ExecutionFactory;
+import org.saucedemo.executionmodes.ExecutionMode;
 import org.saucedemo.factories.EnvFactory;
+import org.saucedemo.factories.capabilities.localhost.android.AvailableEmulators;
 import org.saucedemo.factories.capabilities.localhost.android.EmulatorDevice;
 
 import java.util.Iterator;
+import java.util.List;
 
 import static org.saucedemo.factories.capabilities.localhost.android.EmulatorDevicePicker.getAndroidEmulator;
 import static org.saucedemo.utils.FileUtils.getCanonicalPath;
@@ -17,6 +21,7 @@ import static org.saucedemo.utils.FileUtils.getFileAsString;
 @Slf4j
 public class LocalhostCapabilities {
     private static Config config = EnvFactory.getInstance().getConfig();
+    private static final List<String> availableEmulators = AvailableEmulators.getInstance().getAll();
 
     public static DesiredCapabilities get(Platform platform) {
         DesiredCapabilities capabilities = new DesiredCapabilities();
@@ -42,6 +47,7 @@ public class LocalhostCapabilities {
                         setAndroidRealDeviceCapabilities(DEVICE_NAME, capabilities);
                         break;
                     case "virtual":
+                        isEmulatorExecutionRequirementMet();
                         setAndroidEmulatorCapabilities(capabilities);
                         break;
                     default:
@@ -149,5 +155,33 @@ public class LocalhostCapabilities {
         }
 
         return capabilities;
+    }
+
+    public static void isEmulatorExecutionRequirementMet() {
+        ExecutionMode executionMode = ExecutionFactory.getInstance().getExecutionMode();
+        switch (executionMode) {
+            case CLASS_SERIES_TEST_SERIES:
+                if(availableEmulators.size() < 1){
+                    throw new IllegalStateException("No emulators found to run tests in series");
+                }
+                break;
+            case CLASS_SERIES_TEST_PARALLEL:
+                // fall through - same validation applies for all parallel execution modes.
+            case CLASS_PARALLEL_TEST_SERIES:
+                // fall through - same validation applies for all parallel execution modes.
+            case CLASS_PARALLEL_TEST_PARALLEL:
+                String configStrategy = ExecutionFactory.getInstance().getConfigStrategy();
+                if(configStrategy.equalsIgnoreCase("fixed")){
+                    if(availableEmulators.size() < ExecutionFactory.getInstance().getFixedThreadCount()){
+                        throw new IllegalStateException("Nr of emulators are less than total thread count. Either reduce threads or add more emulators");
+                    }
+                }else{ // So when the strategy is not fixed but say is 'dynamic'
+                    throw new IllegalStateException("Running with config strategy that is not 'fixed' is not recommended for mobile tests. " +
+                            "You would need as many emulators as there are nr of tests in the project. Your CPU would not be able to handle that kind of load." +
+                            "Note: If you still wish to go ahead with strategy 'dynamic', then comment this exception.");
+                }
+            default:
+                break;
+        }
     }
 }
