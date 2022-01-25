@@ -3,19 +3,14 @@ package org.saucedemo.utils;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProcessUtils {
+    @SneakyThrows
     public static Process runProcess(String command) {
-        try {
-            return Runtime.getRuntime().exec(command);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException(command + "failed");
-        }
+        return Runtime.getRuntime().exec(command);
     }
 
     @SneakyThrows
