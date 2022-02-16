@@ -26,6 +26,7 @@ class TestLogin extends TestSetup {
         productsScreen = new ProductsScreen(driver);
     }
 
+    @Tag("smokeTest")
     @ParameterizedTest(name = "Login user - {0}")
     @CsvSource({"standard_user,secret_sauce"
             ,"problem_user,secret_sauce"
