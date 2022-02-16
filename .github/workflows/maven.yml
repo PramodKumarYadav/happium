@@ -9,9 +9,7 @@ on:
 
 jobs:
   build-android:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 8
@@ -28,9 +26,7 @@ jobs:
       run: mvn clean -DBROWSERSTACK_BUILD_NAME=${GITHUB_REF#refs/heads/} -DHOST="browserstack" -DPLATFORM="android" -DBROWSERSTACK.DEVICE="google" -DBROWSERSTACK.OS_VERSION="9.0" -Dgroups="android" -B package --file pom.xml
     
   build-ios:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 8
