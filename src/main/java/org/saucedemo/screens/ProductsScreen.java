@@ -8,18 +8,19 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
-import org.saucedemo.actions.ScreenActions;
+import org.saucedemo.actions.screen.Screen;
+import org.saucedemo.actions.screen.ScreenFactory;
 
 import java.util.List;
 
 @Slf4j
 @Data
 public class ProductsScreen {
-    ScreenActions screenActions;
+    Screen screen;
 
     public ProductsScreen(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        screenActions = new ScreenActions(driver);
+        screen = new ScreenFactory(driver).getScreen();
     }
 
     @AndroidFindBy(accessibility = "test-PRODUCTS")
@@ -35,19 +36,20 @@ public class ProductsScreen {
     private List<MobileElement> productsPrice;
 
     public Boolean isProductHeadingDisplayed() {
-        screenActions.waitUntilElementIsVisible(productsTitle);
+        screen.waitUntilElementIsVisible(productsTitle);
         return productsTitle.isDisplayed();
     }
 
-    public void clickProductNumber(Integer itemNumber) {
-        screenActions.clickButton(productsSummary.get(itemNumber));
+    public ProductsScreen clickProductNumber(Integer itemNumber) {
+        screen.tap(productsSummary.get(itemNumber));
+        return this;
     }
 
     public String getProductTitle(Integer itemNumber) {
-        return screenActions.getText(productsSummary.get(itemNumber));
+        return screen.getText(productsSummary.get(itemNumber));
     }
 
     public String getProductPrice(Integer itemNumber) {
-        return screenActions.getText(productsPrice.get(itemNumber));
+        return screen.getText(productsPrice.get(itemNumber));
     }
 }
