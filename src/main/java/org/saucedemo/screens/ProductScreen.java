@@ -8,16 +8,17 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.support.PageFactory;
-import org.saucedemo.actions.ScreenActions;
+import org.saucedemo.actions.screen.Screen;
+import org.saucedemo.actions.screen.ScreenFactory;
 
 @Slf4j
 @Data
 public class ProductScreen {
-    ScreenActions screenActions;
+    Screen screen;
 
     public ProductScreen(AppiumDriver driver) {
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        screenActions = new ScreenActions(driver);
+        screen = new ScreenFactory(driver).getScreen();
     }
 
     @AndroidFindBy(xpath = "//android.view.ViewGroup[@content-desc=\"test-Description\"]/android.widget.TextView[1]")
@@ -29,13 +30,13 @@ public class ProductScreen {
     private MobileElement productDescription;
 
     public String getProductSummary() {
-        screenActions.waitUntilElementIsVisible(productSummary);
+        screen.waitUntilElementIsVisible(productSummary);
         return productSummary.getText();
     }
 
     public String getProductDescriptionByText(String partialText) {
-        screenActions.scrollAndGetElementContainingText(partialText);
-        screenActions.waitUntilElementIsVisible(productDescription);
+        screen.scrollToText(partialText);
+        screen.waitUntilElementIsVisible(productDescription);
         return productDescription.getText();
     }
 }
