@@ -22,7 +22,7 @@ public class ScreenFactory {
             case ANDROID:
                 return new AndroidScreen(driver);
             case IOS:
-                // or return an IOS screen.
+                return new IOSScreen(driver);
             default:
                 throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s.", PLATFORM, java.util.Arrays.asList(Platform.values())));
         }
