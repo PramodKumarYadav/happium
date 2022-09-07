@@ -12,6 +12,13 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class DriverFactory {
+    /**
+     * By using the ThreadLocal, now any page or utility class that wants to use this driver instance can directly
+     * access it from this class. We do not have to pass the driver around from one class to another anymore (which is
+     * what we had to do when we wanted to use the same driver across page and utility classes. This simplifies the
+     * design immensely. In absence of this, you have to initialise the driver in a TestSetup class and toss it around
+     * initializing all page objects and utility classes.
+     */
     private static final ThreadLocal<AppiumDriver> holder = new ThreadLocal<>();
 
     private static Config config = EnvFactory.getInstance().getConfig();
