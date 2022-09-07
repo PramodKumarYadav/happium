@@ -3,7 +3,7 @@ package org.saucedemo.screens;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
 import org.saucedemo.actions.screen.Screen;
-import org.saucedemo.actions.screen.ScreenActionsFactory;
+import org.saucedemo.actions.screen.ScreenFactory;
 import org.saucedemo.factories.DriverContext;
 
 public class InitializeScreen {
@@ -11,6 +11,6 @@ public class InitializeScreen {
 
     protected InitializeScreen() {
         PageFactory.initElements(new AppiumFieldDecorator(DriverContext.holder.get()), this);
-        screen = ScreenActionsFactory.getScreen();
+        screen = ScreenFactory.getScreen();
     }
 }

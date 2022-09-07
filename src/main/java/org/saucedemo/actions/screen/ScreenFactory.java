@@ -7,11 +7,11 @@ import org.saucedemo.choices.Platform;
 import org.saucedemo.factories.EnvFactory;
 
 @Slf4j
-public class ScreenActionsFactory {
+public class ScreenFactory {
     private static final Config CONFIG = EnvFactory.getInstance().getConfig();
     private static final Platform PLATFORM = Platform.parse(CONFIG.getString("PLATFORM"));
 
-    private ScreenActionsFactory() {
+    private ScreenFactory() {
         throw new IllegalStateException("Static factory class");
     }
 
