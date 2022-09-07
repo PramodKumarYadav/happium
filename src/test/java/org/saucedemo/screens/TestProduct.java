@@ -24,7 +24,7 @@ class TestProduct extends TestSetup {
     @BeforeEach
     public void initialize() {
         productScreen = new ProductScreen();
-        deepLink = new DeepLink(driver);
+        deepLink = new DeepLink();
     }
 
     @ParameterizedTest(name = "Product details for product - {1}")

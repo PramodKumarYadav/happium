@@ -49,10 +49,10 @@ public class DriverFactory {
         }
     }
 
-    public static void setDriverTimeouts(AppiumDriver driver) {
-        driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
+    public static void setDriverTimeouts() {
+        getDriver().manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
 
-        log.info("SessionId: {}", driver.getSessionId());
-        log.info("Driver capabilities: {}", driver.getCapabilities());
+        log.info("SessionId: {}", getDriver().getSessionId());
+        log.info("Driver capabilities: {}", getDriver().getCapabilities());
     }
 }
