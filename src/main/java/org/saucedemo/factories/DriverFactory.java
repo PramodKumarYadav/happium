@@ -12,28 +12,31 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class DriverFactory {
+    private static final ThreadLocal<AppiumDriver> holder = new ThreadLocal<>();
+
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final Host HOST = Host.parse(config.getString("HOST"));
     private static final Platform PLATFORM = Platform.parse(config.getString("PLATFORM"));
 
-    private DriverFactory() {
-        throw new IllegalStateException("Static factory class");
+    public static void setDriver() {
+        holder.set(getDriverInstance());
     }
 
     public static AppiumDriver getDriver() {
-        setDriverContext();
-        return DriverContext.holder.get();
+        return holder.get();
     }
 
-    private static void setDriverContext() {
+    public static void removeDriver() {
+        holder.remove();
+    }
+
+    private static AppiumDriver getDriverInstance() {
         log.info("Getting driver for PLATFORM: {}", PLATFORM);
         switch (PLATFORM) {
             case ANDROID:
-                DriverContext.holder.set( new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, PLATFORM)));
-                break;
+                return new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, PLATFORM));
             case IOS:
-                DriverContext.holder.set(new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, PLATFORM)));
-                break;
+                return new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, PLATFORM));
             default:
                 throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s.", PLATFORM, java.util.Arrays.asList(Platform.values())));
         }
