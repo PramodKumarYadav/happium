@@ -32,6 +32,7 @@ public class TestSetup {
 
     @AfterEach
     public void tearDown() {
+        DriverFactory.getDriver().quit();
         DriverFactory.removeDriver();
         log.info("tear down complete");
     }
