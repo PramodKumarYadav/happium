@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.saucedemo.choices.Host;
 import org.saucedemo.choices.Platform;
+import org.saucedemo.factories.DriverContext;
 import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.factories.EnvFactory;
 
@@ -45,6 +46,7 @@ public class TestSetup {
         TestResult.setTestStatus(driver, HOST);
 
         driver.quit();
+        DriverContext.holder.remove();
         log.info("tear down complete");
     }
 }

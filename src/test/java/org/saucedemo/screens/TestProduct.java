@@ -23,7 +23,7 @@ class TestProduct extends TestSetup {
 
     @BeforeEach
     public void initialize() {
-        productScreen = new ProductScreen(driver);
+        productScreen = new ProductScreen();
         deepLink = new DeepLink(driver);
     }
 

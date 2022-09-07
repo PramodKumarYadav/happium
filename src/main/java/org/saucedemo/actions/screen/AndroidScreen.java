@@ -3,8 +3,7 @@ package org.saucedemo.actions.screen;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.saucedemo.factories.DriverContext;
 
 /**
  * All interactions in pages should happen via screen actions and not directly in the pages.
@@ -12,17 +11,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class AndroidScreen extends Screen {
     private AppiumDriver driver;
-    private WebDriverWait shortWait;
-    private WebDriverWait longWait;
-    private static final Integer TIME_OUT_IN_FIVE_SECONDS = 5;
-    private static final Integer TIME_OUT_IN_TEN_SECONDS = 10;
 
-    public AndroidScreen(AppiumDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
-        shortWait = new WebDriverWait(driver, TIME_OUT_IN_FIVE_SECONDS);
-        longWait = new WebDriverWait(driver, TIME_OUT_IN_TEN_SECONDS);
-        this.driver = driver;
+    public AndroidScreen() {
+        driver = DriverContext.holder.get();
     }
 
     public WebElement scrollToText(String partialText) {

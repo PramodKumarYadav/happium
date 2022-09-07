@@ -20,12 +20,19 @@ public class DriverFactory {
     }
 
     public static AppiumDriver getDriver(Platform platform) {
+        setDriverContext(platform);
+        return DriverContext.holder.get();
+    }
+
+    private static void setDriverContext(Platform platform) {
         log.info("Getting driver for PLATFORM: {}", platform);
         switch (platform) {
             case ANDROID:
-                return new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
+                DriverContext.holder.set( new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform)));
+                break;
             case IOS:
-                return new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform));
+                DriverContext.holder.set(new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform)));
+                break;
             default:
                 throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s.", platform, java.util.Arrays.asList(Platform.values())));
         }

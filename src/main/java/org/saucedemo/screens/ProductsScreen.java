@@ -1,28 +1,16 @@
 package org.saucedemo.screens;
 
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.AndroidFindBy;
-import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.support.PageFactory;
-import org.saucedemo.actions.screen.Screen;
-import org.saucedemo.actions.screen.ScreenFactory;
 
 import java.util.List;
 
 @Slf4j
 @Data
-public class ProductsScreen {
-    Screen screen;
-
-    public ProductsScreen(AppiumDriver driver) {
-        PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        screen = new ScreenFactory(driver).getScreen();
-    }
-
+public class ProductsScreen extends InitializeScreen {
     @AndroidFindBy(accessibility = "test-PRODUCTS")
     @iOSXCUITFindBy(accessibility = "PRODUCTS")
     private MobileElement productsTitle;
