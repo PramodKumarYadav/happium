@@ -25,7 +25,7 @@ class TestProducts extends TestSetup {
 
     @BeforeEach
     public void initialize() {
-        productsScreen = new ProductsScreen(driver);
+        productsScreen = new ProductsScreen();
 
         deepLink = new DeepLink(driver);
         String deepLinkUrl = DeepLink.getDeepLinkUrl(config.getString("SWAG_ITEMS_OVERVIEW"), "0,1");

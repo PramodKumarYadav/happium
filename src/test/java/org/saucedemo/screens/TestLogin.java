@@ -22,8 +22,8 @@ class TestLogin extends TestSetup {
 
     @BeforeEach
     public void initialize() {
-        loginScreen = new LoginScreen(driver);
-        productsScreen = new ProductsScreen(driver);
+        loginScreen = new LoginScreen();
+        productsScreen = new ProductsScreen();
     }
 
     @Tag("smokeTest")
