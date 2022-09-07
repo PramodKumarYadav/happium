@@ -1,23 +1,15 @@
 package org.saucedemo.testextensions;
 
-import com.typesafe.config.Config;
-import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.saucedemo.choices.Host;
 import org.saucedemo.factories.DriverFactory;
-import org.saucedemo.factories.EnvFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
 public class TestSetup {
-    private static Config config = EnvFactory.getInstance().getConfig();
-    private static final Host HOST = Host.parse(config.getString("HOST"));
-
-    public AppiumDriver driver;
     private static Map<String, String> testThreadMap = new HashMap<>();
 
     @BeforeEach
@@ -25,8 +17,7 @@ public class TestSetup {
         setTestThreadMap();
 
         DriverFactory.setDriver();
-        driver = DriverFactory.getDriver();
-        DriverFactory.setDriverTimeouts(driver);
+        DriverFactory.setDriverTimeouts();
     }
 
     private void setTestThreadMap() {
@@ -41,10 +32,8 @@ public class TestSetup {
 
     @AfterEach
     public void tearDown() {
-        TestResult.setTestStatus(driver, HOST);
-
+        DriverFactory.getDriver().quit();
         DriverFactory.removeDriver();
-        driver.quit();
         log.info("tear down complete");
     }
 }

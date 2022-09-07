@@ -9,14 +9,14 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.actions.DeepLink;
 import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
-import org.saucedemo.testextensions.TestExecutionLifecycle;
+import org.saucedemo.testextensions.PublishTestResults;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("android")
 @Tag("ios")
-@ExtendWith(TestExecutionLifecycle.class)
+@ExtendWith(PublishTestResults.class)
 class TestProducts extends TestSetup {
     private static Config config = EnvFactory.getInstance().getConfig();
     private ProductsScreen productsScreen;
@@ -27,7 +27,7 @@ class TestProducts extends TestSetup {
     public void initialize() {
         productsScreen = new ProductsScreen();
 
-        deepLink = new DeepLink(driver);
+        deepLink = new DeepLink();
         String deepLinkUrl = DeepLink.getDeepLinkUrl(config.getString("SWAG_ITEMS_OVERVIEW"), "0,1");
         deepLink.toScreen(deepLinkUrl);
     }

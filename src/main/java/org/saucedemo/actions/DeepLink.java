@@ -5,6 +5,7 @@ import com.typesafe.config.Config;
 import io.appium.java_client.AppiumDriver;
 import lombok.extern.slf4j.Slf4j;
 import org.saucedemo.choices.Platform;
+import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.factories.EnvFactory;
 
 import java.util.ArrayList;
@@ -23,8 +24,8 @@ public class DeepLink {
 
     AppiumDriver driver;
 
-    public DeepLink(AppiumDriver driver) {
-        this.driver = driver;
+    public DeepLink() {
+        this.driver = DriverFactory.getDriver();
     }
 
     public static String getDeepLinkUrl(String endpoint, String parameters) {
