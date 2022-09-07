@@ -10,7 +10,7 @@ public class InitializeScreen {
     Screen screen;
 
     protected InitializeScreen() {
-        PageFactory.initElements(new AppiumFieldDecorator(DriverContext.holder.get()), this);
+        PageFactory.initElements(new AppiumFieldDecorator(DriverContext.getDriver()), this);
         screen = ScreenFactory.getScreen();
     }
 }

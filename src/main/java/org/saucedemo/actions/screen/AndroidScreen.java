@@ -13,7 +13,7 @@ public class AndroidScreen extends Screen {
     private AppiumDriver driver;
 
     public AndroidScreen() {
-        driver = DriverContext.holder.get();
+        driver = DriverContext.getDriver();
     }
 
     public WebElement scrollToText(String partialText) {

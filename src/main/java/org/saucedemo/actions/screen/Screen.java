@@ -15,7 +15,7 @@ public abstract class Screen {
     private static final Integer TIME_OUT_IN_TEN_SECONDS = 10;
 
     public Screen() {
-        driver = DriverContext.holder.get();
+        driver = DriverContext.getDriver();
         longWait = new WebDriverWait(driver, TIME_OUT_IN_TEN_SECONDS);
     }
 

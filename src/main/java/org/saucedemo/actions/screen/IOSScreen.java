@@ -13,7 +13,7 @@ public class IOSScreen extends Screen {
     private AppiumDriver driver;
 
     public IOSScreen() {
-        driver = DriverContext.holder.get();
+        driver = DriverContext.getDriver();
     }
 
     // todo: to be implemented
