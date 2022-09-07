@@ -14,27 +14,28 @@ import java.util.concurrent.TimeUnit;
 public class DriverFactory {
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final Host HOST = Host.parse(config.getString("HOST"));
+    private static final Platform PLATFORM = Platform.parse(config.getString("PLATFORM"));
 
     private DriverFactory() {
         throw new IllegalStateException("Static factory class");
     }
 
-    public static AppiumDriver getDriver(Platform platform) {
-        setDriverContext(platform);
+    public static AppiumDriver getDriver() {
+        setDriverContext();
         return DriverContext.holder.get();
     }
 
-    private static void setDriverContext(Platform platform) {
-        log.info("Getting driver for PLATFORM: {}", platform);
-        switch (platform) {
+    private static void setDriverContext() {
+        log.info("Getting driver for PLATFORM: {}", PLATFORM);
+        switch (PLATFORM) {
             case ANDROID:
-                DriverContext.holder.set( new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform)));
+                DriverContext.holder.set( new AndroidDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, PLATFORM)));
                 break;
             case IOS:
-                DriverContext.holder.set(new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, platform)));
+                DriverContext.holder.set(new IOSDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getDesiredCapabilities(HOST, PLATFORM)));
                 break;
             default:
-                throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s.", platform, java.util.Arrays.asList(Platform.values())));
+                throw new IllegalStateException(String.format("%s is not a valid platform choice. Pick your platform from %s.", PLATFORM, java.util.Arrays.asList(Platform.values())));
         }
     }
 

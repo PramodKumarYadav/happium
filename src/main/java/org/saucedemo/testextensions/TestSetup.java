@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.saucedemo.choices.Host;
-import org.saucedemo.choices.Platform;
 import org.saucedemo.factories.DriverContext;
 import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.factories.EnvFactory;
@@ -17,7 +16,6 @@ import java.util.Map;
 @Slf4j
 public class TestSetup {
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final Platform PLATFORM = Platform.parse(config.getString("PLATFORM"));
     private static final Host HOST = Host.parse(config.getString("HOST"));
 
     public AppiumDriver driver;
@@ -27,7 +25,7 @@ public class TestSetup {
     public void setUp() {
         setTestThreadMap();
 
-        this.driver = DriverFactory.getDriver(PLATFORM);
+        this.driver = DriverFactory.getDriver();
         DriverFactory.setDriverTimeouts(driver);
     }
 
