@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.saucedemo.choices.Host;
-import org.saucedemo.factories.DriverContext;
+import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.factories.EnvFactory;
 
 import java.util.HashMap;
@@ -24,9 +24,9 @@ public class TestSetup {
     public void setUp() {
         setTestThreadMap();
 
-        DriverContext.setDriver();
-        this.driver = DriverContext.getDriver();
-        DriverContext.setDriverTimeouts(driver);
+        DriverFactory.setDriver();
+        driver = DriverFactory.getDriver();
+        DriverFactory.setDriverTimeouts(driver);
     }
 
     private void setTestThreadMap() {
@@ -43,8 +43,8 @@ public class TestSetup {
     public void tearDown() {
         TestResult.setTestStatus(driver, HOST);
 
+        DriverFactory.removeDriver();
         driver.quit();
-        DriverContext.unloadDriver();
         log.info("tear down complete");
     }
 }

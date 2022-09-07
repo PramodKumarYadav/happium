@@ -5,7 +5,7 @@ import io.appium.java_client.MobileElement;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.saucedemo.factories.DriverContext;
+import org.saucedemo.factories.DriverFactory;
 
 public abstract class Screen {
     public abstract WebElement scrollToText(String partialText);
@@ -15,7 +15,7 @@ public abstract class Screen {
     private static final Integer TIME_OUT_IN_TEN_SECONDS = 10;
 
     public Screen() {
-        driver = DriverContext.getDriver();
+        driver = DriverFactory.getDriver();
         longWait = new WebDriverWait(driver, TIME_OUT_IN_TEN_SECONDS);
     }
 

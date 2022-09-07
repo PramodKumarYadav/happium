@@ -11,26 +11,26 @@ import org.saucedemo.choices.Platform;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class DriverContext {
-    public static final ThreadLocal<AppiumDriver> holder = new ThreadLocal<>();
+public class DriverFactory {
+    private static final ThreadLocal<AppiumDriver> holder = new ThreadLocal<>();
 
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final Host HOST = Host.parse(config.getString("HOST"));
     private static final Platform PLATFORM = Platform.parse(config.getString("PLATFORM"));
 
-    public static void setDriver(){
-        holder.set(getDriverType());
+    public static void setDriver() {
+        holder.set(getDriverInstance());
     }
 
     public static AppiumDriver getDriver() {
         return holder.get();
     }
 
-    public static void unloadDriver() {
+    public static void removeDriver() {
         holder.remove();
     }
 
-    public static AppiumDriver getDriverType() {
+    private static AppiumDriver getDriverInstance() {
         log.info("Getting driver for PLATFORM: {}", PLATFORM);
         switch (PLATFORM) {
             case ANDROID:

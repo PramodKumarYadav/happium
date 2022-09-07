@@ -3,7 +3,7 @@ package org.saucedemo.actions.screen;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import org.openqa.selenium.WebElement;
-import org.saucedemo.factories.DriverContext;
+import org.saucedemo.factories.DriverFactory;
 
 /**
  * All interactions in pages should happen via screen actions and not directly in the pages.
@@ -13,7 +13,7 @@ public class IOSScreen extends Screen {
     private AppiumDriver driver;
 
     public IOSScreen() {
-        driver = DriverContext.getDriver();
+        driver = DriverFactory.getDriver();
     }
 
     // todo: to be implemented
