@@ -10,12 +10,8 @@ import org.junit.jupiter.api.extension.ExtensionContext.Store;
 import java.lang.reflect.Method;
 
 @Slf4j
-public class TestExecutionLifecycle implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
+public class PublishTestResults implements BeforeTestExecutionCallback, AfterTestExecutionCallback {
     private static final String TEST_START_TIME = "start time";
-    private static String testClassName;
-    private static String testName;
-    private static Boolean testStatus;
-    private static String reason;
 
     @Override
     public void beforeTestExecution(ExtensionContext context) {
@@ -28,15 +24,9 @@ public class TestExecutionLifecycle implements BeforeTestExecutionCallback, Afte
 
     @Override
     public void afterTestExecution(ExtensionContext context) {
-        setCurrentTestsVariables(context);
+        TestRunMetaData testRunMetaData = new TestRunMetaData().getBody(context);
+        ReportFactory.publishToHost(testRunMetaData);
         logCurrentTestsTotalExecutionTime(context);
-    }
-
-    private void setCurrentTestsVariables(ExtensionContext context) {
-        testName = context.getDisplayName();
-        testStatus = context.getExecutionException().isPresent();
-        reason = context.getExecutionException().toString();
-        testClassName = context.getTestClass().get().getSimpleName();
     }
 
     private void logCurrentTestsTotalExecutionTime(ExtensionContext context) {
@@ -45,21 +35,5 @@ public class TestExecutionLifecycle implements BeforeTestExecutionCallback, Afte
         double duration = (System.currentTimeMillis() - startTime)/1000.0;
 
         log.info("Method [{}] took {} seconds.", testMethod.getName(), duration);
-    }
-
-    public static String getTestClassName() {
-        return testClassName;
-    }
-
-    public static String getTestName() {
-        return testName;
-    }
-
-    public static Boolean getTestStatus() {
-        return testStatus;
-    }
-
-    public static String getReason() {
-        return reason;
     }
 }

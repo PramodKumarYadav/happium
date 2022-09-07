@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Capabilities;
 import org.saucedemo.executionmodes.ExecutionFactory;
+import org.saucedemo.factories.DriverFactory;
 import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
 import org.saucedemo.executionmodes.ExecutionMode;
@@ -164,8 +165,8 @@ public class EmulatorDevicePicker {
      * for now, this method is only setup for android virtual devices. But that will be changed soon once we start
      * working with ios devices.
      */
-    public static synchronized void freeDevice(AppiumDriver driver) {
-        Capabilities capabilities = driver.getCapabilities();
+    public static synchronized void freeDevice() {
+        Capabilities capabilities = DriverFactory.getDriver().getCapabilities();
         log.debug("capabilities: {}", capabilities);
 
         // Get capabilities important for our setup.

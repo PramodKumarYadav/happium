@@ -9,13 +9,13 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.actions.DeepLink;
 import org.saucedemo.testextensions.TestSetup;
 import org.saucedemo.factories.EnvFactory;
-import org.saucedemo.testextensions.TestExecutionLifecycle;
+import org.saucedemo.testextensions.PublishTestResults;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Tag("android")
-@ExtendWith(TestExecutionLifecycle.class)
+@ExtendWith(PublishTestResults.class)
 class TestProduct extends TestSetup {
     private static Config config = EnvFactory.getInstance().getConfig();
     private ProductScreen productScreen;

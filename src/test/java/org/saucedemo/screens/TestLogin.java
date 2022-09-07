@@ -8,14 +8,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.saucedemo.testextensions.TestSetup;
-import org.saucedemo.testextensions.TestExecutionLifecycle;
+import org.saucedemo.testextensions.PublishTestResults;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Tag("android")
 @Tag("ios")
-@ExtendWith(TestExecutionLifecycle.class)
+@ExtendWith(PublishTestResults.class)
 class TestLogin extends TestSetup {
     private LoginScreen loginScreen;
     private ProductsScreen productsScreen;
