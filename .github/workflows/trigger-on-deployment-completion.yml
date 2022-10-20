@@ -2,6 +2,10 @@ name: trigger-tests-on-event-receipt
 on:
   repository_dispatch:
     types: [deployment-completed-event]
+    
+env: 
+  GITHUB_CONTEXT: ${{ toJSON(github) }}
+  
 jobs:
   trigger-tests-on-event-receipt:
     runs-on: ubuntu-latest
@@ -13,3 +17,4 @@ jobs:
           echo ${{ github.event.client_payload.github.workflow }}
           echo ${{ github.event.client_payload.github.event_name }}
           echo ${{ github.event.client_payload.github.repository }}
+          echo "$GITHUB_CONTEXT"
