@@ -17,4 +17,5 @@ jobs:
           echo ${{ github.event.client_payload.github.workflow }}
           echo ${{ github.event.client_payload.github.event_name }}
           echo ${{ github.event.client_payload.github.repository }}
-          echo "$GITHUB_CONTEXT"
+          echo ${{ github.event.client_payload.TEST_ENV }}
+          echo ${{ github.event.client_payload.BASE_URL }}
