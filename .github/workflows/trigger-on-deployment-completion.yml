@@ -9,7 +9,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.client_payload.ref }}
-      - run: 
+      - run: |
           echo ${{ github.event.client_payload.github.workflow }}
           echo ${{ github.event.client_payload.github.event_name }}
           echo ${{ github.event.client_payload.github.repository }}
