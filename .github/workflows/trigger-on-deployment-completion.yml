@@ -1,0 +1,21 @@
+name: trigger-tests-on-event-receipt
+on:
+  repository_dispatch:
+    types: [deployment-completed-event]
+    
+env: 
+  GITHUB_CONTEXT: ${{ toJSON(github) }}
+  
+jobs:
+  trigger-tests-on-event-receipt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - run: |
+          echo ${{ github.event.client_payload.github.workflow }}
+          echo ${{ github.event.client_payload.github.event_name }}
+          echo ${{ github.event.client_payload.github.repository }}
+          echo ${{ github.event.client_payload.TEST_ENV }}
+          echo ${{ github.event.client_payload.BASE_URL }}
